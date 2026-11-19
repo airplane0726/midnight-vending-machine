@@ -19,10 +19,39 @@ def reference_images(series: Series, character_ids: list[str], location_id: str 
     out: list[dict[str, Any]] = []
     for cid in character_ids:
         for r in series.characters.get(cid, {}).get("reference_images", []) or []:
-            out.append({"subject": cid, "kind": "character", "path": r["path"], "view": r.get("view", "")})
+            out.append({"subject": cid, "kind": "character", "path": r["path"], "view": r.get("view", ""),
+                        "prompt_note": r.get("prompt_note", "")})
     for r in (series.locations.get(location_id) or {}).get("reference_images", []) or []:
-        out.append({"subject": location_id, "kind": "location", "path": r["path"], "view": r.get("view", "")})
+        out.append({"subject": location_id, "kind": "location", "path": r["path"], "view": r.get("view", ""),
+                    "prompt_note": r.get("prompt_note", "")})
     return out
+
+
+def _names(series: Series, ids: list[str]) -> str:
+    names = [series.characters[c]["name_en"] for c in ids]
+    return names[0] if len(names) == 1 else ", ".join(names[:-1]) + " and " + names[-1]
+
+
+def single_instance_rule(series: Series, ids: list[str], *, video: bool = False) -> str:
+    """各人物を1体ずつしか描かない指示（参照画像に複数の向きが並んでいても、複数体にしない）。"""
+    if not ids:
+        return ""
+    each = " and ".join(f"exactly one {series.characters[c]['name_en']}" for c in ids)
+    when = "at all times in the shot" if video else "in the image"
+    return (f"Show {each} {when}; never duplicate, clone or repeat any character, "
+            f"and do not reproduce the multi-angle layout of a reference sheet")
+
+
+def reference_guidance(style: dict[str, Any], refs: list[dict[str, Any]]) -> list[str]:
+    if not refs:
+        return []
+    notes = [style.get("reference_prompt_intro", "")]
+    seen = set()
+    for r in refs:
+        if r.get("prompt_note") and r["prompt_note"] not in seen:
+            seen.add(r["prompt_note"])
+            notes.append(r["prompt_note"])
+    return notes
 
 
 def _join(parts: list[str]) -> str:
@@ -56,13 +85,19 @@ def build_production(series: Series, ep: dict[str, Any]) -> dict[str, Any]:
         for cid in at_start:
             c = series.characters[cid]
             parts.append(f"{c['name_en']}: {c['appearance_prompt']}")
+        image_refs = reference_images(series, at_start, cut.get("location"))
+        parts += reference_guidance(style, image_refs)
+        parts.append(single_instance_rule(series, at_start))
         parts.append(style.get("image_prompt_suffix", ""))
         image_prompt = _join(parts)
+        video_refs = reference_images(series, in_shot, cut.get("location"))
 
         video_parts = [cut["video_prompt"]]
         for cid in entering:
             c = series.characters[cid]
             video_parts.append(f"{c['name_en']} (appears during the shot): {c['appearance_prompt']}")
+        video_parts += reference_guidance(style, video_refs)
+        video_parts.append(single_instance_rule(series, in_shot, video=True))
         if cut.get("camera_en"):
             video_parts.append(f"Camera: {cut['camera_en']}")
         video_parts += [f"Duration: {cut['duration_sec']} seconds.", style.get("video_prompt_suffix", "")]
@@ -80,12 +115,12 @@ def build_production(series: Series, ep: dict[str, Any]) -> dict[str, Any]:
             "image": {"slot": f"{slot}_start",
                       "prompt": image_prompt, "negative_prompt": style.get("negative_prompt", ""),
                       "aspect_ratio": fmt["aspect_ratio"], "resolution": fmt.get("resolution"),
-                      "references": reference_images(series, at_start, cut.get("location")),
+                      "references": image_refs,
                       "output_dir": series.media_rel(n, "images")},
             "video": {"slot": slot,
                       "prompt": video_prompt, "negative_prompt": style.get("negative_prompt", ""),
                       "init_image_slot": f"{slot}_start",
-                      "references": reference_images(series, in_shot, cut.get("location")),
+                      "references": video_refs,
                       "duration_sec": cut["duration_sec"], "aspect_ratio": fmt["aspect_ratio"],
                       "output_dir": series.media_rel(n, "videos")},
             "sound": cut["sound"],

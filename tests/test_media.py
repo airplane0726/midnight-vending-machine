@@ -151,7 +151,9 @@ class TestGeneration(MediaTestCase):
         self.assertEqual(sorted(plans), [1, 2, 3, 4, 5])
         for p in plans.values():
             self.assertEqual(p.action, "generate")
-            self.assertEqual(p.references, [])
+            # 開始画像に映るのはポコと自販機の路地（モチはカット5の途中から）
+            self.assertEqual([r["subject"] for r in p.references], ["poco", "vending-corner"])
+            self.assertEqual(p.missing_references, [])
             self.assertEqual(p.output_dir, "media/ep001/images")
         self.assertFalse((self.root / "media").exists())  # dry-run は何も書かない
 
@@ -313,6 +315,35 @@ class TestReferences(MediaTestCase):
         (self.root / "series.json").write_text(json.dumps(cfg), encoding="utf-8")
         with self.assertRaises(ValueError):
             load_series(self.root)
+
+
+class TestRegisteredReferences(MediaTestCase):
+    """リポジトリに登録した基準画像と、生成指示への反映。"""
+
+    def test_registered_reference_files_are_valid_images(self):
+        for group in ("characters", "locations"):
+            for item in self.series.config[group].values():
+                for r in item.get("reference_images", []):
+                    media.inspect_image(self.series.resolve(r["path"]))
+
+    def test_prompts_require_single_instance_and_reference_notes(self):
+        prod, _ = media.current_production(self.series, 1)
+        for cut in prod["cuts"]:
+            img = cut["image"]["prompt"]
+            self.assertIn("exactly one Poco in the image", img)
+            self.assertNotIn("Mochi", img)  # 開始画像にモチはいない
+            self.assertIn("ONE single Poco", img)
+            self.assertIn("vending corner reference", img)
+        vid = prod["cuts"][4]["video"]["prompt"]
+        self.assertIn("exactly one Poco and exactly one Mochi at all times", vid)
+        self.assertIn("ONE single Mochi", vid)
+        self.assertEqual({r["subject"] for r in prod["cuts"][4]["video"]["references"]},
+                         {"poco", "mochi", "vending-corner"})
+
+    def test_unreadable_reference_blocks(self):
+        ref = self.series.resolve("references/characters/poco/poco_reference.png")
+        ref.write_bytes(ref.read_bytes()[:1000])
+        self.assertTrue(all(p.action == "blocked" for p in self.plans().values()))
 
 
 class TestReplaceKeepsMedia(MediaTestCase):

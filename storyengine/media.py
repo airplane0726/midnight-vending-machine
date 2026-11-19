@@ -179,7 +179,13 @@ def image_conditions(series: Series, spec: dict[str, Any], model: dict[str, Any]
     refs, missing = [], []
     for r in spec.get("references", []):
         p = series.resolve(r["path"])
-        if p.is_file():
+        ok = p.is_file()
+        if ok:
+            try:
+                inspect_image(p)
+            except InvalidImageError:
+                ok = False
+        if ok:
             refs.append({"subject": r["subject"], "view": r.get("view", ""), "path": r["path"],
                          "sha256": _sha256_file(p)})
         else:
@@ -327,7 +333,7 @@ def plan_images(series: Series, n: int, *, cuts: list[int] | None = None,
         p = SlotPlan(cut["cut_number"], slot, key, "generate", "", spec, cond, spec.get("references", []),
                      missing, spec["output_dir"], previous=previous)
         if missing:
-            p.action, p.reason = "blocked", "見つからない参照画像: " + ", ".join(missing)
+            p.action, p.reason = "blocked", "見つからない・読み込めない参照画像: " + ", ".join(missing)
         elif same:
             v = same[-1]
             problem = _verify_local(series, v, spec.get("resolution"))
