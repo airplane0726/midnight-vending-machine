@@ -32,21 +32,21 @@
 ## カット1「光るボタン」 3秒（0〜3秒）
 
 - 登場: ポコ
-- カメラ: やや引きの正面ローアングル（ポコの目線より少し低い）。画面右寄りに自販機全体、画面左下にポコの全身。固定カメラ。
+- カメラ: 正面からのやや低いアングル（ポコの目の高さより少し下）。カメラは自販機の正面に向き、壁の時計から石畳のポコの足元までを縦長に収める。自販機は画面の中央から右寄り、ポコは画面左下で自販機の正面に重なって立つ。画面下端はポコの足元のすぐ下（手前の石畳は画面の1割程度まで）。固定カメラ。
 - 前からのつながり: 話の開始状況：午前0時直前、取り出し口の画面左半分の前（自販機から1歩手前）にポコが立ち、ボタンはどれも光っていない。
 - 足の接地: 開始時は両足とも石畳に接地。1.1〜2.0秒は交互に1歩ずつ（常に片足は接地）。2.0秒以降は両足のつま先が接地。
 
 **開始画像**
 
-深い青の夜。石畳の路地の角、しっくい壁の前に、くすんだ水色の古い自販機がカメラの方を向いて画面右寄りに立ち、陳列窓の内側上部の古い蛍光灯が暖かく灯っている。自販機の上の壁の丸い掛け時計は、2本の針が真上で重なっている（午前0時）。陳列窓の右側のボタン盤（3段×4列の丸いボタン）はまだどれも光っていない。取り出し口の画面左半分の前、自販機から1歩手前の石畳の上に、ポコが両足をそろえて立っている。ポコの身長は自販機の約0.6倍で、頭のてっぺんは陳列窓の中ほどの高さ。体は画面右（自販機の方）を向き、少しだけカメラ側へ振り向いているので、顔（横長の目）と、ポコ自身の左半身がカメラから見える。ボタン盤を見上げ、木の腕は体の横。赤いバッグはベルトがポコ自身の右肩から左腰へ斜めにかかり、バッグ本体はポコ自身の左腰（カメラ側）にある。ふたは閉じている。画面左奥に街灯の暖かい光。
+深い青の夜。石畳の路地の角、しっくい壁の前に、くすんだ水色の古い自販機がカメラの方を向いて画面の中央から右寄りに立ち、陳列窓の内側上部の古い蛍光灯が暖かく灯っている。自販機の上の壁の丸い掛け時計は、2本の針が真上で重なっている（午前0時）。陳列窓の右側のボタン盤（3段×4列の丸いボタン）はまだどれも光っていない。ポコは自販機の横ではなく正面にいる：取り出し口の画面左半分の前、自販機から1歩手前の石畳の上に両足をそろえて立ち、カメラから見るとポコの体が取り出し口のフラップの左半分に重なっている。ポコの大きさの目安：頭のてっぺんは陳列窓の中段の棚の高さ、下段のボタンの列はポコの目と頭のてっぺんの間の高さ、取り出し口のフラップの上端はポコの胴の中ほどの高さ。下段右端のボタン（ボタン盤の右端）は、ポコから見て画面右へ自分の体の幅2つ分ほど離れている。体は画面右（ボタン盤の方）を向き、少しだけカメラ側へ振り向いているので、顔（横長の目）と、ポコ自身の左半身がカメラから見える。ボタン盤を見上げ、木の腕は体の横。赤いバッグのベルトは、ポコ自身の右肩（カメラから遠い側）から胸の前を斜めに横切って、ポコ自身の左腰（カメラ側）のバッグへ下りている。ふたは閉じている。画面左奥に街灯の暖かい光。
 
 **動き**
 
 - 0.0秒〜0.5秒: 静止。自販機の低い作動音だけが鳴っている。
 - 0.5秒〜0.8秒: 下段右端のボタンが1つだけ、ぽうっと琥珀色に光る。光がポコのクリーム色の体にほんのり映る。
 - 0.8秒〜1.1秒: ポコの横長の目が縦に少し大きくなり（驚き）、体がわずかに後ろへ傾いてから戻る。
-- 1.1秒〜2.0秒: ポコが画面右斜め前（自販機の方）へ小さく2歩進む（ポコ自身の右足、左足の順）。光るボタンの真下、取り出し口の画面右半分の前で止まり、自販機の正面に向き直る（カメラにはポコの背中と、斜め後ろからの横顔が見える）。バッグが歩みに合わせて小さく揺れる。
-- 2.0秒〜2.4秒: つま先立ちになり、ポコ自身の右腕（画面右側）を真上へいっぱいに伸ばす。指先がちょうど下段のボタンの高さに届く。
+- 1.1秒〜2.0秒: ポコが自販機の正面に沿って画面右へ小さく2歩進む（ポコ自身の右足、左足の順。1歩で体の幅の半分ほど）。光るボタンの真下、取り出し口の画面右半分の前で止まり、その場で自販機の正面に向き直る（カメラにはポコの背中と、斜め後ろからの横顔が見える）。バッグが歩みに合わせて小さく揺れる。
+- 2.0秒〜2.4秒: つま先立ちになり、ポコ自身の右腕（画面右側）を頭の横から真上へいっぱいに伸ばす。下段のボタンは頭のてっぺんより少し低い位置なので、腕の先がちょうど届く。
 - 2.4秒〜3.0秒: 光るボタンをポコ自身の右腕の先で押す。ボタンは光ったまま。ポコはつま先立ちで右腕を伸ばした姿勢で止まる。
 
 **終了状態**: ポコは取り出し口の画面右半分の前、光るボタンの真下で、自販機の正面を向いてつま先立ちになっている（カメラにはポコの背中側が見える）。ポコ自身の右腕（画面右側）を真上に伸ばし、陳列窓の右側のボタン盤の下段右端の光るボタンに触れている。ポコ自身の左腕（画面左側）は体の横。バッグはポコ自身の左腰（画面左側）。取り出し口のフラップはポコの脚の前にあり、上端はポコの胴の中ほどの高さで、画面左へも広がっている。
@@ -65,13 +65,13 @@
 **image_prompt**
 
 ```
-Static low-angle front view at midnight; the camera faces the front of the vending machine. The old pale-blue vending machine stands against a plaster wall on the screen-right side of the frame, facing the camera; the round clock on the wall above it shows both hands together pointing straight up, and all twelve round buttons on the panel to the right of the display window are unlit. In the lower screen-left, on the cobblestones one step in front of the screen-left half of the retrieval slot, Poco stands with both feet flat; Poco is about 0.6 times as tall as the machine, the top of its head level with the middle of the display window. Its body faces screen-right toward the machine, turned slightly toward the camera so its eyes and its own left side are visible; it looks up at the button panel, wooden arms hanging at its sides. The red bag hangs at Poco's own left hip, on the side facing the camera. Warm street lamp glow in the screen-left background, deep blue night.
+Static, slightly low front view at midnight, from just below Poco's eye level; the camera faces the front of the vending machine. The old pale-blue vending machine stands against a plaster wall, center-right in the frame, facing the camera; the round clock on the wall above it shows both hands together pointing straight up, and all twelve round buttons on the panel to the right of the display window are unlit. Poco stands IN FRONT OF the machine's face, not beside it: on the cobblestones one step in front of the screen-left half of the retrieval slot, so that from the camera Poco's body overlaps the left half of the retrieval flap. Scale cues: the top of Poco's head is level with the middle shelf of the display window; the bottom row of buttons is between Poco's eyes and the top of its head; the top edge of the retrieval flap is at the middle of Poco's body. The bottom-right button is about two Poco body-widths to the screen-right of Poco. Both of Poco's feet are flat. Its body faces screen-right toward the button panel, turned slightly toward the camera so its eyes and its own left side are visible; it looks up at the button panel, wooden arms hanging at its sides. The red bag strap runs from Poco's own right shoulder (the far side) diagonally across its chest down to the bag at its own left hip, on the side facing the camera. The frame runs from the wall clock at the top to just below Poco's feet; the cobblestone foreground fills no more than about one tenth of the frame. Warm street lamp glow in the screen-left background, deep blue night.
 ```
 
 **video_prompt**
 
 ```
-Poco stands still for half a second. Then a single button at the bottom row, screen-right end of the button panel (to the right of the display window) lights up with a soft amber glow that tints Poco's cream felt body. Poco's horizontal eyes grow slightly taller in surprise and its body tilts back a little. It takes two small steps diagonally toward screen-right and toward the machine, stopping directly below the lit button in front of the screen-right half of the retrieval slot, and turns to face the machine (its back toward the camera). It rises on tiptoe and stretches its own right wooden arm (on the screen-right side) straight up; the tip just reaches the bottom row of buttons, and it presses the glowing button. The button stays lit. End on Poco on tiptoe, facing the machine, its own right arm touching the lit button.
+Poco stands still in front of the left half of the retrieval slot for half a second. Then a single button at the bottom row, screen-right end of the button panel (to the right of the display window) lights up with a soft amber glow that tints Poco's cream felt body. Poco's horizontal eyes grow slightly taller in surprise and its body tilts back a little. It takes two small steps toward screen-right along the front of the machine (each about half its body width), stopping directly below the lit button in front of the screen-right half of the retrieval slot, and turns in place to face the machine (its back toward the camera). It rises on tiptoe and stretches its own right wooden arm (on the screen-right side) straight up beside its head; because the bottom row of buttons is just below the top of its head, the arm tip reaches the lit button, and it presses it. The button stays lit. End on Poco on tiptoe, facing the machine, its own right arm touching the lit button.
 ```
 
 </details>

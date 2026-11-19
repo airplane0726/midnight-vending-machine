@@ -180,7 +180,7 @@
           "prompt_note": "The vending corner reference image shows the location from the front at night with no characters: match the old pale-blue vending machine, its glass display, button panel, wide retrieval flap, the round wall clock above it, the street lamp and the cobblestone alley"
         }
       ],
-      "fixed_layout": "自販機は画面右寄りで正面（カメラ側）を向く。物語の開始位置は、取り出し口の画面左半分の前、自販機から1歩手前。街灯は画面左奥。下段右端のボタンは、陳列窓の右側のボタン盤の下段・画面右端（自販機の正面に向かって右端）。その真下は取り出し口の画面右半分の前にあたる。",
+      "fixed_layout": "自販機は画面右寄りで正面（カメラ側）を向く。物語の開始位置は、取り出し口の画面左半分の前、自販機から1歩手前（自販機の横ではなく正面）。街灯は画面左奥。下段右端のボタンは、陳列窓の右側のボタン盤の下段・画面右端（自販機の正面に向かって右端）。その真下は取り出し口の画面右半分の前にあたる。",
       "proportions": {
         "_note": "基準画像から測った比率。自販機の高さ＝脚を含む本体の高さ。生成指示と台本の位置関係はこの値に合わせる。",
         "poco_height_to_machine": 0.6,
