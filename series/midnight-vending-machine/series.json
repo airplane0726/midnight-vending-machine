@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "series_id": "midnight-vending-machine",
+  "title": "午前0時の自販機",
+  "title_en": "The Midnight Vending Machine",
+  "premise": "夜の小さな街にある古い自販機。午前0時になると、ボタンが1つだけ光り、不思議な品物が1つ現れる。小さな配達ロボットのポコは、毎晩その品物を受け取り、試してみる。",
+  "series_arc": "ポコは、自販機から現れる品物の本来の持ち主と、赤いバッグに入っている「宛先の消えた荷物」の届け先を少しずつ探していく。手がかりは毎話ほんの少しずつ増え、一度に大きく解決しない。自販機に住むモチとは、少しずつ距離が縮まっていく。",
+  "tone": "手作りミニチュア風の立体アニメ。青い夜と暖かい照明。かわいく、少し奇妙。音と動きをつい見続けたくなる。",
+  "ai_disclosure": "この作品は画像・動画生成AIを用いて制作しています。",
+
+  "format": {
+    "aspect_ratio": "9:16",
+    "resolution": "1080x1920",
+    "total_seconds": 20,
+    "cut_durations": [3, 4, 4, 5, 4],
+    "spoken_text_allowed": false,
+    "forbidden_cut_fields": ["dialogue", "narration", "subtitles", "on_screen_text"],
+    "featured_object": {"required": true, "label": "不思議な品物"},
+    "required_episode_fields": [
+      "title", "logline", "summary",
+      "featured_object.id", "featured_object.name", "featured_object.description", "featured_object.properties",
+      "music.overall", "music.instrumentation",
+      "posts.instagram.caption", "posts.instagram.hashtags",
+      "posts.youtube.title", "posts.youtube.description", "posts.youtube.tags",
+      "continuity.end_state", "continuity.new_facts"
+    ],
+    "required_cut_fields": [
+      "title", "location", "characters_in_shot", "camera", "camera_en",
+      "start_image",
+      "motion", "motion[].action",
+      "continuity.carry_in", "continuity.carry_out", "continuity.footing", "continuity.props",
+      "sound.ambience", "sound.sfx", "sound.sfx[].sound", "sound.music",
+      "image_prompt", "video_prompt"
+    ],
+    "post_limits": {
+      "instagram_caption_max": 2200,
+      "instagram_max_hashtags": 30,
+      "youtube_title_max": 100,
+      "youtube_description_max": 5000,
+      "youtube_tags_total_max": 500
+    }
+  },
+
+  "style": {
+    "image_prompt_prefix": "Handmade miniature diorama, stop-motion style 3D animation still, felt, clay and hand-painted wood textures, tiny real-world scale, tilt-shift shallow depth of field, vertical 9:16 composition. Deep blue night with warm amber practical lights, soft glow, cute and slightly uncanny mood.",
+    "image_prompt_suffix": "Consistent character design, clean silhouette, no text anywhere.",
+    "negative_prompt": "text, letters, numbers, subtitles, captions, watermark, logo, readable signage, humans, realistic photograph, mouth on Poco, extra limbs, extra eyes, different bag color, harsh neon, horror, gore, motion blur on faces",
+    "video_prompt_suffix": "Gentle handmade stop-motion-like miniature animation, slightly stepped motion, consistent character design and colors throughout, no text, no subtitles. Characters' feet stay planted on the ground unless floating is explicitly described."
+  },
+
+  "characters": {
+    "poco": {
+      "name": "ポコ",
+      "name_en": "Poco",
+      "role": "主人公。小さな配達ロボット",
+      "personality": "好奇心旺盛で少し不器用。驚くと目の形が変わり、体ごと傾く。",
+      "appearance_ja": [
+        "丸いクリーム色の体（卵を少しつぶしたような丸い胴体と頭が一体）",
+        "黒い横長の楕円の目が2つ。口はない。表情は目の形と体の傾きで表す",
+        "短い腕（先は丸く、指はない）と短い脚（先は平たい丸い足）",
+        "赤い肩掛けバッグ：ベルトを右肩から左腰へ斜めにかけ、四角いバッグが左腰にある。ふたは閉じている",
+        "身長は自販機の高さの約3分の1"
+      ],
+      "appearance_prompt": "a tiny round delivery robot with a smooth matte cream-colored egg-shaped body (head and body are one piece), two wide horizontal black oval eyes, no mouth, short stubby rounded arms without fingers, short stubby legs with flat round feet, a red canvas messenger bag on a strap worn diagonally from the right shoulder to the left hip, bag flap closed, about one third the height of the vending machine",
+      "movement_rules": [
+        "移動は歩く。走る・跳ぶ・飛ぶことはしない（つま先立ちはできる）",
+        "浮くのは品物の作用を受けたときだけ"
+      ],
+      "initial_status": "毎晩、街角の古い自販機の前に来ている。バッグには宛先の消えた荷物を入れている"
+    },
+    "mochi": {
+      "name": "モチ",
+      "name_en": "Mochi",
+      "role": "自販機に住む白い生き物",
+      "personality": "まだ詳しくはわからない。物陰からそっと様子をうかがう。",
+      "appearance_ja": [
+        "柔らかい四角い白い体（角の丸い大福のような立方体）",
+        "黒い点の目が2つ。口はない",
+        "取り出し口のフラップを内側から押し上げ、顔や体の一部だけを出す",
+        "体の大きさは取り出し口にちょうど収まるくらい（ポコの胴体より少し小さい）"
+      ],
+      "appearance_prompt": "a soft squishy white creature shaped like a rounded square mochi cube, two small black dot eyes, no mouth, only partially peeking out from the vending machine's retrieval slot by pushing the flap up from inside",
+      "movement_rules": [
+        "自販機の取り出し口から顔や体の一部を出すだけで、全身が外に出ることはない"
+      ],
+      "initial_status": "自販機の中に住んでいる。ポコとはまだ面識がない"
+    }
+  },
+
+  "locations": {
+    "vending-corner": {
+      "name": "夜の街角の古い自販機",
+      "appearance_ja": [
+        "夜の小さな街の、石畳の細い路地の角",
+        "古い自販機：くすんだ水色の金属の箱、角に少し錆。上部に暖色の古い蛍光灯",
+        "正面上部に小さな丸い文字盤の時計（数字なし。午前0時には両方の針が真上）",
+        "正面中央に空のガラス陳列棚（見本はなく、ラベルは色あせて読めない）",
+        "その下に丸いボタンが3段×4列。午前0時に1つだけ琥珀色に光る",
+        "最下部に取り出し口（黄ばんだ半透明のフラップ付き）",
+        "画面左奥に暖かい光の街灯、遠くの家々の窓に小さな灯り。空と影は深い青"
+      ],
+      "appearance_prompt": "a narrow cobblestone alley corner in a tiny miniature town at night. An old small vending machine made of faded pale-blue painted metal with slight rust on the edges and a warm old fluorescent light on top; a small round clock face without numbers above an empty glass display shelf with faded unreadable labels; a grid of 3 rows by 4 columns of round buttons; a retrieval slot at the bottom with a yellowed translucent flap. A warm street lamp in the left background, small glowing house windows far away, deep blue shadows and sky",
+      "fixed_layout": "自販機は画面右寄りで正面を向く。ポコが立つ定位置は取り出し口の左前。街灯は画面左奥。"
+    }
+  },
+
+  "writing_rules": [
+    "毎話、午前0時に自販機のボタンが1つ光り、不思議な品物が1つ現れる。品物は1話につき1つ。",
+    "品物は必ず実際に試し、その結果まで描く。",
+    "品物の性質（properties）は登場後に変えない。既出の品物を再登場させる場合は、登録済みの名前と性質をそのまま使う。",
+    "ナレーション・せりふ・字幕・画面内の読める文字を使わない。表情（目の形・体の傾き）・動作・効果音・音楽で伝える。",
+    "ポコは歩いて移動する。浮くのは品物の作用を受けたときだけ。走る・跳ぶ・飛ぶ動きは描かない。",
+    "モチは取り出し口から顔や体の一部を出すだけ。",
+    "各カットの開始画像は、前カットの終了状態（carry_out）と、位置・向き・姿勢・小道具・足の接地を一致させる。第1カットは前話の end_state を踏まえる。",
+    "外見は series.json の appearance_ja / appearance_prompt に従う（赤いバッグは右肩から左腰、口はない、など）。",
+    "持ち主と『宛先の消えた荷物』の手がかりは小さく少しずつ。1話で大きく解決しない。",
+    "実際に起きた出来事は continuity.new_facts に、まだ決めていない構想は continuity.future_ideas に分けて書く。",
+    "最後のカットは、もう一度見たくなる小さな余韻か、次を見たくなるフックで終える。",
+    "画像・動画の生成指示（image_prompt / video_prompt）は英語で、開始画像の構図・姿勢・光を具体的に書く。",
+    "投稿文は結末を書きすぎない。音ありでの視聴を促す。"
+  ],
+
+  "initial_state": {
+    "opening_situation": "午前0時直前。夜の街角、古い自販機の前（取り出し口の左前）に、赤いバッグを下げたポコが立っている。自販機のボタンはまだどれも光っていない。",
+    "canon_facts": [
+      "ポコの赤い肩掛けバッグには、宛先の文字が消えた小さな荷物（紐をかけた茶色い紙包み）が入っている。",
+      "街角の古い自販機は、午前0時にボタンが1つだけ光り、不思議な品物が1つ出てくる。"
+    ],
+    "relationships": [
+      {"between": ["poco", "mochi"], "status": "未対面（互いを知らない）"}
+    ],
+    "mysteries": [
+      {"id": "parcel-destination", "text": "ポコのバッグにある『宛先の消えた荷物』は、どこの誰に届けるものなのか。"},
+      {"id": "item-owners", "text": "自販機から出てくる不思議な品物の、本来の持ち主は誰なのか。"}
+    ],
+    "future_ideas": []
+  }
+}

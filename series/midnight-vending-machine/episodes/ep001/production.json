@@ -1,0 +1,460 @@
+{
+  "_note": "自動生成ファイル。episode.json を編集して python -m storyengine render で作り直してください。",
+  "series_id": "midnight-vending-machine",
+  "episode_number": 1,
+  "title": "雨のしかく",
+  "format": {
+    "aspect_ratio": "9:16",
+    "resolution": "1080x1920",
+    "total_seconds": 20,
+    "cut_durations": [
+      3,
+      4,
+      4,
+      5,
+      4
+    ]
+  },
+  "cuts": [
+    {
+      "cut_number": 1,
+      "start_sec": 0.0,
+      "duration_sec": 3,
+      "image": {
+        "prompt": "Handmade miniature diorama, stop-motion style 3D animation still, felt, clay and hand-painted wood textures, tiny real-world scale, tilt-shift shallow depth of field, vertical 9:16 composition. Deep blue night with warm amber practical lights, soft glow, cute and slightly uncanny mood. Static low-angle front view at midnight. The old pale-blue vending machine stands on the right side of the frame, its small round clock showing both hands pointing straight up, all twelve round buttons unlit. In the lower left, in front of and slightly left of the retrieval slot, Poco stands on the cobblestones with both feet flat, body angled slightly toward the machine, looking up at the buttons, arms hanging at its sides. Warm street lamp glow in the left background, deep blue night. Setting: a narrow cobblestone alley corner in a tiny miniature town at night. An old small vending machine made of faded pale-blue painted metal with slight rust on the edges and a warm old fluorescent light on top; a small round clock face without numbers above an empty glass display shelf with faded unreadable labels; a grid of 3 rows by 4 columns of round buttons; a retrieval slot at the bottom with a yellowed translucent flap. A warm street lamp in the left background, small glowing house windows far away, deep blue shadows and sky. Poco: a tiny round delivery robot with a smooth matte cream-colored egg-shaped body (head and body are one piece), two wide horizontal black oval eyes, no mouth, short stubby rounded arms without fingers, short stubby legs with flat round feet, a red canvas messenger bag on a strap worn diagonally from the right shoulder to the left hip, bag flap closed, about one third the height of the vending machine. Consistent character design, clean silhouette, no text anywhere.",
+        "negative_prompt": "text, letters, numbers, subtitles, captions, watermark, logo, readable signage, humans, realistic photograph, mouth on Poco, extra limbs, extra eyes, different bag color, harsh neon, horror, gore, motion blur on faces",
+        "aspect_ratio": "9:16",
+        "resolution": "1080x1920",
+        "output": "assets/cut01_start.png"
+      },
+      "video": {
+        "prompt": "Poco stands still for half a second. Then a single button at the bottom-right of the button grid lights up with a soft amber glow that tints Poco's cream body. Poco's horizontal oval eyes grow slightly taller in surprise and its body tilts back a little, then it takes two small steps toward the machine, rises on tiptoe, stretches its right arm and presses the glowing button. The button stays lit. End on Poco on tiptoe, right arm touching the lit button. Camera: Slightly wide, static, low-angle front shot from just below Poco's eye level; the whole vending machine on the right two-thirds of the frame, Poco's full body in the lower left. Duration: 3 seconds. Gentle handmade stop-motion-like miniature animation, slightly stepped motion, consistent character design and colors throughout, no text, no subtitles. Characters' feet stay planted on the ground unless floating is explicitly described.",
+        "negative_prompt": "text, letters, numbers, subtitles, captions, watermark, logo, readable signage, humans, realistic photograph, mouth on Poco, extra limbs, extra eyes, different bag color, harsh neon, horror, gore, motion blur on faces",
+        "init_image": "assets/cut01_start.png",
+        "duration_sec": 3,
+        "aspect_ratio": "9:16",
+        "output": "assets/cut01.mp4"
+      },
+      "sound": {
+        "ambience": "自販機の低い作動音（ブーン）、遠くでかすかな夜風。全編を通して小さく続く。",
+        "sfx": [
+          {
+            "at_sec": 0.5,
+            "sound": "ポーン",
+            "description": "ボタンが光る、やわらかい鐘のような一音"
+          },
+          {
+            "at_sec": 1.2,
+            "sound": "トコ",
+            "description": "ポコの足音（小さな樹脂の足が石畳に当たる軽い音）"
+          },
+          {
+            "at_sec": 1.7,
+            "sound": "トコ",
+            "description": "2歩目の足音"
+          },
+          {
+            "at_sec": 2.4,
+            "sound": "カチッ",
+            "description": "古いボタンが押し込まれる硬い音"
+          }
+        ],
+        "music": "0.5秒の『ポーン』と同じ音程で、オルゴールの単音がゆっくり3音だけ鳴る。"
+      }
+    },
+    {
+      "cut_number": 2,
+      "start_sec": 3.0,
+      "duration_sec": 4,
+      "image": {
+        "prompt": "Handmade miniature diorama, stop-motion style 3D animation still, felt, clay and hand-painted wood textures, tiny real-world scale, tilt-shift shallow depth of field, vertical 9:16 composition. Deep blue night with warm amber practical lights, soft glow, cute and slightly uncanny mood. Static medium shot of the lower half of the old pale-blue vending machine. The bottom-right round button glows amber. Poco stands on tiptoe right in front of the machine, its right arm stretched up touching the glowing button, just about to lower it. Below and to Poco's left is the retrieval slot with a yellowed translucent flap. Red messenger bag at Poco's left hip. Warm fluorescent light from above, deep blue night around. Setting: a narrow cobblestone alley corner in a tiny miniature town at night. An old small vending machine made of faded pale-blue painted metal with slight rust on the edges and a warm old fluorescent light on top; a small round clock face without numbers above an empty glass display shelf with faded unreadable labels; a grid of 3 rows by 4 columns of round buttons; a retrieval slot at the bottom with a yellowed translucent flap. A warm street lamp in the left background, small glowing house windows far away, deep blue shadows and sky. Poco: a tiny round delivery robot with a smooth matte cream-colored egg-shaped body (head and body are one piece), two wide horizontal black oval eyes, no mouth, short stubby rounded arms without fingers, short stubby legs with flat round feet, a red canvas messenger bag on a strap worn diagonally from the right shoulder to the left hip, bag flap closed, about one third the height of the vending machine. Consistent character design, clean silhouette, no text anywhere.",
+        "negative_prompt": "text, letters, numbers, subtitles, captions, watermark, logo, readable signage, humans, realistic photograph, mouth on Poco, extra limbs, extra eyes, different bag color, harsh neon, horror, gore, motion blur on faces",
+        "aspect_ratio": "9:16",
+        "resolution": "1080x1920",
+        "output": "assets/cut02_start.png"
+      },
+      "video": {
+        "prompt": "Poco lowers its arm and settles back onto flat feet. Something drops into the retrieval slot with a thud and the flap wobbles. Poco turns toward it, crouches by bending its short legs (feet stay flat on the ground), pushes the flap up with its left arm and pulls out a transparent glass cube with both arms. The flap closes. Poco stands up holding the cube upright against its chest; the amber button light fades out. Inside the cube, fine rain falls straight down and the drops vanish in tiny splashes at the bottom. Poco leans in, its eyes growing taller, reflecting the rain. Camera: Static medium shot from Poco's front right, framing the lower half of the vending machine, the retrieval slot and Poco's full body. Duration: 4 seconds. Gentle handmade stop-motion-like miniature animation, slightly stepped motion, consistent character design and colors throughout, no text, no subtitles. Characters' feet stay planted on the ground unless floating is explicitly described.",
+        "negative_prompt": "text, letters, numbers, subtitles, captions, watermark, logo, readable signage, humans, realistic photograph, mouth on Poco, extra limbs, extra eyes, different bag color, harsh neon, horror, gore, motion blur on faces",
+        "init_image": "assets/cut02_start.png",
+        "duration_sec": 4,
+        "aspect_ratio": "9:16",
+        "output": "assets/cut02.mp4"
+      },
+      "sound": {
+        "ambience": "自販機の低い作動音が続く。",
+        "sfx": [
+          {
+            "at_sec": 0.4,
+            "sound": "ゴトン",
+            "description": "取り出し口に品物が落ちる、こもった重めの音"
+          },
+          {
+            "at_sec": 0.5,
+            "sound": "カタカタ",
+            "description": "フラップが小さく揺れる音"
+          },
+          {
+            "at_sec": 1.0,
+            "sound": "キィ",
+            "description": "古いフラップを押し上げるきしみ"
+          },
+          {
+            "at_sec": 2.0,
+            "sound": "パタン",
+            "description": "フラップが閉じる軽い音"
+          },
+          {
+            "at_sec": 2.6,
+            "sound": "サァァ（小）",
+            "description": "立方体の中の細かな雨音。ガラス越しのようにこもった小さな音で、以後この雨音は立方体を持っている間ずっと続く"
+          },
+          {
+            "at_sec": 3.4,
+            "sound": "ピコ",
+            "description": "ポコの小さな電子音（驚き）。言葉ではない短い一音"
+          }
+        ],
+        "music": "2.6秒の雨音と同時に、ピチカートのコントラバスが雨粒のように軽く入る。オルゴールは短い上昇フレーズ。"
+      }
+    },
+    {
+      "cut_number": 3,
+      "start_sec": 7.0,
+      "duration_sec": 4,
+      "image": {
+        "prompt": "Handmade miniature diorama, stop-motion style 3D animation still, felt, clay and hand-painted wood textures, tiny real-world scale, tilt-shift shallow depth of field, vertical 9:16 composition. Deep blue night with warm amber practical lights, soft glow, cute and slightly uncanny mood. Close-up bust shot of Poco holding a transparent glass cube upright against its chest with both stubby arms, looking into it. Inside the cube fine silver rain falls straight down and vanishes in tiny splashes at the bottom; no water outside the cube. Poco's horizontal oval eyes are slightly taller, reflecting tiny glints of the rain. The red bag strap crosses its right shoulder. Background: softly blurred pale-blue vending machine and warm fluorescent glow, deep blue night. Setting: a narrow cobblestone alley corner in a tiny miniature town at night. An old small vending machine made of faded pale-blue painted metal with slight rust on the edges and a warm old fluorescent light on top; a small round clock face without numbers above an empty glass display shelf with faded unreadable labels; a grid of 3 rows by 4 columns of round buttons; a retrieval slot at the bottom with a yellowed translucent flap. A warm street lamp in the left background, small glowing house windows far away, deep blue shadows and sky. Poco: a tiny round delivery robot with a smooth matte cream-colored egg-shaped body (head and body are one piece), two wide horizontal black oval eyes, no mouth, short stubby rounded arms without fingers, short stubby legs with flat round feet, a red canvas messenger bag on a strap worn diagonally from the right shoulder to the left hip, bag flap closed, about one third the height of the vending machine. Consistent character design, clean silhouette, no text anywhere.",
+        "negative_prompt": "text, letters, numbers, subtitles, captions, watermark, logo, readable signage, humans, realistic photograph, mouth on Poco, extra limbs, extra eyes, different bag color, harsh neon, horror, gore, motion blur on faces",
+        "aspect_ratio": "9:16",
+        "resolution": "1080x1920",
+        "output": "assets/cut03_start.png"
+      },
+      "video": {
+        "prompt": "Poco slowly tilts the cube about 30 degrees to the left; the rain inside tilts with the cube, always falling toward the cube's own bottom face, and Poco's body leans the same way. It pauses, eyes round with wonder, then tilts the cube back past upright to about 30 degrees to the right; the rain follows. Poco's body leans right. End holding the cube tilted 30 degrees to the right, eyes narrowing slightly as if getting an idea. Camera: Static close-up bust shot of Poco and the cube, from the front slightly left; the pale-blue vending machine is softly blurred behind. Duration: 4 seconds. Gentle handmade stop-motion-like miniature animation, slightly stepped motion, consistent character design and colors throughout, no text, no subtitles. Characters' feet stay planted on the ground unless floating is explicitly described.",
+        "negative_prompt": "text, letters, numbers, subtitles, captions, watermark, logo, readable signage, humans, realistic photograph, mouth on Poco, extra limbs, extra eyes, different bag color, harsh neon, horror, gore, motion blur on faces",
+        "init_image": "assets/cut03_start.png",
+        "duration_sec": 4,
+        "aspect_ratio": "9:16",
+        "output": "assets/cut03.mp4"
+      },
+      "sound": {
+        "ambience": "自販機の作動音（小）。立方体の中の雨音が続く。",
+        "sfx": [
+          {
+            "at_sec": 0.6,
+            "sound": "キュ",
+            "description": "ガラスの立方体を持ち直す小さなこすれる音"
+          },
+          {
+            "at_sec": 1.0,
+            "sound": "サァァ（左へ移動）",
+            "description": "雨音が傾きに合わせて左へパンする"
+          },
+          {
+            "at_sec": 2.4,
+            "sound": "キュ",
+            "description": "反対へ傾け始める音"
+          },
+          {
+            "at_sec": 2.9,
+            "sound": "サァァ（右へ移動）",
+            "description": "雨音が右へパンする"
+          },
+          {
+            "at_sec": 3.7,
+            "sound": "ピ",
+            "description": "ポコの短い電子音（ひらめき）"
+          }
+        ],
+        "music": "ピチカートが雨のリズムを刻み、傾けるたびにオルゴールが下降（左）・上昇（右）する短い音型を鳴らす。"
+      }
+    },
+    {
+      "cut_number": 4,
+      "start_sec": 11.0,
+      "duration_sec": 5,
+      "image": {
+        "prompt": "Handmade miniature diorama, stop-motion style 3D animation still, felt, clay and hand-painted wood textures, tiny real-world scale, tilt-shift shallow depth of field, vertical 9:16 composition. Deep blue night with warm amber practical lights, soft glow, cute and slightly uncanny mood. Medium-long shot from Poco's front right. Poco stands with both feet flat on the cobblestones in front of and slightly left of the closed retrieval slot, holding the transparent rain cube against its chest tilted about 30 degrees to the right; the rain inside falls diagonally toward the cube's own bottom face. Poco's body leans slightly right. Red bag at its left hip. The lower half of the old pale-blue vending machine behind, open dark-blue night space above Poco's head. Setting: a narrow cobblestone alley corner in a tiny miniature town at night. An old small vending machine made of faded pale-blue painted metal with slight rust on the edges and a warm old fluorescent light on top; a small round clock face without numbers above an empty glass display shelf with faded unreadable labels; a grid of 3 rows by 4 columns of round buttons; a retrieval slot at the bottom with a yellowed translucent flap. A warm street lamp in the left background, small glowing house windows far away, deep blue shadows and sky. Poco: a tiny round delivery robot with a smooth matte cream-colored egg-shaped body (head and body are one piece), two wide horizontal black oval eyes, no mouth, short stubby rounded arms without fingers, short stubby legs with flat round feet, a red canvas messenger bag on a strap worn diagonally from the right shoulder to the left hip, bag flap closed, about one third the height of the vending machine. Consistent character design, clean silhouette, no text anywhere.",
+        "negative_prompt": "text, letters, numbers, subtitles, captions, watermark, logo, readable signage, humans, realistic photograph, mouth on Poco, extra limbs, extra eyes, different bag color, harsh neon, horror, gore, motion blur on faces",
+        "aspect_ratio": "9:16",
+        "resolution": "1080x1920",
+        "output": "assets/cut04_start.png"
+      },
+      "video": {
+        "prompt": "Poco boldly rotates the cube fully upside down. The rain inside reverses and rises upward. Poco's heels then toes leave the ground and its whole body slowly floats up to about half its own height above the cobblestones, the red bag lifting gently, short legs paddling in the air. Poco looks down at its feet, eyes turning into narrow wavy lines in panic, then hurriedly turns the cube back upright; the rain falls downward again. Poco stops rising and begins to drift slowly down, still about one third of its height above the ground at the end. The camera tilts up slightly to follow. Camera: Medium-long shot from Poco's front right showing its full body, empty space above it and the lower half of the vending machine behind; the camera tilts up slightly to follow Poco as it rises. Duration: 5 seconds. Gentle handmade stop-motion-like miniature animation, slightly stepped motion, consistent character design and colors throughout, no text, no subtitles. Characters' feet stay planted on the ground unless floating is explicitly described.",
+        "negative_prompt": "text, letters, numbers, subtitles, captions, watermark, logo, readable signage, humans, realistic photograph, mouth on Poco, extra limbs, extra eyes, different bag color, harsh neon, horror, gore, motion blur on faces",
+        "init_image": "assets/cut04_start.png",
+        "duration_sec": 5,
+        "aspect_ratio": "9:16",
+        "output": "assets/cut04.mp4"
+      },
+      "sound": {
+        "ambience": "自販機の作動音（小）。雨音は逆さにしたあと逆再生のように上昇する音に変わる。",
+        "sfx": [
+          {
+            "at_sec": 0.3,
+            "sound": "キュッ",
+            "description": "ガラスの立方体を大きく回す音"
+          },
+          {
+            "at_sec": 1.0,
+            "sound": "シュワァ（逆再生の雨）",
+            "description": "雨音が逆回転したように吸い上がっていく音"
+          },
+          {
+            "at_sec": 1.2,
+            "sound": "フワン",
+            "description": "体が浮く、やわらかく上昇する電子音"
+          },
+          {
+            "at_sec": 3.1,
+            "sound": "ピピッ",
+            "description": "ポコの慌てた短い電子音"
+          },
+          {
+            "at_sec": 3.5,
+            "sound": "キュキュッ",
+            "description": "立方体を急いで回し戻す音"
+          },
+          {
+            "at_sec": 4.3,
+            "sound": "サァァ",
+            "description": "雨音が通常の降る音に戻る"
+          }
+        ],
+        "music": "1.0秒で低音とピチカートが抜け、グラスハープの持続音が全音音階で上昇して宙づりの響きに。3.3秒で一瞬止まり、4.3秒でオルゴールが1音だけ戻る。"
+      }
+    },
+    {
+      "cut_number": 5,
+      "start_sec": 16.0,
+      "duration_sec": 4,
+      "image": {
+        "prompt": "Handmade miniature diorama, stop-motion style 3D animation still, felt, clay and hand-painted wood textures, tiny real-world scale, tilt-shift shallow depth of field, vertical 9:16 composition. Deep blue night with warm amber practical lights, soft glow, cute and slightly uncanny mood. Very low-angle shot from just above the cobblestones. Poco floats about one third of its own height above the ground, in front of and slightly left of the retrieval slot, holding the transparent rain cube upright against its chest with both arms; rain inside falls downward. A soft shadow on the cobblestones beneath its flat round feet. Red bag at its left hip. In the right background, the bottom of the old pale-blue vending machine and the closed yellowed translucent flap of the retrieval slot. Deep blue night, warm fluorescent glow. Setting: a narrow cobblestone alley corner in a tiny miniature town at night. An old small vending machine made of faded pale-blue painted metal with slight rust on the edges and a warm old fluorescent light on top; a small round clock face without numbers above an empty glass display shelf with faded unreadable labels; a grid of 3 rows by 4 columns of round buttons; a retrieval slot at the bottom with a yellowed translucent flap. A warm street lamp in the left background, small glowing house windows far away, deep blue shadows and sky. Poco: a tiny round delivery robot with a smooth matte cream-colored egg-shaped body (head and body are one piece), two wide horizontal black oval eyes, no mouth, short stubby rounded arms without fingers, short stubby legs with flat round feet, a red canvas messenger bag on a strap worn diagonally from the right shoulder to the left hip, bag flap closed, about one third the height of the vending machine. Consistent character design, clean silhouette, no text anywhere.",
+        "negative_prompt": "text, letters, numbers, subtitles, captions, watermark, logo, readable signage, humans, realistic photograph, mouth on Poco, extra limbs, extra eyes, different bag color, harsh neon, horror, gore, motion blur on faces",
+        "aspect_ratio": "9:16",
+        "resolution": "1080x1920",
+        "output": "assets/cut05_start.png"
+      },
+      "video": {
+        "prompt": "Poco slowly drifts down and lands softly, toes first then heels, both feet flat, body bobbing once. A tiny rainbow arch, about as wide as Poco's foot, gently appears on the cobblestones between its feet and stays. Poco looks down at it, eyes curving into happy arcs. Then, in the right background, the retrieval slot flap is pushed up slightly from inside and a soft white square mochi-like creature peeks out, showing only the top half of its face with two black dot eyes, watching Poco. Poco does not notice. The creature blinks once. Mochi (appears during the shot): a soft squishy white creature shaped like a rounded square mochi cube, two small black dot eyes, no mouth, only partially peeking out from the vending machine's retrieval slot by pushing the flap up from inside. Camera: Static low-angle medium shot from just above the cobblestones, showing Poco's full body and the ground beneath it, with the vending machine's retrieval slot in the right background. Duration: 4 seconds. Gentle handmade stop-motion-like miniature animation, slightly stepped motion, consistent character design and colors throughout, no text, no subtitles. Characters' feet stay planted on the ground unless floating is explicitly described.",
+        "negative_prompt": "text, letters, numbers, subtitles, captions, watermark, logo, readable signage, humans, realistic photograph, mouth on Poco, extra limbs, extra eyes, different bag color, harsh neon, horror, gore, motion blur on faces",
+        "init_image": "assets/cut05_start.png",
+        "duration_sec": 4,
+        "aspect_ratio": "9:16",
+        "output": "assets/cut05.mp4"
+      },
+      "sound": {
+        "ambience": "自販機の作動音（小）と立方体の雨音。最後は作動音だけが残る。",
+        "sfx": [
+          {
+            "at_sec": 1.0,
+            "sound": "トン",
+            "description": "やわらかな着地音"
+          },
+          {
+            "at_sec": 1.4,
+            "sound": "キラキラ…ン",
+            "description": "虹が浮かぶ、グラスハープとチェレスタのきらめき"
+          },
+          {
+            "at_sec": 2.2,
+            "sound": "キィ…",
+            "description": "フラップが内側からそっと押し上げられる、ごく小さなきしみ"
+          },
+          {
+            "at_sec": 3.4,
+            "sound": "ぱち",
+            "description": "モチのまばたき。ごく小さく、少しコミカルな音"
+          }
+        ],
+        "music": "1.4秒でオルゴールが主旋律に戻り、虹とともにヘ長調の和音で解決。2.2秒以降はオルゴールが1音ずつ間を空けて鳴り、3.4秒のまばたきと同時に最後の1音。残りは自販機の作動音だけになり、カット1の冒頭へつながる。"
+      }
+    }
+  ],
+  "audio": {
+    "music": {
+      "overall": "オルゴールの単音から始まる、かわいく少し不思議な20秒の小品。途中で一瞬宙づりになり、最後は元の調に戻ってふわっと終わる。最後の音がカット1の冒頭につながるループ可能な構成。",
+      "bpm": 84,
+      "key": "ヘ長調（浮く場面だけ全音音階の響き）",
+      "instrumentation": "オルゴール、ピチカートのコントラバス、グラスハープ（ワイングラスの縁をこする音）、ごく小さなチェレスタ",
+      "structure": "0〜3秒 オルゴール単音 / 3〜11秒 ピチカートが加わり雨のリズムと同期 / 11〜16秒 低音が抜けグラスハープの持続音が上昇 / 16〜20秒 オルゴールが主旋律に戻り、虹とともに和音で解決、最後は自販機の作動音だけ残る"
+    },
+    "sfx_timeline": [
+      {
+        "time_sec": 0.5,
+        "cut": 1,
+        "sound": "ポーン",
+        "description": "ボタンが光る、やわらかい鐘のような一音"
+      },
+      {
+        "time_sec": 1.2,
+        "cut": 1,
+        "sound": "トコ",
+        "description": "ポコの足音（小さな樹脂の足が石畳に当たる軽い音）"
+      },
+      {
+        "time_sec": 1.7,
+        "cut": 1,
+        "sound": "トコ",
+        "description": "2歩目の足音"
+      },
+      {
+        "time_sec": 2.4,
+        "cut": 1,
+        "sound": "カチッ",
+        "description": "古いボタンが押し込まれる硬い音"
+      },
+      {
+        "time_sec": 3.4,
+        "cut": 2,
+        "sound": "ゴトン",
+        "description": "取り出し口に品物が落ちる、こもった重めの音"
+      },
+      {
+        "time_sec": 3.5,
+        "cut": 2,
+        "sound": "カタカタ",
+        "description": "フラップが小さく揺れる音"
+      },
+      {
+        "time_sec": 4.0,
+        "cut": 2,
+        "sound": "キィ",
+        "description": "古いフラップを押し上げるきしみ"
+      },
+      {
+        "time_sec": 5.0,
+        "cut": 2,
+        "sound": "パタン",
+        "description": "フラップが閉じる軽い音"
+      },
+      {
+        "time_sec": 5.6,
+        "cut": 2,
+        "sound": "サァァ（小）",
+        "description": "立方体の中の細かな雨音。ガラス越しのようにこもった小さな音で、以後この雨音は立方体を持っている間ずっと続く"
+      },
+      {
+        "time_sec": 6.4,
+        "cut": 2,
+        "sound": "ピコ",
+        "description": "ポコの小さな電子音（驚き）。言葉ではない短い一音"
+      },
+      {
+        "time_sec": 7.6,
+        "cut": 3,
+        "sound": "キュ",
+        "description": "ガラスの立方体を持ち直す小さなこすれる音"
+      },
+      {
+        "time_sec": 8.0,
+        "cut": 3,
+        "sound": "サァァ（左へ移動）",
+        "description": "雨音が傾きに合わせて左へパンする"
+      },
+      {
+        "time_sec": 9.4,
+        "cut": 3,
+        "sound": "キュ",
+        "description": "反対へ傾け始める音"
+      },
+      {
+        "time_sec": 9.9,
+        "cut": 3,
+        "sound": "サァァ（右へ移動）",
+        "description": "雨音が右へパンする"
+      },
+      {
+        "time_sec": 10.7,
+        "cut": 3,
+        "sound": "ピ",
+        "description": "ポコの短い電子音（ひらめき）"
+      },
+      {
+        "time_sec": 11.3,
+        "cut": 4,
+        "sound": "キュッ",
+        "description": "ガラスの立方体を大きく回す音"
+      },
+      {
+        "time_sec": 12.0,
+        "cut": 4,
+        "sound": "シュワァ（逆再生の雨）",
+        "description": "雨音が逆回転したように吸い上がっていく音"
+      },
+      {
+        "time_sec": 12.2,
+        "cut": 4,
+        "sound": "フワン",
+        "description": "体が浮く、やわらかく上昇する電子音"
+      },
+      {
+        "time_sec": 14.1,
+        "cut": 4,
+        "sound": "ピピッ",
+        "description": "ポコの慌てた短い電子音"
+      },
+      {
+        "time_sec": 14.5,
+        "cut": 4,
+        "sound": "キュキュッ",
+        "description": "立方体を急いで回し戻す音"
+      },
+      {
+        "time_sec": 15.3,
+        "cut": 4,
+        "sound": "サァァ",
+        "description": "雨音が通常の降る音に戻る"
+      },
+      {
+        "time_sec": 17.0,
+        "cut": 5,
+        "sound": "トン",
+        "description": "やわらかな着地音"
+      },
+      {
+        "time_sec": 17.4,
+        "cut": 5,
+        "sound": "キラキラ…ン",
+        "description": "虹が浮かぶ、グラスハープとチェレスタのきらめき"
+      },
+      {
+        "time_sec": 18.2,
+        "cut": 5,
+        "sound": "キィ…",
+        "description": "フラップが内側からそっと押し上げられる、ごく小さなきしみ"
+      },
+      {
+        "time_sec": 19.4,
+        "cut": 5,
+        "sound": "ぱち",
+        "description": "モチのまばたき。ごく小さく、少しコミカルな音"
+      }
+    ]
+  },
+  "publish": {
+    "instagram": {
+      "caption": "午前0時。\n古い自販機のボタンが、ひとつだけ光った。\n\n第1話「雨のしかく」\n\n出てきたのは、中だけ雨が降る透明な立方体。\n傾けたら、雨も傾く。\nじゃあ、逆さにしたら――？\n\n🔊 音ありでどうぞ\n\n#午前0時の自販機 #ポコ #ミニチュア #ショートアニメ #不思議 #自販機 #ロボット #雨 #虹 #夜の街 #ほっこり #3Dアニメ #miniature #shortanimation #cuterobot"
+    },
+    "youtube": {
+      "title": "中だけ雨が降る立方体を逆さにしたら…｜午前0時の自販機 第1話「雨のしかく」 #shorts",
+      "description": "午前0時、古い自販機のボタンがひとつだけ光る。\n小さな配達ロボット・ポコが受け取ったのは、中だけで雨が降る透明な立方体。\n\n第1話「雨のしかく」\n\nせりふのない20秒の連載ショートアニメです。音ありでお楽しみください。\nポコのバッグに入っている「宛先の消えた荷物」は、どこへ届くのか――。\n\n#午前0時の自販機 #ショートアニメ #ミニチュア\n\n※この作品は画像・動画生成AIを用いて制作しています。",
+      "tags": [
+        "午前0時の自販機",
+        "ポコ",
+        "ショートアニメ",
+        "ミニチュア",
+        "自販機",
+        "ロボット",
+        "不思議",
+        "雨",
+        "虹",
+        "せりふなし",
+        "shorts"
+      ],
+      "made_for_kids": false
+    },
+    "ai_disclosure": "この作品は画像・動画生成AIを用いて制作しています。"
+  }
+}

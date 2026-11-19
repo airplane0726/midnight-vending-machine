@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "series_id": "TODO",
+  "episode_number": 0,
+  "title": "TODO",
+  "logline": "TODO 1文の要約",
+  "summary": "TODO 3〜5文のあらすじ",
+  "featured_object": {
+    "id": "TODO-kebab-case-id",
+    "name": "TODO",
+    "first_appearance": true,
+    "owner": "不明",
+    "description": "TODO 見た目と大きさ",
+    "properties": ["TODO 性質1（以後変更しない）"]
+  },
+  "music": {
+    "overall": "TODO 全体の曲調",
+    "bpm": 0,
+    "instrumentation": "TODO",
+    "structure": "TODO 20秒の中での展開"
+  },
+  "cuts": [
+    {
+      "cut_number": 0,
+      "duration_sec": 0,
+      "title": "TODO",
+      "location": "TODO",
+      "characters_in_shot": [],
+      "camera": "TODO 構図（日本語）",
+      "camera_en": "TODO camera framing in English",
+      "start_image": "TODO 開始画像の具体的な描写（人物の位置・向き・姿勢・小道具・光）",
+      "motion": [
+        {"start_sec": 0, "end_sec": 0, "action": "TODO"}
+      ],
+      "continuity": {
+        "carry_in": "TODO 前カット（第1カットは前話または話の開始状況）からのつながり",
+        "carry_out": "TODO このカットの終了状態（次カットの開始画像と一致させる）",
+        "footing": "TODO 足の接地状態",
+        "props": "TODO 小道具の位置と状態"
+      },
+      "sound": {
+        "ambience": "TODO",
+        "sfx": [
+          {"at_sec": 0, "sound": "TODO", "description": "TODO"}
+        ],
+        "music": "TODO"
+      },
+      "image_prompt": "TODO English prompt for the start frame",
+      "video_prompt": "TODO English prompt for the motion"
+    }
+  ],
+  "posts": {
+    "instagram": {
+      "caption": "TODO",
+      "hashtags": ["#TODO"]
+    },
+    "youtube": {
+      "title": "TODO",
+      "description": "TODO",
+      "tags": ["TODO"],
+      "made_for_kids": false
+    }
+  },
+  "continuity": {
+    "end_state": "TODO 次話の開始に引き継ぐ状況",
+    "new_facts": ["TODO 実際に起きた出来事"],
+    "character_changes": [],
+    "relationship_changes": [],
+    "mysteries_opened": [],
+    "mysteries_progressed": [],
+    "mysteries_resolved": [],
+    "future_ideas": [],
+    "future_ideas_retired": []
+  }
+}

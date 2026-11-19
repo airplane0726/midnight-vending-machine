@@ -1,0 +1,16 @@
+# 秘密情報
+.env
+.env.*
+!.env.example
+
+# 作業ファイル
+series/*/drafts/*
+!series/*/drafts/.gitkeep
+series/*/.lock
+series/*/episodes/.staging-*
+series/*/episodes/.backup-*
+series/*/episodes/*/assets/
+.tmp-*.part
+
+__pycache__/
+*.pyc
