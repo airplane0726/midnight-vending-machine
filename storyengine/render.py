@@ -11,6 +11,20 @@ def _fmt_sec(x: float) -> str:
     return f"{x:.1f}秒"
 
 
+PRODUCTION_SCHEMA_VERSION = 2
+
+
+def reference_images(series: Series, character_ids: list[str], location_id: str | None) -> list[dict[str, Any]]:
+    """カットに映る人物・場所の参照画像（series.json の reference_images）。未登録なら空。"""
+    out: list[dict[str, Any]] = []
+    for cid in character_ids:
+        for r in series.characters.get(cid, {}).get("reference_images", []) or []:
+            out.append({"subject": cid, "kind": "character", "path": r["path"], "view": r.get("view", "")})
+    for r in (series.locations.get(location_id) or {}).get("reference_images", []) or []:
+        out.append({"subject": location_id, "kind": "location", "path": r["path"], "view": r.get("view", "")})
+    return out
+
+
 def _join(parts: list[str]) -> str:
     """文として連結する（末尾に句点がなければ補う）。"""
     out = []
@@ -57,17 +71,23 @@ def build_production(series: Series, ep: dict[str, Any]) -> dict[str, Any]:
         for sfx in cut["sound"].get("sfx", []):
             timeline.append({"time_sec": round(offset + sfx["at_sec"], 2), "cut": cut["cut_number"],
                              "sound": sfx["sound"], "description": sfx.get("description", "")})
+        n = ep["episode_number"]
+        slot = f"cut{cut['cut_number']:02d}"
         cuts_out.append({
             "cut_number": cut["cut_number"],
             "start_sec": offset,
             "duration_sec": cut["duration_sec"],
-            "image": {"prompt": image_prompt, "negative_prompt": style.get("negative_prompt", ""),
+            "image": {"slot": f"{slot}_start",
+                      "prompt": image_prompt, "negative_prompt": style.get("negative_prompt", ""),
                       "aspect_ratio": fmt["aspect_ratio"], "resolution": fmt.get("resolution"),
-                      "output": f"assets/cut{cut['cut_number']:02d}_start.png"},
-            "video": {"prompt": video_prompt, "negative_prompt": style.get("negative_prompt", ""),
-                      "init_image": f"assets/cut{cut['cut_number']:02d}_start.png",
+                      "references": reference_images(series, at_start, cut.get("location")),
+                      "output_dir": series.media_rel(n, "images")},
+            "video": {"slot": slot,
+                      "prompt": video_prompt, "negative_prompt": style.get("negative_prompt", ""),
+                      "init_image_slot": f"{slot}_start",
+                      "references": reference_images(series, in_shot, cut.get("location")),
                       "duration_sec": cut["duration_sec"], "aspect_ratio": fmt["aspect_ratio"],
-                      "output": f"assets/cut{cut['cut_number']:02d}.mp4"},
+                      "output_dir": series.media_rel(n, "videos")},
             "sound": cut["sound"],
         })
         offset += cut["duration_sec"]
@@ -75,6 +95,8 @@ def build_production(series: Series, ep: dict[str, Any]) -> dict[str, Any]:
     posts = ep["posts"]
     return {
         "_note": "自動生成ファイル。episode.json を編集して python -m storyengine render で作り直してください。",
+        "schema_version": PRODUCTION_SCHEMA_VERSION,
+        "paths_relative_to": "series_dir",
         "series_id": series.id,
         "episode_number": ep["episode_number"],
         "title": ep["title"],

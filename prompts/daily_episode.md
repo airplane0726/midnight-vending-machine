@@ -73,6 +73,7 @@ python3 -m storyengine validate series/midnight-vending-machine/drafts/epNNN.jso
 検証では確認できないので、自分で必ず点検すること:
 
 - [ ] カットNの `carry_out` とカットN+1の `start_image` / `carry_in` が、位置・向き・姿勢・小道具・足の接地で一致している
+- [ ] 左右を「画面左／画面右」と「ポコ自身の右腕・左腰」で区別して書いている（ポコがカメラの方を向くと、ポコ自身の右は画面左になる）
 - [ ] ポコ：クリーム色の丸い体、黒い横長の目2つ、口なし、短い腕と脚、赤いバッグ（右肩→左腰）
 - [ ] ポコは歩いて移動し、浮くのは品物の作用のときだけ
 - [ ] モチは取り出し口から顔や体の一部を出すだけ
@@ -95,6 +96,7 @@ python3 -m storyengine commit series/midnight-vending-machine/drafts/epNNN.json
 ```bash
 python3 -m unittest discover -s tests
 python3 -m storyengine status
+python3 -m storyengine images --dry-run   # 画像生成の対象と参照画像の確認のみ（生成はしない）
 git add series/ && git commit -m "第N話「タイトル」を追加" && git push
 ```
 

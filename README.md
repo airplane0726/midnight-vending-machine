@@ -17,7 +17,8 @@
 | 検証成功後の履歴更新、失敗時・再実行時の保護 | ✅ `python3 -m storyengine commit` |
 | 次回以降の Claude Code 用の指示 | ✅ `CLAUDE.md`、`prompts/daily_episode.md`、`/daily-episode` |
 | 作品固有の設定と処理の分離 | ✅ `storyengine/`（汎用）と `series/<id>/`（作品固有） |
-| 画像・動画・音声の生成、SNS 投稿 | ⏳ 未接続（接続口のインターフェースのみ。下記参照） |
+| 画像生成の準備（参照画像、生成記録、再利用判定、途中再開、dry-run） | ✅ `python3 -m storyengine images`（生成サービスは未接続） |
+| 画像・動画・音声の実際の生成、素材の永続保存、SNS 投稿 | ⏳ 未接続（接続口のインターフェースのみ。下記参照） |
 
 外部サービスへの接続・有料APIの呼び出し・SNSへの公開は一切行っていません。
 
@@ -31,15 +32,19 @@ storyengine/                  作品に依存しない処理（標準ライブ�
   commit.py                   登録処理（原子的書き込み、ロールバック、冪等性、ロック）
   render.py                   episode.md と production.json の生成（外見プロンプトの自動合成）
   storage.py                  原子的なファイル書き込み、排他ロック、内容ハッシュ
-  integrations.py             画像・動画・音声・投稿の接続口（抽象クラスのみ）
+  media.py                    画像の生成記録・条件キー・再利用判定・画像の検査・生成処理
+  integrations.py             画像・動画・音声・投稿・永続保存の接続口（抽象クラスと登録表。実装は0件）
   templates/episode_template.json
 series/midnight-vending-machine/
-  series.json                 作品設定（人物・場所・画風・形式・ルール・初期の謎）
+  series.json                 作品設定（人物・場所・参照画像・画風・形式・ルール・初期の謎・生成/保存先の設定）
   state.json                  履歴（自動生成。手で編集しない）
+  references/                 人物・場所の基準画像（Git 管理。置き方は references/README.md）
+  media/epNNN/records.json    生成記録（Git 管理）
+  media/epNNN/images/         生成した画像（Git 管理外。永続保存は asset_storage）
   episodes/ep001/
     episode.json              第1話の正本
     episode.md                読みやすい台本
-    production.json           カットごとの合成済み画像・動画プロンプト、効果音タイムライン、投稿文
+    production.json           カットごとの合成済み画像・動画プロンプト、参照画像、保存先、効果音タイムライン、投稿文
   drafts/                     下書き（Git 管理外）
 prompts/daily_episode.md      毎日の制作手順
 .claude/commands/daily-episode.md   スラッシュコマンド /daily-episode
@@ -56,6 +61,8 @@ python3 -m storyengine brief         # 次の話を書くための設定・履�
 python3 -m storyengine scaffold      # drafts/epNNN.json にひな形を作成
 python3 -m storyengine validate series/midnight-vending-machine/drafts/ep002.json
 python3 -m storyengine commit   series/midnight-vending-machine/drafts/ep002.json
+python3 -m storyengine images --dry-run          # 最新話の画像生成の対象・参照画像・保存先・再利用/生成の判定（何も書かない）
+python3 -m storyengine images --episode 1 --cuts 2,3   # 生成（生成サービス接続後。未接続なら何も生成しない）
 python3 -m unittest discover -s tests -v
 ```
 
@@ -71,6 +78,29 @@ Claude Code では `/daily-episode` と入力するか、「今日の話を作�
 - **同時実行の防止**。連載ごとのロックファイルで、2つの処理が同時に履歴を更新しないようにしています。
 - **連続性の検査**。品物の性質の変更、未登録の謎・構想・人物の参照、タイトルの重複を拒否します。
 
+## 素材の保存場所とパスの基準
+
+`production.json`、生成記録、`series.json` の `reference_images` に書く素材のパスは、**すべて連載ディレクトリ（`series/<id>/`）からの相対パス**です（`production.json` の `paths_relative_to: "series_dir"`）。
+
+| 種類 | 場所 | Git | 備考 |
+|---|---|---|---|
+| 参照画像（基準画像） | `references/characters/<id>/`、`references/locations/<id>/` | 管理する | 小さなファイル（目安 1MB 以下）。`series.json` の `reference_images` に登録 |
+| 生成した画像 | `media/epNNN/images/<スロット>-<条件キー先頭16桁>.<拡張子>` | 管理しない | 条件ごとに別名で保存するので、条件が変わっても以前の画像は残る |
+| 生成した動画（予定） | `media/epNNN/videos/` | 管理しない | |
+| 生成記録 | `media/epNNN/records.json` | 管理する | 条件キー、条件の内訳、シード、ファイルの SHA-256、大きさ、永続保存の状態、失敗履歴 |
+
+- **エピソードの差し替え（`commit --replace`）は `media/` に触れません。** エピソードのディレクトリに旧形式の `assets/` などがあれば、それも引き継ぎます。
+- **クラウド環境の終了後も素材を残すには、永続保存先（`series.json` の `asset_storage`）が必要です。** 未設定の間は、生成した画像はその環境にしか残らず、`images` コマンドは「保存完了ではありません」と表示します。永続保存先へのアップロードに成功したものだけを「保存済み」とし、記録のある画像がローカルから消えていれば保存先から復元して再利用します。
+
+### 画像の生成条件と再利用
+
+- 生成条件 = 合成済みの指示文、除外指示、モデル（`generation.image` の provider / model / params）、縦横比と解像度、参照画像（パスと内容の SHA-256）。この内容から条件キーを作ります。
+- シード値は、生成器が対応している場合だけ、条件キーから決まる固定値を渡して記録します。
+- 同じ条件キーで完成した記録があり、ファイルが**正常な画像として読み込め**（PNG は CRC と画素データまで検査）、縦横比と内容（SHA-256）が記録どおりなら再利用します。
+- 生成に失敗した出力、壊れた画像、縦横比が違う画像は「失敗」として記録し、完成品として扱いません。
+- 5カットを順に処理し、1カットごとに記録を保存します。途中で失敗したら止まり、再実行すると成功済みのカットを再利用して続きから再開します。
+- プレースホルダー（ダミー）の生成器の出力は登録しません。生成サービスが未接続なら何も生成しません。
+
 ### ほかの物語に使う場合
 
 `series/<新しいid>/series.json` を作り（形式・カット尺・必須項目・人物・場所・画風・ルール・初期状態）、すべてのコマンドに `--series series/<新しいid>` を付けます。エンジン側の変更は不要です。
@@ -81,8 +111,8 @@ Claude Code では `/daily-episode` と入力するか、「今日の話を作�
 
 | カット | 尺 | 内容 |
 |---|---|---|
-| 1 光るボタン | 3秒 | ボタンが1つ光り、ポコが2歩近づいてつま先立ちで押す |
-| 2 落ちてきた立方体 | 4秒 | 取り出し口から透明な立方体を取り出す。中で雨が降っている |
+| 1 光るボタン | 3秒 | ボタンが1つ光り、ポコが画面右へ2歩進んでボタンの真下でつま先立ちで押す |
+| 2 落ちてきた立方体 | 4秒 | 足元の取り出し口から透明な立方体を取り出し、カメラの方へ向き直る。中で雨が降っている |
 | 3 傾く雨 | 4秒 | 左右に傾けると、雨も同じ角度で傾く |
 | 4 逆さの雨 | 5秒 | 逆さにすると雨が昇り、ポコが浮く。慌てて元に戻す |
 | 5 小さな虹と、のぞく目 | 4秒 | 着地し、足元に小さな虹。取り出し口からモチがのぞく |
@@ -91,22 +121,24 @@ Claude Code では `/daily-episode` と入力するか、「今日の話を作�
 
 ## 残っている接続作業（次の段階）
 
-各工程の入力は `episodes/epNNN/production.json` にまとまっています。サービスと費用を確認したうえで、`storyengine/integrations.py` の抽象クラスを実装します。認証情報は環境変数またはシークレット設定で渡し、リポジトリには入れません（`.env.example` 参照）。
+各工程の入力は `production.json` と同じ内容です（`images` コマンドは常に `episode.json` と現在の `series.json` から組み立てるので、`production.json` が古くても最新の指示で生成します）。サービスと費用を確認したうえで、`storyengine/integrations.py` の抽象クラスを実装して登録表（`IMAGE_GENERATORS` / `ASSET_STORES`）に追加し、`series.json` で選びます。認証情報は環境変数またはシークレット設定で渡し、リポジトリには入れません（`.env.example` 参照）。
 
-1. **画像生成**（`ImageGenerator`）
-   - サービス選定（縦9:16・キャラクター一貫性の機能があるもの）、料金・利用規約（商用利用、生成物の権利）の確認、APIキーの取得。
-   - ポコとモチの基準画像（キャラクターシート）を先に作り、参照画像として固定すると外見のぶれが減ります。
-   - 出力は `episodes/epNNN/assets/cutNN_start.png`（Git 管理外）。
-2. **動画生成**（`VideoGenerator`）
-   - 画像から動画（image-to-video）に対応し、3〜5秒・9:16 で出力できるサービスの選定と費用確認。
-   - カットの開始画像を前カットの最終フレームと照合する工程（必要なら最終フレームを次カットの初期画像に使う）。
-3. **音**（`AudioProducer`）
-   - 音楽・効果音の調達方法の決定（生成サービス / ライセンス素材 / 自作）。`production.json` の `audio.sfx_timeline` は20秒の絶対時刻になっています。
-4. **編集・書き出し**
+1. **参照画像の用意**：ポコ・モチ・自販機の基準画像を `references/` に置き、`series.json` の `reference_images` に登録する（置き方は `references/README.md`）。
+2. **画像生成**（`ImageGenerator`）
+   - サービスとモデルの選定（縦9:16、参照画像によるキャラクター固定に対応するもの）、料金・利用規約（商用利用、生成物の権利）の確認、APIキーの取得。
+   - 実装を `IMAGE_GENERATORS` に登録し、`series.json` の `generation.image` に `provider` と `model` を設定する。シードに対応するなら `supports_seed = True`。
+   - まず `images --dry-run`、次に `images --cuts 1` で1カットだけ生成して確認する。
+3. **永続保存**（`AssetStore`）
+   - 保存先（クラウドのオブジェクトストレージなど）の決定、認証情報の用意、実装と `ASSET_STORES` への登録、`series.json` の `asset_storage.provider` の設定。
+4. **動画生成**（`VideoGenerator`）
+   - 画像から動画（image-to-video）に対応し、3〜5秒・9:16 で出力できるサービスの選定と費用確認。開始画像は生成記録の完成済み画像（`init_image_slot`）を使う。
+5. **音**（`AudioProducer`）
+   - 音楽・効果音の調達方法の決定（生成サービス / ライセンス素材 / 自作）。`production.json` の `audio.sfx_timeline` は20秒の絶対時刻。
+6. **編集・書き出し**
    - 5カットの結合、音声の合成、1080×1920 / 20秒での書き出し（例: ffmpeg）。
-5. **投稿**（`Publisher`）
+7. **投稿**（`Publisher`）
    - **Instagram**: プロ（ビジネス/クリエイター）アカウント、Facebookページとの連携、Meta 開発者アプリ、Graph API のリール投稿権限とアクセストークン。動画は公開URLから取得される方式のため、一時的な公開ストレージも必要。
    - **YouTube**: Google Cloud プロジェクト、YouTube Data API v3、OAuth 同意画面と認証（リフレッシュトークン）、アップロードのクォータ確認。AI 生成コンテンツの開示設定の確認。
    - まずは非公開・限定公開・下書き（dry run）で動作確認してから公開に切り替える。
-6. **毎日の自動実行**
+8. **毎日の自動実行**
    - Claude Code のスケジュール実行などで `/daily-episode` を毎日起動し、制作 → 検証 → コミットまでを自動化。生成と投稿は、上記の接続後に人の確認を挟むか段階的に自動化。

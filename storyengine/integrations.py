@@ -1,9 +1,11 @@
-"""画像・動画・音声の生成と、SNS 投稿の接続口（インターフェースのみ）。
+"""画像・動画・音声の生成と、SNS 投稿・素材の永続保存の接続口。
 
-今回の段階では外部サービスに接続しない。各サービスと契約・費用を確認したあと、
-このクラスを継承して実装を追加する。
+今回の段階では外部サービスに接続しない（登録済みの実装は 0 件）。各サービスと契約・費用を確認したあと、
+このクラスを継承して実装し、IMAGE_GENERATORS / ASSET_STORES に登録する。
+使うサービスは series.json の generation.image.provider / asset_storage.provider で選ぶ。
 
-- 入力は episodes/epNNN/production.json（カットごとの合成済みプロンプト、効果音タイムライン、投稿文）。
+- 入力は production.json と同じ内容（storyengine.media が episode.json と series.json から組み立てる）。
+- 素材のパスはすべて「連載ディレクトリ（series/<id>/）からの相対パス」。
 - 認証情報は必ず環境変数から読む（コードやリポジトリに書かない）。必要な変数名は .env.example を参照。
 """
 from __future__ import annotations
@@ -26,14 +28,39 @@ def require_env(*names: str) -> dict[str, str]:
 
 
 class ImageGenerator(ABC):
-    """カットの開始画像を生成する。production.json の cuts[].image を受け取る。"""
+    """カットの開始画像を生成する。
+
+    実装するときの約束:
+    - generate() は spec に従って画像を 1 枚作り、out_path に書き込む（PNG / JPEG / WebP）。
+      拡張子は呼び出し側が判定するので、out_path の名前は変えない。
+    - spec は production.json の cuts[].image に次を加えたもの:
+        references[].abs_path … 参照画像の絶対パス（未登録なら references は空）
+        seed               … supports_seed が True のときだけ入る（生成条件から決まる固定値）
+    - 失敗したら例外を投げる。不完全なファイルが残っても完成品としては登録されない。
+    """
+
+    provider: str = ""
+    supports_seed: bool = False
+    #: True の生成器（ダミー・プレースホルダー）の出力は完成素材として登録しない
+    placeholder: bool = False
+
+    def __init__(self, config: dict[str, Any] | None = None) -> None:
+        self.config = config or {}
 
     @abstractmethod
     def generate(self, spec: dict[str, Any], out_path: Path) -> Path: ...
 
 
 class VideoGenerator(ABC):
-    """開始画像と動きの指示から、カットの動画を生成する。cuts[].video を受け取る。"""
+    """開始画像と動きの指示から、カットの動画を生成する。cuts[].video を受け取る。
+
+    init_image_slot の画像は、生成記録（media/epNNN/records.json）で完成済みのものを使う。
+    """
+
+    provider: str = ""
+
+    def __init__(self, config: dict[str, Any] | None = None) -> None:
+        self.config = config or {}
 
     @abstractmethod
     def generate(self, spec: dict[str, Any], init_image: Path, out_path: Path) -> Path: ...
@@ -51,3 +78,48 @@ class Publisher(ABC):
 
     @abstractmethod
     def publish(self, video_path: Path, post: dict[str, Any], *, dry_run: bool = True) -> dict[str, Any]: ...
+
+
+class AssetStore(ABC):
+    """生成素材の永続保存先（クラウドのストレージなど）。
+
+    クラウド環境は終了するとローカルのファイルが消えるため、生成素材はここへ保存して初めて「保存完了」とする。
+    """
+
+    provider: str = ""
+
+    def __init__(self, config: dict[str, Any] | None = None) -> None:
+        self.config = config or {}
+
+    @abstractmethod
+    def upload(self, local_path: Path, object_key: str) -> str:
+        """ファイルを保存し、取り出し用の URI を返す。"""
+
+    @abstractmethod
+    def download(self, uri: str, dest: Path) -> Path:
+        """upload() が返した URI のファイルを dest に書き出す。"""
+
+
+# 実サービスの実装を登録する（例: IMAGE_GENERATORS["some-service"] = SomeServiceImageGenerator）
+IMAGE_GENERATORS: dict[str, type[ImageGenerator]] = {}
+ASSET_STORES: dict[str, type[AssetStore]] = {}
+
+
+def create_image_generator(cfg: dict[str, Any] | None) -> ImageGenerator | None:
+    """series.json の generation.image から生成器を作る。provider 未設定なら None（未接続）。"""
+    provider = (cfg or {}).get("provider")
+    if not provider:
+        return None
+    if provider not in IMAGE_GENERATORS:
+        raise NotConfiguredError(f"画像生成サービス {provider!r} の接続が実装されていません")
+    return IMAGE_GENERATORS[provider](cfg)
+
+
+def create_asset_store(cfg: dict[str, Any] | None) -> AssetStore | None:
+    """series.json の asset_storage から保存先を作る。provider 未設定なら None（永続保存なし）。"""
+    provider = (cfg or {}).get("provider")
+    if not provider:
+        return None
+    if provider not in ASSET_STORES:
+        raise NotConfiguredError(f"永続保存先 {provider!r} の接続が実装されていません")
+    return ASSET_STORES[provider](cfg)

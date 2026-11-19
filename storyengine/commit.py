@@ -65,6 +65,32 @@ def plan_commit(series: Series, draft: dict[str, Any], *, replace: bool = False)
     return Plan(action, n, [], apply_episode(base, draft))
 
 
+MANAGED_FILES = ("episode.json", "episode.md", "production.json")
+
+
+def _link_or_copy(src: str, dst: str) -> str:
+    try:
+        os.link(src, dst)
+    except OSError:
+        shutil.copy2(src, dst)
+    return dst
+
+
+def _carry_over_extras(old_dir: Path, new_dir: Path) -> None:
+    """差し替え時、エピソードのディレクトリにある管理外のファイル（旧形式の assets/ など）を引き継ぐ。
+
+    ハードリンク（できなければコピー）なので、差し替えが失敗して元に戻すときも元のファイルは残る。
+    """
+    for child in old_dir.iterdir():
+        if child.name in MANAGED_FILES or child.name.startswith(".tmp-"):
+            continue
+        dst = new_dir / child.name
+        if child.is_dir():
+            shutil.copytree(child, dst, copy_function=_link_or_copy, symlinks=True)
+        else:
+            _link_or_copy(str(child), str(dst))
+
+
 def _write_episode_files(series: Series, ep: dict[str, Any], target: Path) -> None:
     target.mkdir(parents=True, exist_ok=True)
     atomic_write_text(target / "episode.json", pretty_json(ep))
@@ -120,6 +146,8 @@ def commit(series: Series, draft: dict[str, Any], *, replace: bool = False) -> t
         backup = series.episodes_dir / f".backup-{target.name}"
         try:
             _write_episode_files(series, draft, staging)
+            if target.exists():
+                _carry_over_extras(target, staging)
         except BaseException:
             shutil.rmtree(staging, ignore_errors=True)
             raise

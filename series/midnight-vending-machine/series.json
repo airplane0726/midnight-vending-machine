@@ -7,30 +7,65 @@
   "series_arc": "ポコは、自販機から現れる品物の本来の持ち主と、赤いバッグに入っている「宛先の消えた荷物」の届け先を少しずつ探していく。手がかりは毎話ほんの少しずつ増え、一度に大きく解決しない。自販機に住むモチとは、少しずつ距離が縮まっていく。",
   "tone": "手作りミニチュア風の立体アニメ。青い夜と暖かい照明。かわいく、少し奇妙。音と動きをつい見続けたくなる。",
   "ai_disclosure": "この作品は画像・動画生成AIを用いて制作しています。",
-
   "format": {
     "aspect_ratio": "9:16",
     "resolution": "1080x1920",
     "total_seconds": 20,
-    "cut_durations": [3, 4, 4, 5, 4],
+    "cut_durations": [
+      3,
+      4,
+      4,
+      5,
+      4
+    ],
     "spoken_text_allowed": false,
-    "forbidden_cut_fields": ["dialogue", "narration", "subtitles", "on_screen_text"],
-    "featured_object": {"required": true, "label": "不思議な品物"},
+    "forbidden_cut_fields": [
+      "dialogue",
+      "narration",
+      "subtitles",
+      "on_screen_text"
+    ],
+    "featured_object": {
+      "required": true,
+      "label": "不思議な品物"
+    },
     "required_episode_fields": [
-      "title", "logline", "summary",
-      "featured_object.id", "featured_object.name", "featured_object.description", "featured_object.properties",
-      "music.overall", "music.instrumentation",
-      "posts.instagram.caption", "posts.instagram.hashtags",
-      "posts.youtube.title", "posts.youtube.description", "posts.youtube.tags",
-      "continuity.end_state", "continuity.new_facts"
+      "title",
+      "logline",
+      "summary",
+      "featured_object.id",
+      "featured_object.name",
+      "featured_object.description",
+      "featured_object.properties",
+      "music.overall",
+      "music.instrumentation",
+      "posts.instagram.caption",
+      "posts.instagram.hashtags",
+      "posts.youtube.title",
+      "posts.youtube.description",
+      "posts.youtube.tags",
+      "continuity.end_state",
+      "continuity.new_facts"
     ],
     "required_cut_fields": [
-      "title", "location", "characters_in_shot", "camera", "camera_en",
+      "title",
+      "location",
+      "characters_in_shot",
+      "camera",
+      "camera_en",
       "start_image",
-      "motion", "motion[].action",
-      "continuity.carry_in", "continuity.carry_out", "continuity.footing", "continuity.props",
-      "sound.ambience", "sound.sfx", "sound.sfx[].sound", "sound.music",
-      "image_prompt", "video_prompt"
+      "motion",
+      "motion[].action",
+      "continuity.carry_in",
+      "continuity.carry_out",
+      "continuity.footing",
+      "continuity.props",
+      "sound.ambience",
+      "sound.sfx",
+      "sound.sfx[].sound",
+      "sound.music",
+      "image_prompt",
+      "video_prompt"
     ],
     "post_limits": {
       "instagram_caption_max": 2200,
@@ -40,14 +75,30 @@
       "youtube_tags_total_max": 500
     }
   },
-
   "style": {
     "image_prompt_prefix": "Handmade miniature diorama, stop-motion style 3D animation still, felt, clay and hand-painted wood textures, tiny real-world scale, tilt-shift shallow depth of field, vertical 9:16 composition. Deep blue night with warm amber practical lights, soft glow, cute and slightly uncanny mood.",
     "image_prompt_suffix": "Consistent character design, clean silhouette, no text anywhere.",
     "negative_prompt": "text, letters, numbers, subtitles, captions, watermark, logo, readable signage, humans, realistic photograph, mouth on Poco, extra limbs, extra eyes, different bag color, harsh neon, horror, gore, motion blur on faces",
     "video_prompt_suffix": "Gentle handmade stop-motion-like miniature animation, slightly stepped motion, consistent character design and colors throughout, no text, no subtitles. Characters' feet stay planted on the ground unless floating is explicitly described."
   },
-
+  "generation": {
+    "_note": "画像・動画の生成サービス。provider を storyengine/integrations.py に実装・登録してから設定する。認証情報はここに書かず環境変数で渡す。",
+    "image": {
+      "provider": null,
+      "model": null,
+      "params": {}
+    },
+    "video": {
+      "provider": null,
+      "model": null,
+      "params": {}
+    }
+  },
+  "asset_storage": {
+    "_note": "生成素材の永続保存先。未設定の間は、生成した画像はこの環境にしか残らず『保存完了』にならない。認証情報は環境変数で渡す。",
+    "provider": null,
+    "params": {}
+  },
   "characters": {
     "poco": {
       "name": "ポコ",
@@ -62,6 +113,7 @@
         "身長は自販機の高さの約3分の1"
       ],
       "appearance_prompt": "a tiny round delivery robot with a smooth matte cream-colored egg-shaped body (head and body are one piece), two wide horizontal black oval eyes, no mouth, short stubby rounded arms without fingers, short stubby legs with flat round feet, a red canvas messenger bag on a strap worn diagonally from the right shoulder to the left hip, bag flap closed, about one third the height of the vending machine",
+      "reference_images": [],
       "movement_rules": [
         "移動は歩く。走る・跳ぶ・飛ぶことはしない（つま先立ちはできる）",
         "浮くのは品物の作用を受けたときだけ"
@@ -80,13 +132,13 @@
         "体の大きさは取り出し口にちょうど収まるくらい（ポコの胴体より少し小さい）"
       ],
       "appearance_prompt": "a soft squishy white creature shaped like a rounded square mochi cube, two small black dot eyes, no mouth, only partially peeking out from the vending machine's retrieval slot by pushing the flap up from inside",
+      "reference_images": [],
       "movement_rules": [
         "自販機の取り出し口から顔や体の一部を出すだけで、全身が外に出ることはない"
       ],
       "initial_status": "自販機の中に住んでいる。ポコとはまだ面識がない"
     }
   },
-
   "locations": {
     "vending-corner": {
       "name": "夜の街角の古い自販機",
@@ -100,10 +152,10 @@
         "画面左奥に暖かい光の街灯、遠くの家々の窓に小さな灯り。空と影は深い青"
       ],
       "appearance_prompt": "a narrow cobblestone alley corner in a tiny miniature town at night. An old small vending machine made of faded pale-blue painted metal with slight rust on the edges and a warm old fluorescent light on top; a small round clock face without numbers above an empty glass display shelf with faded unreadable labels; a grid of 3 rows by 4 columns of round buttons; a retrieval slot at the bottom with a yellowed translucent flap. A warm street lamp in the left background, small glowing house windows far away, deep blue shadows and sky",
-      "fixed_layout": "自販機は画面右寄りで正面を向く。ポコが立つ定位置は取り出し口の左前。街灯は画面左奥。"
+      "reference_images": [],
+      "fixed_layout": "自販機は画面右寄りで正面（カメラ側）を向く。ポコが立つ定位置は取り出し口の画面左前。街灯は画面左奥。下段右端のボタンは、画面上でボタン列の下段・右端（自販機の正面に向かって右端）。"
     }
   },
-
   "writing_rules": [
     "毎話、午前0時に自販機のボタンが1つ光り、不思議な品物が1つ現れる。品物は1話につき1つ。",
     "品物は必ず実際に試し、その結果まで描く。",
@@ -112,6 +164,7 @@
     "ポコは歩いて移動する。浮くのは品物の作用を受けたときだけ。走る・跳ぶ・飛ぶ動きは描かない。",
     "モチは取り出し口から顔や体の一部を出すだけ。",
     "各カットの開始画像は、前カットの終了状態（carry_out）と、位置・向き・姿勢・小道具・足の接地を一致させる。第1カットは前話の end_state を踏まえる。",
+    "左右は区別して書く。構図・位置関係は『画面左／画面右』（英語では screen-left / screen-right）、体の部位や持ち物は『ポコ自身の右腕・左腰』（英語では Poco's own right arm）と書く。単に『左』『右』とは書かない。",
     "外見は series.json の appearance_ja / appearance_prompt に従う（赤いバッグは右肩から左腰、口はない、など）。",
     "持ち主と『宛先の消えた荷物』の手がかりは小さく少しずつ。1話で大きく解決しない。",
     "実際に起きた出来事は continuity.new_facts に、まだ決めていない構想は continuity.future_ideas に分けて書く。",
@@ -119,19 +172,30 @@
     "画像・動画の生成指示（image_prompt / video_prompt）は英語で、開始画像の構図・姿勢・光を具体的に書く。",
     "投稿文は結末を書きすぎない。音ありでの視聴を促す。"
   ],
-
   "initial_state": {
-    "opening_situation": "午前0時直前。夜の街角、古い自販機の前（取り出し口の左前）に、赤いバッグを下げたポコが立っている。自販機のボタンはまだどれも光っていない。",
+    "opening_situation": "午前0時直前。夜の街角、古い自販機の前（取り出し口の画面左前）に、赤いバッグを下げたポコが立っている。自販機のボタンはまだどれも光っていない。",
     "canon_facts": [
       "ポコの赤い肩掛けバッグには、宛先の文字が消えた小さな荷物（紐をかけた茶色い紙包み）が入っている。",
       "街角の古い自販機は、午前0時にボタンが1つだけ光り、不思議な品物が1つ出てくる。"
     ],
     "relationships": [
-      {"between": ["poco", "mochi"], "status": "未対面（互いを知らない）"}
+      {
+        "between": [
+          "poco",
+          "mochi"
+        ],
+        "status": "未対面（互いを知らない）"
+      }
     ],
     "mysteries": [
-      {"id": "parcel-destination", "text": "ポコのバッグにある『宛先の消えた荷物』は、どこの誰に届けるものなのか。"},
-      {"id": "item-owners", "text": "自販機から出てくる不思議な品物の、本来の持ち主は誰なのか。"}
+      {
+        "id": "parcel-destination",
+        "text": "ポコのバッグにある『宛先の消えた荷物』は、どこの誰に届けるものなのか。"
+      },
+      {
+        "id": "item-owners",
+        "text": "自販機から出てくる不思議な品物の、本来の持ち主は誰なのか。"
+      }
     ],
     "future_ideas": []
   }

@@ -10,6 +10,7 @@ commands:
   render    保存済みエピソードの episode.md / production.json を作り直す
   rebuild   保存済みエピソードから state.json を作り直す
   status    次の話数と履歴の整合を表示
+  images    カットの開始画像を生成（--dry-run で確認のみ。生成サービス未接続なら生成しない）
 """
 from __future__ import annotations
 
@@ -21,6 +22,8 @@ from pathlib import Path
 from typing import Any
 
 from .commit import commit, plan_commit, rebuild_state
+from .integrations import NotConfiguredError
+from .media import GenerationError
 from .render import build_production, render_markdown
 from .series import Series, load_series
 from .state import HistoryError, load_episodes, replay
@@ -184,6 +187,71 @@ def cmd_status(series: Series, args) -> int:
     return 1
 
 
+def _latest_episode(series: Series) -> int:
+    eps = load_episodes(series)
+    if not eps:
+        raise HistoryError("登録済みのエピソードがありません")
+    return eps[-1]["episode_number"]
+
+
+def cmd_images(series: Series, args) -> int:
+    from . import media
+    from .integrations import NotConfiguredError, create_asset_store, create_image_generator
+
+    n = args.episode or _latest_episode(series)
+    cuts = [int(x) for x in args.cuts.split(",")] if args.cuts else None
+    gen_cfg = series.config.get("generation", {}).get("image")
+    store_cfg = series.config.get("asset_storage")
+    try:
+        generator = create_image_generator(gen_cfg)
+        store = create_asset_store(store_cfg)
+    except NotConfiguredError as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        return 2
+    model = media.model_descriptor(gen_cfg)
+    print(f"第{n}話 画像生成{'（dry-run：確認のみ）' if args.dry_run else ''}")
+    print(f"  画像生成サービス: {model['provider'] or '未接続'} / モデル: {model['model'] or '未設定'}"
+          f" / シード: {'記録する' if generator and generator.supports_seed else '使わない（未対応または未接続）'}")
+    print(f"  永続保存先: {(store_cfg or {}).get('provider') or '未設定（生成しても保存完了になりません）'}")
+    print(f"  パスの基準: {os.path.relpath(series.root)}/（連載ディレクトリ）")
+
+    if args.dry_run:
+        plans, notes = media.plan_images(series, n, cuts=cuts, store=store)
+    else:
+        result = media.run_images(series, n, generator, store=store, cuts=cuts)
+        notes = result.notes
+        plans, _ = media.plan_images(series, n, cuts=cuts, store=store)
+    for note in notes:
+        print(f"  [注意] {note}")
+    for p in plans:
+        print(f"\n  カット{p.cut_number}（{p.slot}）: {media.ACTION_LABEL[p.action]}")
+        if p.reason:
+            print(f"    理由: {p.reason}")
+        if p.references:
+            for r in p.references:
+                mark = "なし" if r["path"] in p.missing_references else "あり"
+                print(f"    参照画像: {r['path']}（{r['subject']}、{mark}）")
+        else:
+            print("    参照画像: 未登録（series.json の reference_images に追加すると使われます）")
+        print(f"    保存先: {p.planned_file}")
+        if p.current:
+            print(f"    永続保存: {(p.current.get('storage') or {}).get('status', 'local_only')}")
+        for old in p.previous:
+            print(f"    以前の画像（保持）: {old}")
+        print(f"    条件キー: {p.key}")
+    print()
+    if not args.dry_run:
+        for c in result.done:
+            print(f"  カット{c}: 完了")
+        for c, err in result.failed:
+            print(f"  カット{c}: 失敗 — {err}")
+    print(media.storage_summary(plans, store))
+    if not args.dry_run and result.failed:
+        print("成功したカットは記録済みです。原因を直して同じコマンドを再実行すると、続きから再開します。")
+        return 1
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="storyengine", description="連載ショート動画の制作管理")
     p.add_argument("--series", default=DEFAULT_SERIES, help=f"連載ディレクトリ（既定: {DEFAULT_SERIES}）")
@@ -196,17 +264,21 @@ def main(argv: list[str] | None = None) -> int:
         x.add_argument("--replace", action="store_true", help="内容の違う最新話を差し替える")
     r = sub.add_parser("render"); r.add_argument("--episode", type=int)
     sub.add_parser("rebuild")
+    im = sub.add_parser("images", help="カットの開始画像を生成（--dry-run で確認のみ）")
+    im.add_argument("--episode", type=int, help="話数（既定: 最新話）")
+    im.add_argument("--cuts", help="対象カット（例: 1,3）。既定: 全カット")
+    im.add_argument("--dry-run", action="store_true", help="生成せず、対象・参照画像・保存先・再利用可否を表示")
     sub.add_parser("status")
     args = p.parse_args(argv)
 
     handlers = {"brief": cmd_brief, "scaffold": cmd_scaffold, "validate": cmd_validate,
-                "commit": cmd_commit, "render": cmd_render, "rebuild": cmd_rebuild, "status": cmd_status}
+                "commit": cmd_commit, "render": cmd_render, "rebuild": cmd_rebuild, "status": cmd_status, "images": cmd_images}
     try:
         series = load_series(args.series)
         return handlers[args.cmd](series, args)
     except LockBusyError as e:
         print(f"エラー: {e}", file=sys.stderr)
         return 2
-    except (HistoryError, FileNotFoundError, ValueError) as e:
+    except (HistoryError, FileNotFoundError, ValueError, GenerationError, NotConfiguredError) as e:
         print(f"エラー: {e}", file=sys.stderr)
         return 2

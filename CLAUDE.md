@@ -15,6 +15,9 @@
 - `series/<id>/episodes/epNNN/episode.json` … 登録済みの各話（**正本**）。`episode.md` と `production.json` はここから自動生成。
 - `series/<id>/state.json` … 履歴（次の話数、確定した出来事、品物、関係、謎、構想）。**自動生成。手で編集しない。** `rebuild` で作り直せる。
 - `series/<id>/drafts/` … 下書き（Git 管理外）。
+- `series/<id>/references/` … 人物・場所の基準画像（Git 管理）。`series.json` の `reference_images` に登録。
+- `series/<id>/media/epNNN/` … 生成素材（`images/` などは Git 管理外）と生成記録 `records.json`（Git 管理）。
+- 素材のパスはすべて連載ディレクトリ（`series/<id>/`）からの相対パス。
 - `prompts/daily_episode.md` … 毎日の制作手順。
 - `tests/` … `python3 -m unittest discover -s tests`
 
@@ -28,6 +31,7 @@ python3 -m storyengine validate <draft.json>  # 検証のみ
 python3 -m storyengine commit <draft.json>    # 検証→登録→履歴更新（冪等）
 python3 -m storyengine render [--episode N]   # episode.md / production.json 再生成
 python3 -m storyengine rebuild                # state.json 再生成
+python3 -m storyengine images --dry-run       # 画像生成の対象・参照画像・保存先・再利用判定（書き込みなし）
 ```
 
 別の連載は `--series series/<id>` を付ける。標準ライブラリのみ（Python 3.10+）。
@@ -35,7 +39,9 @@ python3 -m storyengine rebuild                # state.json 再生成
 ## 守ること
 
 - 秘密情報（APIキー、トークン）をコード・JSON・コミットに入れない。環境変数で渡す（`.env.example` に名前だけ記載）。
-- 外部APIの呼び出し、画像・動画生成、SNS投稿は、ユーザーが接続と費用を確認するまで行わない。
+- 外部APIの呼び出し、画像・動画生成、SNS投稿は、ユーザーが接続と費用を確認するまで行わない。`images` は `--dry-run` のみ使う。
+- ダミー画像を生成素材として登録しない。永続保存先が未設定なら「保存完了」と報告しない。
+- 左右は「画面左／画面右」と「ポコ自身の右腕・左腰」を区別して書く。
 - 登録済みの話は書き換えない（最新話のみ `commit --replace` で差し替え可）。
 - 品物の性質、人物の外見、形式は途中で変えない。変更が必要ならユーザーに確認する。
 - 実際に起きた出来事（`new_facts`）と未確定の構想（`future_ideas`）を混ぜない。
