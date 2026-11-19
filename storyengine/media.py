@@ -161,7 +161,19 @@ def check_aspect(info: dict[str, Any], resolution: str | None) -> None:
 # ---------------------------------------------------------------- 生成条件
 
 
+_HASH_CACHE: dict[tuple[str, int, int], str] = {}
+
+
 def _sha256_file(path: Path) -> str:
+    st = os.stat(path)
+    ck = (str(path), st.st_mtime_ns, st.st_size)
+    if ck in _HASH_CACHE:
+        return _HASH_CACHE[ck]
+    _HASH_CACHE[ck] = _sha256_file_uncached(path)
+    return _HASH_CACHE[ck]
+
+
+def _sha256_file_uncached(path: Path) -> str:
     h = hashlib.sha256()
     with open(path, "rb") as f:
         for chunk in iter(lambda: f.read(1 << 20), b""):
@@ -174,17 +186,31 @@ def model_descriptor(gen_cfg: dict[str, Any] | None) -> dict[str, Any]:
     return {"provider": cfg.get("provider"), "model": cfg.get("model"), "params": cfg.get("params") or {}}
 
 
+_READABLE_CACHE: dict[tuple[str, int, int], bool] = {}
+
+
+def _reference_readable(p: Path) -> bool:
+    st = os.stat(p)
+    ck = (str(p), st.st_mtime_ns, st.st_size)
+    if ck not in _READABLE_CACHE:
+        try:
+            inspect_image(p)
+            _READABLE_CACHE[ck] = True
+        except InvalidImageError:
+            _READABLE_CACHE[ck] = False
+    return _READABLE_CACHE[ck]
+
+
 def image_conditions(series: Series, spec: dict[str, Any], model: dict[str, Any]) -> tuple[dict[str, Any], list[str]]:
     """生成条件と、見つからない参照画像の一覧を返す。"""
     refs, missing = [], []
     for r in spec.get("references", []):
+        if not r.get("path"):  # 生成済み画像の参照で、まだ完成していない
+            missing.append(f"生成済み画像 {r.get('slot')}（未完成）")
+            refs.append({"subject": r["subject"], "view": r.get("view", ""), "slot": r.get("slot"), "sha256": None})
+            continue
         p = series.resolve(r["path"])
-        ok = p.is_file()
-        if ok:
-            try:
-                inspect_image(p)
-            except InvalidImageError:
-                ok = False
+        ok = p.is_file() and _reference_readable(p)
         if ok:
             refs.append({"subject": r["subject"], "view": r.get("view", ""), "path": r["path"],
                          "sha256": _sha256_file(p)})
@@ -319,10 +345,10 @@ def plan_images(series: Series, n: int, *, cuts: list[int] | None = None,
     model = model_descriptor(series.config.get("generation", {}).get("image"))
     rec = load_records(series, n)
     plans = []
+    done: dict[str, SlotPlan] = {}  # 前のカットの計画（生成済み画像を参照するため、全カットを順に計算する）
     for cut in prod["cuts"]:
-        if cuts and cut["cut_number"] not in cuts:
-            continue
-        spec = cut["image"]
+        spec = dict(cut["image"])
+        spec["references"] = [_resolve_generated(r, done) for r in spec.get("references", [])]
         cond, missing = image_conditions(series, spec, model)
         key = content_hash(cond)
         slot = spec["slot"]
@@ -346,8 +372,19 @@ def plan_images(series: Series, n: int, *, cuts: list[int] | None = None,
                 p.action, p.reason = "regenerate", problem
         elif previous:
             p.action = "update"
-        plans.append(p)
+        done[slot] = p
+        if not cuts or cut["cut_number"] in cuts:
+            plans.append(p)
     return plans, notes
+
+
+def _resolve_generated(ref: dict[str, Any], done: dict[str, "SlotPlan"]) -> dict[str, Any]:
+    """continuity_references の参照先を、そのカットの現在の完成画像（再利用できるもの）に解決する。"""
+    if ref.get("kind") != "generated":
+        return ref
+    prev = done.get(ref["slot"])
+    path = prev.current["file"] if prev and prev.action == "reuse" and prev.current else None
+    return dict(ref, path=path)
 
 
 # ---------------------------------------------------------------- 実行
@@ -390,8 +427,10 @@ def run_images(series: Series, n: int, generator: ImageGenerator | None, *, stor
     with exclusive_lock(series.lock_path):
         plans, notes = plan_images(series, n, cuts=cuts, store=store)
         result = RunResult(plans, notes)
-        rec = load_records(series, n)
-        for p in plans:
+        for first in plans:
+            # 前のカットをこの実行で生成した場合も参照できるよう、カットごとに計画し直す
+            p = plan_images(series, n, cuts=[first.cut_number], store=store)[0][0]
+            rec = load_records(series, n)
             if p.action == "reuse":
                 if store is not None and not p.persisted:
                     _retry_upload(series, store, p, rec, n)
@@ -484,6 +523,28 @@ def _usage_fields(gen: ImageGenerator) -> dict[str, Any]:
         if cost is not None:
             out["cost_usd"] = cost
     return out
+
+
+def persist_all(series: Series, store: AssetStore, episodes: list[int]) -> list[tuple[str, str, str]]:
+    """完成済みでまだ永続保存されていない画像（以前の版も含む）を保存先へ送る。結果は (ファイル, 状態, 詳細)。"""
+    results = []
+    with exclusive_lock(series.lock_path):
+        for n in episodes:
+            if not series.media_records_path(n).is_file():
+                continue
+            rec = load_records(series, n)
+            for slot in rec["slots"].values():
+                for v in slot["versions"]:
+                    if v.get("status") != "complete" or (v.get("storage") or {}).get("status") == "persisted":
+                        continue
+                    problem = _verify_local(series, v, None)
+                    if problem:
+                        results.append((v["file"], "skipped", problem))
+                        continue
+                    v["storage"] = _persist(series, store, series.resolve(v["file"]), n)
+                    results.append((v["file"], v["storage"]["status"], v["storage"].get("uri") or v["storage"].get("error", "")))
+                    save_records(series, n, rec)
+    return results
 
 
 def storage_summary(plans: list[SlotPlan], store: AssetStore | None) -> str:

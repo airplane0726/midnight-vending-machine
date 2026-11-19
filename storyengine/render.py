@@ -27,6 +27,16 @@ def reference_images(series: Series, character_ids: list[str], location_id: str 
     return out
 
 
+def generated_references(cut: dict[str, Any]) -> list[dict[str, Any]]:
+    """前のカットで生成・採用した画像を参照にする（episode.json の continuity_references）。
+
+    パスは生成記録から決まるので、ここでは slot だけを持つ。実際のファイルは storyengine.media が解決する。
+    """
+    return [{"subject": r["slot"], "kind": "generated", "slot": r["slot"], "view": r.get("view", "previous shot"),
+             "prompt_note": r.get("prompt_note", "")}
+            for r in cut.get("continuity_references", []) or []]
+
+
 def _names(series: Series, ids: list[str]) -> str:
     names = [series.characters[c]["name_en"] for c in ids]
     return names[0] if len(names) == 1 else ", ".join(names[:-1]) + " and " + names[-1]
@@ -85,7 +95,7 @@ def build_production(series: Series, ep: dict[str, Any]) -> dict[str, Any]:
         for cid in at_start:
             c = series.characters[cid]
             parts.append(f"{c['name_en']}: {c['appearance_prompt']}")
-        image_refs = reference_images(series, at_start, cut.get("location"))
+        image_refs = reference_images(series, at_start, cut.get("location")) + generated_references(cut)
         parts += reference_guidance(style, image_refs)
         parts.append(single_instance_rule(series, at_start))
         parts.append(style.get("image_prompt_suffix", ""))

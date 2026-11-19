@@ -32,6 +32,7 @@ python3 -m storyengine commit <draft.json>    # 検証→登録→履歴更新�
 python3 -m storyengine render [--episode N]   # episode.md / production.json 再生成
 python3 -m storyengine rebuild                # state.json 再生成
 python3 -m storyengine images --dry-run       # 画像生成の対象・参照画像・保存先・再利用判定（書き込みなし）
+python3 -m storyengine persist                # 生成済み画像を永続保存先（Cloudflare R2）へ送る
 ```
 
 別の連載は `--series series/<id>` を付ける。標準ライブラリのみ（Python 3.10+）。

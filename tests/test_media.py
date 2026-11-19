@@ -150,10 +150,11 @@ class TestGeneration(MediaTestCase):
         plans = self.plans()
         self.assertEqual(sorted(plans), [1, 2, 3, 4, 5])
         for p in plans.values():
-            self.assertEqual(p.action, "generate")
+            # カット2は採用したカット1の画像も参照するので、カット1ができるまで待つ
+            self.assertEqual(p.action, "blocked" if p.cut_number == 2 else "generate")
             # 開始画像に映るのはポコと自販機の路地（モチはカット5の途中から）
-            self.assertEqual([r["subject"] for r in p.references], ["poco", "vending-corner"])
-            self.assertEqual(p.missing_references, [])
+            self.assertEqual([r["subject"] for r in p.references if r.get("kind") != "generated"],
+                             ["poco", "vending-corner"])
             self.assertEqual(p.output_dir, "media/ep001/images")
         self.assertFalse((self.root / "media").exists())  # dry-run は何も書かない
 
@@ -222,14 +223,16 @@ class TestGeneration(MediaTestCase):
         old_files = self.image_files()
         self.set_config(lambda c: c["generation"]["image"].update(model="model-b"))
         plans = self.plans()
-        self.assertTrue(all(p.action == "update" for p in plans.values()))
+        # カット2はカット1の新しい画像ができるまで待つ（参照先が更新待ちのため）
+        self.assertEqual({c: p.action for c, p in plans.items()},
+                         {1: "update", 2: "blocked", 3: "update", 4: "update", 5: "update"})
         self.assertTrue(all(len(p.previous) == 1 for p in plans.values()))
         media.run_images(self.series, 1, FakeGen())
         self.assertEqual(len(self.image_files()), 10)
         self.assertTrue(set(old_files) <= set(self.image_files()))
 
         self.set_config(lambda c: c["style"].update(negative_prompt=c["style"]["negative_prompt"] + ", fog"))
-        self.assertTrue(all(p.action == "update" for p in self.plans().values()))
+        self.assertTrue(all(p.action in ("update", "blocked") for p in self.plans().values()))
 
     def test_lost_or_corrupt_file_needs_regeneration(self):
         media.run_images(self.series, 1, FakeGen())
@@ -391,7 +394,9 @@ class TestLegacyData(MediaTestCase):
         plans, notes = media.plan_images(self.series, 1)
         self.assertEqual(len(plans), 5)
         self.assertTrue(any("旧形式" in n for n in notes))
-        self.assertTrue(all(p.references == [] and p.action == "generate" for p in plans))
+        self.assertTrue(all(p.action in ("generate", "blocked") for p in plans))
+        # 参照は生成済み画像（カット2→カット1）だけ。基準画像の登録がない旧形式でも動く
+        self.assertTrue(all(r.get("kind") == "generated" for p in plans for r in p.references))
         self.assertIsNone(media.model_descriptor(self.series.config.get("generation", {}).get("image"))["provider"])
 
 

@@ -36,6 +36,7 @@ storyengine/                  作品に依存しない処理（標準ライブ�
   media.py                    画像の生成記録・条件キー・再利用判定・画像の検査・生成処理
   integrations.py             画像・動画・音声・投稿・永続保存の接続口（抽象クラスと登録表）
   openai_images.py            OpenAI Images API の画像生成器（provider: openai）
+  cloudflare_r2.py            Cloudflare R2 への永続保存（provider: cloudflare-r2、REST API）
   templates/episode_template.json
 series/midnight-vending-machine/
   series.json                 作品設定（人物・場所・参照画像・画風・形式・ルール・初期の謎・生成/保存先の設定）
@@ -65,8 +66,12 @@ python3 -m storyengine validate series/midnight-vending-machine/drafts/ep002.jso
 python3 -m storyengine commit   series/midnight-vending-machine/drafts/ep002.json
 python3 -m storyengine images --dry-run          # 最新話の画像生成の対象・参照画像・保存先・再利用/生成の判定（何も書かない）
 python3 -m storyengine images --episode 1 --cuts 1 --allow-paid   # 有料生成（見積もり確認後のみ。未接続なら何も生成しない）
+python3 -m storyengine persist                   # 完成済みでまだ永続保存されていない画像を保存先へ送る
 python3 -m unittest discover -s tests -v
 ```
+
+前のカットで採用した画像を次のカットの参照にするときは、`episode.json` のカットに
+`"continuity_references": [{"slot": "cut01_start", "prompt_note": "..."}]` を書きます。参照先の画像が更新されると、そのカットは「更新が必要」になります。
 
 Claude Code では `/daily-episode` と入力するか、「今日の話を作って」と頼むと、`prompts/daily_episode.md` の手順で次の話を制作します。
 
@@ -132,7 +137,8 @@ Claude Code では `/daily-episode` と入力するか、「今日の話を作�
    - ⏳ API キー：環境のネットワーク用シークレットとして登録する（リポジトリ・会話・環境変数には書かない）。必要なら OpenAI の組織の本人確認（Organization Verification）。
    - ⏳ 費用確認のうえ `images --dry-run --cuts 1` → `images --cuts 1 --allow-paid` で1カットだけ試す。生成記録に実際のトークン数と費用（`usage`、`cost_usd`）が残る。
    - シード値は API にないため使わない。除外指示は指示文の末尾に「Do not include: …」として付ける。
-3. **永続保存**（`AssetStore`）
+3. **永続保存（Cloudflare R2）**：✅ 実装・テスト済み（`storyengine/cloudflare_r2.py`、Standard・非公開バケット）。⏳ Cloudflare 側の準備、`series.json` の `asset_storage.params.account_id` 設定、API トークンの登録（ネットワーク用シークレット `api.cloudflare.com`）。
+   - 旧メモ（`AssetStore`）
    - 保存先（クラウドのオブジェクトストレージなど）の決定、認証情報の用意、実装と `ASSET_STORES` への登録、`series.json` の `asset_storage.provider` の設定。
 4. **動画生成**（`VideoGenerator`）
    - 画像から動画（image-to-video）に対応し、3〜5秒・9:16 で出力できるサービスの選定と費用確認。開始画像は生成記録の完成済み画像（`init_image_slot`）を使う。

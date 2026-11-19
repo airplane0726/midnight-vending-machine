@@ -101,9 +101,12 @@
     }
   },
   "asset_storage": {
-    "_note": "生成素材の永続保存先。未設定の間は、生成した画像はこの環境にしか残らず『保存完了』にならない。認証情報は環境変数で渡す。",
+    "_note": "生成素材の永続保存先。Cloudflare R2（Standard・非公開バケット）を Cloudflare REST API で使う。account_id を設定したら provider を cloudflare-r2 にする。API トークンはここに書かず、クラウド環境のネットワーク用シークレット（api.cloudflare.com）に保存する。",
     "provider": null,
-    "params": {}
+    "params": {
+      "account_id": null,
+      "bucket": "midnight-vending-machine-media"
+    }
   },
   "characters": {
     "poco": {

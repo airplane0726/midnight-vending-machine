@@ -125,6 +125,10 @@ def validate_structure(series: Series, ep: dict[str, Any]) -> list[str]:
         for cid in cut.get("characters_in_shot", []) or []:
             if cid not in char_ids:
                 errors.append(f"{label}.characters_in_shot に未登録の人物: {cid!r}")
+        for j, ref in enumerate(cut.get("continuity_references", []) or []):
+            m = re.fullmatch(r"cut(\d{2})_start", str(ref.get("slot", "")))
+            if not m or not 1 <= int(m.group(1)) < i + 1:
+                errors.append(f"{label}.continuity_references[{j}].slot は前のカットの開始画像（例: cut01_start）を指定してください")
         start_chars = cut.get("characters_in_start_image")
         if start_chars is not None and not set(start_chars) <= set(cut.get("characters_in_shot") or []):
             errors.append(f"{label}.characters_in_start_image は characters_in_shot に含まれる人物だけにしてください")

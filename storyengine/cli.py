@@ -10,6 +10,7 @@ commands:
   render    保存済みエピソードの episode.md / production.json を作り直す
   rebuild   保存済みエピソードから state.json を作り直す
   status    次の話数と履歴の整合を表示
+  persist   生成済み画像を永続保存先へ送る（以前の版も含む）
   images    カットの開始画像を生成（--dry-run で確認のみ。生成サービス未接続なら生成しない）
 """
 from __future__ import annotations
@@ -243,6 +244,9 @@ def cmd_images(series: Series, args) -> int:
             print(f"    理由: {p.reason}")
         if p.references:
             for r in p.references:
+                if r.get("kind") == "generated":
+                    print(f"    参照画像: {r.get('path') or '（未完成）'}（生成済み {r['slot']}、{'あり' if r.get('path') else 'なし'}）")
+                    continue
                 mark = "なし" if r["path"] in p.missing_references else "あり"
                 print(f"    参照画像: {r['path']}（{r['subject']}、{mark}）")
         else:
@@ -272,6 +276,27 @@ def cmd_images(series: Series, args) -> int:
     return 0
 
 
+def cmd_persist(series: Series, args) -> int:
+    from . import media
+    from .integrations import NotConfiguredError, create_asset_store
+
+    try:
+        store = create_asset_store(series.config.get("asset_storage"))
+    except (NotConfiguredError, RuntimeError) as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        return 2
+    if store is None:
+        print("永続保存先が未設定です（series.json の asset_storage.provider）。保存完了ではありません。")
+        return 2
+    eps = [args.episode] if args.episode else [e["episode_number"] for e in load_episodes(series)]
+    results = media.persist_all(series, store, eps)
+    for f, status, detail in results:
+        print(f"  {f}: {status} {detail}")
+    if not results:
+        print("  未保存の完成画像はありません。")
+    return 1 if any(st != "persisted" for _, st, _ in results) else 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="storyengine", description="連載ショート動画の制作管理")
     p.add_argument("--series", default=DEFAULT_SERIES, help=f"連載ディレクトリ（既定: {DEFAULT_SERIES}）")
@@ -284,6 +309,8 @@ def main(argv: list[str] | None = None) -> int:
         x.add_argument("--replace", action="store_true", help="内容の違う最新話を差し替える")
     r = sub.add_parser("render"); r.add_argument("--episode", type=int)
     sub.add_parser("rebuild")
+    ps = sub.add_parser("persist", help="完成済みでまだ永続保存されていない生成画像を保存先へ送る")
+    ps.add_argument("--episode", type=int)
     im = sub.add_parser("images", help="カットの開始画像を生成（--dry-run で確認のみ）")
     im.add_argument("--episode", type=int, help="話数（既定: 最新話）")
     im.add_argument("--cuts", help="対象カット（例: 1,3）。既定: 全カット")
@@ -293,7 +320,7 @@ def main(argv: list[str] | None = None) -> int:
     args = p.parse_args(argv)
 
     handlers = {"brief": cmd_brief, "scaffold": cmd_scaffold, "validate": cmd_validate,
-                "commit": cmd_commit, "render": cmd_render, "rebuild": cmd_rebuild, "status": cmd_status, "images": cmd_images}
+                "commit": cmd_commit, "render": cmd_render, "rebuild": cmd_rebuild, "status": cmd_status, "images": cmd_images, "persist": cmd_persist}
     try:
         series = load_series(args.series)
         return handlers[args.cmd](series, args)

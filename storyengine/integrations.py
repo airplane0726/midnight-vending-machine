@@ -1,6 +1,6 @@
 """画像・動画・音声の生成と、SNS 投稿・素材の永続保存の接続口。
 
-登録済みの実装: 画像生成 openai（storyengine/openai_images.py）。永続保存先は未実装。各サービスと契約・費用を確認したあと、
+登録済みの実装: 画像生成 openai（storyengine/openai_images.py）。永続保存 cloudflare-r2（storyengine/cloudflare_r2.py）。各サービスと契約・費用を確認したあと、
 このクラスを継承して実装し、IMAGE_GENERATORS / ASSET_STORES に登録する。
 使うサービスは series.json の generation.image.provider / asset_storage.provider で選ぶ。
 
@@ -119,7 +119,7 @@ ASSET_STORES: dict[str, type[AssetStore]] = {}
 
 
 def _load_builtin_providers() -> None:
-    from . import openai_images  # noqa: F401  （IMAGE_GENERATORS["openai"] を登録）
+    from . import cloudflare_r2, openai_images  # noqa: F401  （openai / cloudflare-r2 を登録）
 
 
 def create_image_generator(cfg: dict[str, Any] | None) -> ImageGenerator | None:
@@ -138,6 +138,7 @@ def create_asset_store(cfg: dict[str, Any] | None) -> AssetStore | None:
     provider = (cfg or {}).get("provider")
     if not provider:
         return None
+    _load_builtin_providers()
     if provider not in ASSET_STORES:
         raise NotConfiguredError(f"永続保存先 {provider!r} の接続が実装されていません")
     return ASSET_STORES[provider](cfg)
