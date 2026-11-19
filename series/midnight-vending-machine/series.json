@@ -107,13 +107,13 @@
       "role": "主人公。小さな配達ロボット",
       "personality": "好奇心旺盛で少し不器用。驚くと目の形が変わり、体ごと傾く。",
       "appearance_ja": [
-        "丸いクリーム色の体（卵を少しつぶしたような丸い胴体と頭が一体）",
-        "黒い横長の楕円の目が2つ。口はない。表情は目の形と体の傾きで表す",
-        "短い腕（先は丸く、指はない）と短い脚（先は平たい丸い足）",
-        "赤い肩掛けバッグ：ベルトを右肩から左腰へ斜めにかけ、四角いバッグが左腰にある。ふたは閉じている",
-        "身長は自販機の高さの約3分の1"
+        "クリーム色のフェルトでできた豆形の体（縦長で丸みのある体。頭と胴が一体）",
+        "黒い横長の目が2つ（両端の丸い短い横長）。口はない。表情は目の形と体の傾きで表す",
+        "明るい色の木でできた腕（指のない丸い棒状）と脚（短い円柱）。足は丸い木の円盤",
+        "赤いフェルトの肩掛けバッグ（ふたに丸い木のボタン）：ベルトをポコ自身の右肩から左腰へ斜めにかけ、バッグ本体はポコ自身の左腰にある。ふたは閉じている。左右の確認には基準画像の正面図と背面図を使う（横向きの図では判断しない）",
+        "身長は自販機の高さ（脚を含む本体）の約0.6倍。腕を真上に伸ばしてつま先立ちすると、下段のボタンに届く"
       ],
-      "appearance_prompt": "a tiny round delivery robot with a smooth matte cream-colored egg-shaped body (head and body are one piece), two wide horizontal black oval eyes, no mouth, short stubby rounded arms without fingers, short stubby legs with flat round feet, a red canvas messenger bag on a strap worn diagonally from the right shoulder to the left hip, bag flap closed, about one third the height of the vending machine",
+      "appearance_prompt": "a small handmade delivery robot with a cream-colored felt bean-shaped body (a tall rounded capsule; head and body are one piece), two short horizontal black eyes with rounded ends, no mouth, smooth light-wood arms without fingers, short light-wood cylinder legs with round wooden disc feet, a red felt messenger bag with a round wooden button on its flap, the strap worn diagonally from Poco's own right shoulder to its own left hip, bag flap closed; Poco's height is about 0.6 times the height of the vending machine",
       "reference_images": [
         {
           "path": "references/characters/poco/poco_reference.png",
@@ -131,15 +131,15 @@
     "mochi": {
       "name": "モチ",
       "name_en": "Mochi",
-      "role": "自販機に住む白い生き物",
+      "role": "自販機に住む、アイボリーホワイトの生き物",
       "personality": "まだ詳しくはわからない。物陰からそっと様子をうかがう。",
       "appearance_ja": [
-        "柔らかい四角い白い体（角の丸い大福のような立方体）",
+        "アイボリーホワイトのフェルトでできた、柔らかい四角い体（角の丸い大福のような立方体）。暖色の照明の下では薄いクリーム色に見える",
         "黒い点の目が2つ。口はない",
         "取り出し口のフラップを内側から押し上げ、顔や体の一部だけを出す",
-        "体の大きさは取り出し口にちょうど収まるくらい（ポコの胴体より少し小さい）"
+        "体の大きさは取り出し口にちょうど収まるくらい（高さはポコの身長の約3分の1）"
       ],
-      "appearance_prompt": "a soft squishy white creature shaped like a rounded square mochi cube, two small black dot eyes, no mouth, only partially peeking out from the vending machine's retrieval slot by pushing the flap up from inside",
+      "appearance_prompt": "a soft felt creature in ivory white (it looks pale cream under warm light), shaped like a rounded square mochi cube, two small black dot eyes, no mouth, about one third of Poco's height, only partially peeking out from the vending machine's retrieval slot by pushing the flap up from inside",
       "reference_images": [
         {
           "path": "references/characters/mochi/mochi_reference.png",
@@ -159,14 +159,14 @@
       "name": "夜の街角の古い自販機",
       "appearance_ja": [
         "夜の小さな街の、石畳の細い路地の角",
-        "古い自販機：くすんだ水色の金属の箱、角に少し錆。上部に暖色の古い蛍光灯",
-        "正面上部に小さな丸い文字盤の時計（数字なし。午前0時には両方の針が真上）",
-        "正面中央に空のガラス陳列棚（見本はなく、ラベルは色あせて読めない）",
-        "その下に丸いボタンが3段×4列。午前0時に1つだけ琥珀色に光る",
-        "最下部に取り出し口（黄ばんだ半透明のフラップ付き）",
-        "画面左奥に暖かい光の街灯、遠くの家々の窓に小さな灯り。空と影は深い青"
+        "古い自販機：くすんだ水色の金属の箱、縁や角に錆、四隅にリベット。陳列窓の内側上部に暖色の古い蛍光灯",
+        "自販機の上のしっくい壁に、木の縁の丸い掛け時計（数字なし。午前0時には2本の針が真上で重なる）",
+        "正面の左側に大きなガラスの陳列窓。中は空の木の棚が3段（見本も読める文字もない）",
+        "陳列窓の右側に丸いボタンが3段×4列。午前0時に1つだけ琥珀色に光る。下段のボタンの中心は自販機の高さの約0.55",
+        "最下部に横長の取り出し口（黄ばんだ半透明のフラップ付き。幅は自販機のほぼ全体、上端は自販機の高さの約0.3）",
+        "自販機の右に暖かい灯りの窓と植木鉢、壁につた。画面左奥に暖かい光の街灯と階段、遠くの家々の窓に小さな灯り。空と影は深い青"
       ],
-      "appearance_prompt": "a narrow cobblestone alley corner in a tiny miniature town at night. An old small vending machine made of faded pale-blue painted metal with slight rust on the edges and a warm old fluorescent light on top; a small round clock face without numbers above an empty glass display shelf with faded unreadable labels; a grid of 3 rows by 4 columns of round buttons; a retrieval slot at the bottom with a yellowed translucent flap. A warm street lamp in the left background, small glowing house windows far away, deep blue shadows and sky",
+      "appearance_prompt": "a narrow cobblestone alley corner in a tiny miniature town at night. An old small vending machine made of faded pale-blue painted metal with rust on its edges and rivets at the corners stands against a plaster wall; a large glass display window on the left side of its front with three empty wooden shelves and a warm old fluorescent tube inside at the top; a panel of round cream buttons in 3 rows by 4 columns to the right of the display window; a wide retrieval slot across the bottom with a yellowed translucent flap. On the wall above the machine hangs a round clock with a wooden rim and no numbers. Ivy on the wall, a warmly lit window and a flower pot to the right of the machine, a warm street lamp and steps in the left background, small glowing house windows far away, deep blue shadows and starry sky",
       "reference_images": [
         {
           "path": "references/locations/vending-corner/vending_corner_reference.png",
@@ -175,7 +175,17 @@
           "prompt_note": "The vending corner reference image shows the location from the front at night with no characters: match the old pale-blue vending machine, its glass display, button panel, wide retrieval flap, the round wall clock above it, the street lamp and the cobblestone alley"
         }
       ],
-      "fixed_layout": "自販機は画面右寄りで正面（カメラ側）を向く。ポコが立つ定位置は取り出し口の画面左前。街灯は画面左奥。下段右端のボタンは、画面上でボタン列の下段・右端（自販機の正面に向かって右端）。"
+      "fixed_layout": "自販機は画面右寄りで正面（カメラ側）を向く。物語の開始位置は、取り出し口の画面左半分の前、自販機から1歩手前。街灯は画面左奥。下段右端のボタンは、陳列窓の右側のボタン盤の下段・画面右端（自販機の正面に向かって右端）。その真下は取り出し口の画面右半分の前にあたる。",
+      "proportions": {
+        "_note": "基準画像から測った比率。自販機の高さ＝脚を含む本体の高さ。生成指示と台本の位置関係はこの値に合わせる。",
+        "poco_height_to_machine": 0.6,
+        "poco_reach_with_raised_arm_to_poco_height": 0.92,
+        "bottom_button_center_height_to_machine": 0.55,
+        "retrieval_flap_top_to_machine": 0.3,
+        "machine_width_to_height": 0.65,
+        "mochi_height_to_poco_height": 0.33,
+        "decision": "指定の目安は約0.5倍だが、0.5倍では腕を伸ばした指先が自販機の高さの約0.46までしか届かず、下段のボタン（約0.55）に届かない。0.6倍なら約0.55〜0.57（つま先立ち込み）で届くため0.6倍を採用。"
+      }
     }
   },
   "writing_rules": [
@@ -195,7 +205,7 @@
     "投稿文は結末を書きすぎない。音ありでの視聴を促す。"
   ],
   "initial_state": {
-    "opening_situation": "午前0時直前。夜の街角、古い自販機の前（取り出し口の画面左前）に、赤いバッグを下げたポコが立っている。自販機のボタンはまだどれも光っていない。",
+    "opening_situation": "午前0時直前。夜の街角、古い自販機の前（取り出し口の画面左半分の前、自販機から1歩手前）に、赤いバッグを下げたポコが立っている。自販機のボタンはまだどれも光っていない。",
     "canon_facts": [
       "ポコの赤い肩掛けバッグには、宛先の文字が消えた小さな荷物（紐をかけた茶色い紙包み）が入っている。",
       "街角の古い自販機は、午前0時にボタンが1つだけ光り、不思議な品物が1つ出てくる。"

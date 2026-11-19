@@ -33,29 +33,29 @@
 
 - 登場: ポコ
 - カメラ: やや引きの正面ローアングル（ポコの目線より少し低い）。画面右寄りに自販機全体、画面左下にポコの全身。固定カメラ。
-- 前からのつながり: 話の開始状況：午前0時直前、取り出し口の画面左前にポコが立ち、ボタンはどれも光っていない。
+- 前からのつながり: 話の開始状況：午前0時直前、取り出し口の画面左半分の前（自販機から1歩手前）にポコが立ち、ボタンはどれも光っていない。
 - 足の接地: 開始時は両足とも石畳に接地。1.1〜2.0秒は交互に1歩ずつ（常に片足は接地）。2.0秒以降は両足のつま先が接地。
 
 **開始画像**
 
-深い青の夜。石畳の路地の角に、くすんだ水色の古い自販機がカメラの方を向いて画面右寄りに立ち、上部の古い蛍光灯が暖かく灯っている。陳列棚の上の小さな丸時計は両方の針が真上（午前0時）。3段×4列の丸いボタンはまだどれも光っていない。取り出し口の画面左前、自販機から1歩離れた石畳の上にポコが両足をそろえて立っている。体は画面右（自販機の方）を向き、少しだけカメラ側へ振り向いているので、顔（横長の目）と、ポコ自身の左半身がカメラから見える。ボタンのあたりを見上げ、両腕は体の横。赤いバッグはベルトがポコ自身の右肩から左腰へ斜めにかかり、バッグ本体はポコ自身の左腰（カメラ側）にある。ふたは閉じている。画面左奥に街灯の暖かい光。
+深い青の夜。石畳の路地の角、しっくい壁の前に、くすんだ水色の古い自販機がカメラの方を向いて画面右寄りに立ち、陳列窓の内側上部の古い蛍光灯が暖かく灯っている。自販機の上の壁の丸い掛け時計は、2本の針が真上で重なっている（午前0時）。陳列窓の右側のボタン盤（3段×4列の丸いボタン）はまだどれも光っていない。取り出し口の画面左半分の前、自販機から1歩手前の石畳の上に、ポコが両足をそろえて立っている。ポコの身長は自販機の約0.6倍で、頭のてっぺんは陳列窓の中ほどの高さ。体は画面右（自販機の方）を向き、少しだけカメラ側へ振り向いているので、顔（横長の目）と、ポコ自身の左半身がカメラから見える。ボタン盤を見上げ、木の腕は体の横。赤いバッグはベルトがポコ自身の右肩から左腰へ斜めにかかり、バッグ本体はポコ自身の左腰（カメラ側）にある。ふたは閉じている。画面左奥に街灯の暖かい光。
 
 **動き**
 
 - 0.0秒〜0.5秒: 静止。自販機の低い作動音だけが鳴っている。
 - 0.5秒〜0.8秒: 下段右端のボタンが1つだけ、ぽうっと琥珀色に光る。光がポコのクリーム色の体にほんのり映る。
 - 0.8秒〜1.1秒: ポコの横長の目が縦に少し大きくなり（驚き）、体がわずかに後ろへ傾いてから戻る。
-- 1.1秒〜2.0秒: ポコが画面右へ、自販機に沿って小さく2歩進む（ポコ自身の右足、左足の順）。光るボタンの真下、取り出し口の画面右端の前で止まり、自販機の正面に向き直る（カメラにはポコの背中と、斜め後ろからの横顔が見える）。バッグが歩みに合わせて小さく揺れる。
-- 2.0秒〜2.4秒: つま先立ちになり、ポコ自身の右腕（画面右側）を真上へいっぱいに伸ばす。
+- 1.1秒〜2.0秒: ポコが画面右斜め前（自販機の方）へ小さく2歩進む（ポコ自身の右足、左足の順）。光るボタンの真下、取り出し口の画面右半分の前で止まり、自販機の正面に向き直る（カメラにはポコの背中と、斜め後ろからの横顔が見える）。バッグが歩みに合わせて小さく揺れる。
+- 2.0秒〜2.4秒: つま先立ちになり、ポコ自身の右腕（画面右側）を真上へいっぱいに伸ばす。指先がちょうど下段のボタンの高さに届く。
 - 2.4秒〜3.0秒: 光るボタンをポコ自身の右腕の先で押す。ボタンは光ったまま。ポコはつま先立ちで右腕を伸ばした姿勢で止まる。
 
-**終了状態**: ポコは取り出し口の画面右端の前、光るボタンの真下で、自販機の正面を向いてつま先立ちになっている（カメラにはポコの背中側が見える）。ポコ自身の右腕（画面右側）を真上に伸ばし、下段右端の光るボタンに触れている。ポコ自身の左腕（画面左側）は体の横。バッグはポコ自身の左腰（画面左側）。取り出し口のフラップは、ポコの足元のすぐ前から画面左へ広がっている。
+**終了状態**: ポコは取り出し口の画面右半分の前、光るボタンの真下で、自販機の正面を向いてつま先立ちになっている（カメラにはポコの背中側が見える）。ポコ自身の右腕（画面右側）を真上に伸ばし、陳列窓の右側のボタン盤の下段右端の光るボタンに触れている。ポコ自身の左腕（画面左側）は体の横。バッグはポコ自身の左腰（画面左側）。取り出し口のフラップはポコの脚の前にあり、上端はポコの胴の中ほどの高さで、画面左へも広がっている。
 
 **音**
 
 - 環境音: 自販機の低い作動音（ブーン）、遠くでかすかな夜風。全編を通して小さく続く。
 - 0.5秒: ポーン — ボタンが光る、やわらかい鐘のような一音
-- 1.2秒: トコ — ポコの足音（小さな樹脂の足が石畳に当たる軽い音）
+- 1.2秒: トコ — ポコの足音（丸い木の足が石畳に当たる軽い音）
 - 1.7秒: トコ — 2歩目の足音
 - 2.4秒: カチッ — 古いボタンが押し込まれる硬い音
 - 音楽: 0.5秒の『ポーン』と同じ音程で、オルゴールの単音がゆっくり3音だけ鳴る。
@@ -65,13 +65,13 @@
 **image_prompt**
 
 ```
-Static low-angle front view at midnight; the camera faces the front of the vending machine. The old pale-blue vending machine stands on the screen-right side of the frame, facing the camera, its small round clock showing both hands pointing straight up, all twelve round buttons unlit. In the lower screen-left, one step in front of the machine and to the screen-left of the retrieval slot, Poco stands on the cobblestones with both feet flat. Its body faces screen-right toward the machine, turned slightly toward the camera so its eyes and its own left side are visible; it looks up at the buttons, arms hanging at its sides. The red bag hangs at Poco's own left hip, on the side facing the camera. Warm street lamp glow in the screen-left background, deep blue night.
+Static low-angle front view at midnight; the camera faces the front of the vending machine. The old pale-blue vending machine stands against a plaster wall on the screen-right side of the frame, facing the camera; the round clock on the wall above it shows both hands together pointing straight up, and all twelve round buttons on the panel to the right of the display window are unlit. In the lower screen-left, on the cobblestones one step in front of the screen-left half of the retrieval slot, Poco stands with both feet flat; Poco is about 0.6 times as tall as the machine, the top of its head level with the middle of the display window. Its body faces screen-right toward the machine, turned slightly toward the camera so its eyes and its own left side are visible; it looks up at the button panel, wooden arms hanging at its sides. The red bag hangs at Poco's own left hip, on the side facing the camera. Warm street lamp glow in the screen-left background, deep blue night.
 ```
 
 **video_prompt**
 
 ```
-Poco stands still for half a second. Then a single button at the bottom row, screen-right end of the button grid lights up with a soft amber glow that tints Poco's cream body. Poco's horizontal oval eyes grow slightly taller in surprise and its body tilts back a little. It takes two small steps toward screen-right along the front of the machine, stopping directly below the lit button in front of the screen-right end of the retrieval slot, and turns to face the machine (its back toward the camera). It rises on tiptoe, stretches its own right arm (on the screen-right side) straight up and presses the glowing button. The button stays lit. End on Poco on tiptoe, facing the machine, its own right arm touching the lit button.
+Poco stands still for half a second. Then a single button at the bottom row, screen-right end of the button panel (to the right of the display window) lights up with a soft amber glow that tints Poco's cream felt body. Poco's horizontal eyes grow slightly taller in surprise and its body tilts back a little. It takes two small steps diagonally toward screen-right and toward the machine, stopping directly below the lit button in front of the screen-right half of the retrieval slot, and turns to face the machine (its back toward the camera). It rises on tiptoe and stretches its own right wooden arm (on the screen-right side) straight up; the tip just reaches the bottom row of buttons, and it presses the glowing button. The button stays lit. End on Poco on tiptoe, facing the machine, its own right arm touching the lit button.
 ```
 
 </details>
@@ -79,23 +79,23 @@ Poco stands still for half a second. Then a single button at the bottom row, scr
 ## カット2「落ちてきた立方体」 4秒（3〜7秒）
 
 - 登場: ポコ
-- カメラ: ミディアムショット。カメラはカット1と同じく自販機の正面側、やや画面左寄りの低い位置から、自販機の下半分と取り出し口、ポコの全身をとらえる。開始時のポコは自販機の方を向いているので、ポコの左斜め後ろから見る形になる。固定カメラ。
-- 前からのつながり: カット1の終了状態：光るボタンの真下（取り出し口の画面右端の前）で自販機の正面を向き、つま先立ちでポコ自身の右腕を伸ばしてボタンに触れているポコ。
-- 足の接地: 0.4秒でかかとを下ろし両足接地。その後は足の位置を変えない。しゃがむ間も両足の裏は石畳から離れない。立ち上がりながらその場で向きを変える（足を小さく踏みかえるが、常にどちらかの足は接地）。
+- カメラ: ミディアムショット。カメラはカット1と同じく自販機の正面側、やや画面左寄りの低い位置から、下段のボタンから取り出し口までの自販機の下側と、ポコの全身をとらえる。開始時のポコは自販機の方を向いているので、ポコの左斜め後ろから見る形になる。固定カメラ。
+- 前からのつながり: カット1の終了状態：光るボタンの真下（取り出し口の画面右半分の前）で自販機の正面を向き、つま先立ちでポコ自身の右腕を伸ばしてボタンに触れているポコ。
+- 足の接地: 0.4秒でかかとを下ろし両足接地。その後は足の位置を変えない。かがむ間も両足の裏は石畳から離れない。立ち上がりながらその場で向きを変える（足を小さく踏みかえるが、常にどちらかの足は接地）。
 
 **開始画像**
 
-自販機の下半分のアップ。下段右端のボタンが琥珀色に光っている。ポコは光るボタンの真下で自販機の正面を向き、つま先立ちでポコ自身の右腕（画面右側）を真上に伸ばしてボタンに触れている。カメラからはポコの背中と左半身が見え、バッグはポコ自身の左腰（画面左側、カメラ寄り）にある。黄ばんだ半透明のフラップが付いた横長の取り出し口は、ポコの足元のすぐ前（自販機側）にあり、画面上ではポコの足元から画面左へ広がっている。ポコはまだ腕を下ろし始める直前。
+自販機の下側のアップ（下段のボタンから取り出し口まで）。陳列窓の右側のボタン盤の、下段右端のボタンが琥珀色に光っている。ポコは光るボタンの真下で自販機の正面を向き、つま先立ちでポコ自身の右腕（画面右側）を真上に伸ばしてボタンに触れている。カメラからはポコの背中と左半身が見え、バッグはポコ自身の左腰（画面左側、カメラ寄り）にある。黄ばんだ半透明のフラップが付いた横長の取り出し口は、ポコの脚のすぐ前にあり、上端はポコの胴の中ほどの高さ。画面上ではポコの前から画面左へ広がっている。ポコはまだ腕を下ろし始める直前。
 
 **動き**
 
 - 0.0秒〜0.4秒: ポコがポコ自身の右腕を下ろし、つま先立ちからかかとを下ろして両足で立つ。
-- 0.4秒〜0.7秒: ポコの足元のすぐ前、取り出し口の中に何かが落ち、フラップが内側から小さく揺れる。ポコが下を見る（その場で向きは変えない）。
-- 0.7秒〜1.5秒: ポコがその場で短い脚を曲げてしゃがみ、ポコ自身の左腕で目の前のフラップを押し上げて、中をのぞき込む。
+- 0.4秒〜0.7秒: ポコの目の前、取り出し口の中に何かが落ち、フラップが内側から小さく揺れる。ポコが下を見る（その場で向きは変えない）。
+- 0.7秒〜1.5秒: ポコがその場で少しかがみ、ポコ自身の左腕で目の前のフラップを押し上げて、中をのぞき込む。
 - 1.5秒〜2.6秒: 両腕で透明な立方体を取り出す。フラップがぱたんと閉じる。立方体を両腕で胸の前に抱えたまま、ゆっくり立ち上がりながら、その場で体をカメラの方へ向き直す。同時に、光っていたボタンの灯りがすっと消える。
 - 2.6秒〜4.0秒: カメラの方を向いたポコの胸の前で、立方体の中に細かな雨が真下に降っているのが見えてくる。ポコは顔を近づけてのぞき込み、目が縦に大きくなる。雨粒の光がポコの目に映る。
 
-**終了状態**: ポコは取り出し口の画面右端の前（光っていたボタンの真下、同じ位置）で、体をカメラの方へ向けて両足をそろえて立っている。透明な立方体を両腕で胸の前にまっすぐ（傾けずに）抱え、中の雨をのぞき込んでいる。カメラの方を向いたので、ポコ自身の右側が画面左、ポコ自身の左腰のバッグが画面右に来る。閉じた取り出し口はポコの背後で、画面上ではポコの左側（画面左）へ広がっている。ボタンの灯りは消えている。
+**終了状態**: ポコは取り出し口の画面右半分の前（光っていたボタンの真下、同じ位置）で、体をカメラの方へ向けて両足をそろえて立っている。透明な立方体を両腕で胸の前にまっすぐ（傾けずに）抱え、中の雨をのぞき込んでいる。カメラの方を向いたので、ポコ自身の右側が画面左、ポコ自身の左腰のバッグが画面右に来る。閉じた取り出し口はポコの背後で、画面上ではポコの背後から画面左へ広がっている。ボタンの灯りは消えている。
 
 **音**
 
@@ -113,13 +113,13 @@ Poco stands still for half a second. Then a single button at the bottom row, scr
 **image_prompt**
 
 ```
-Static medium shot of the lower half of the old pale-blue vending machine, seen from the front, slightly screen-left. The round button at the bottom row, screen-right end glows amber. Directly below it, Poco stands on tiptoe facing the machine, its back and own left side toward the camera, its own right arm (on the screen-right side) stretched straight up touching the glowing button. The red bag hangs at Poco's own left hip, on the screen-left side nearest the camera. The wide retrieval slot with a yellowed translucent flap is directly in front of Poco's feet at the base of the machine, extending from Poco's feet toward screen-left. Warm fluorescent light from above, deep blue night around.
+Static medium shot of the lower part of the old pale-blue vending machine, from the bottom row of buttons down to the retrieval slot, seen from the front, slightly screen-left. On the button panel to the right of the display window, the round button at the bottom row, screen-right end glows amber. Directly below it, Poco stands on tiptoe facing the machine, its back and own left side toward the camera, its own right wooden arm (on the screen-right side) stretched straight up, the tip touching the glowing button. The red bag hangs at Poco's own left hip, on the screen-left side nearest the camera. The wide retrieval slot with a yellowed translucent flap is right in front of Poco's legs, its top edge level with the middle of Poco's body, and it extends from in front of Poco toward screen-left. Warm light from the display window above, deep blue night around.
 ```
 
 **video_prompt**
 
 ```
-Poco lowers its arm and settles back onto flat feet without moving them. Something drops into the retrieval slot right in front of its feet with a thud and the flap wobbles. Poco looks down, crouches in place by bending its short legs (feet stay flat on the ground), pushes the flap up with its own left arm and pulls out a transparent glass cube with both arms. The flap closes. Poco stands up holding the cube upright against its chest and, staying on the same spot, turns its body to face the camera; the amber button light fades out. Inside the cube, fine rain falls straight down and the drops vanish in tiny splashes at the bottom. Poco leans in, its eyes growing taller, reflecting the rain.
+Poco lowers its arm and settles back onto flat feet without moving them. Something drops into the retrieval slot right in front of it with a thud and the flap wobbles. Poco looks down, bends slightly in place (feet stay flat on the ground), pushes the flap up with its own left arm and pulls out a transparent glass cube with both arms. The flap closes. Poco straightens up holding the cube upright against its chest and, staying on the same spot, turns its body to face the camera; the amber button light fades out. Inside the cube, fine rain falls straight down and the drops vanish in tiny splashes at the bottom. Poco leans in, its eyes growing taller, reflecting the rain.
 ```
 
 </details>
@@ -128,12 +128,12 @@ Poco lowers its arm and settles back onto flat feet without moving them. Somethi
 
 - 登場: ポコ
 - カメラ: ポコの上半身と立方体のアップ（バストショット）。カメラの方を向いたポコを正面からやや画面左寄りに撮る。背景に自販機の水色がぼける。固定カメラ。
-- 前からのつながり: カット2の終了状態：取り出し口の画面右端の前でカメラの方を向いて両足で立ち、立方体を胸の前にまっすぐ抱えて中の雨をのぞき込むポコ。
+- 前からのつながり: カット2の終了状態：取り出し口の画面右半分の前でカメラの方を向いて両足で立ち、立方体を胸の前にまっすぐ抱えて中の雨をのぞき込むポコ。
 - 足の接地: フレーム外だが両足とも接地したまま（足は動かさない）。
 
 **開始画像**
 
-ポコの上半身と立方体のアップ。ポコはカメラの方を向き、両腕で透明な立方体を胸の前にまっすぐ抱え、のぞき込んでいる。立方体の中では細かな雨が真下に降り、底で小さくはねて消えている。ポコの横長の目は少し縦に大きく、雨の光が映っている。背景には自販機の水色と蛍光灯の暖かい光がぼけている。赤いバッグのベルトがポコ自身の右肩（画面左側）にかかっている。
+ポコの上半身と立方体のアップ。ポコはカメラの方を向き、両腕で透明な立方体を胸の前にまっすぐ抱え、のぞき込んでいる。立方体の中では細かな雨が真下に降り、底で小さくはねて消えている。ポコの横長の目は少し縦に大きく、雨の光が映っている。背景には自販機の水色と陳列窓の暖かい光がぼけている。赤いバッグのベルトがポコ自身の右肩（画面左側）にかかっている。
 
 **動き**
 
@@ -160,7 +160,7 @@ Poco lowers its arm and settles back onto flat feet without moving them. Somethi
 **image_prompt**
 
 ```
-Close-up bust shot of Poco facing the camera, holding a transparent glass cube upright against its chest with both stubby arms, looking into it. Inside the cube fine silver rain falls straight down and vanishes in tiny splashes at the bottom; no water outside the cube. Poco's horizontal oval eyes are slightly taller, reflecting tiny glints of the rain. The red bag strap crosses Poco's own right shoulder (on the screen-left side). Background: softly blurred pale-blue vending machine and warm fluorescent glow, deep blue night.
+Close-up bust shot of Poco facing the camera, holding a transparent glass cube upright against its chest with both wooden arms, looking into it. Inside the cube fine silver rain falls straight down and vanishes in tiny splashes at the bottom; no water outside the cube. Poco's horizontal oval eyes are slightly taller, reflecting tiny glints of the rain. The red bag strap crosses Poco's own right shoulder (on the screen-left side). Background: softly blurred pale-blue vending machine and warm glow of the display window, deep blue night.
 ```
 
 **video_prompt**
@@ -180,7 +180,7 @@ Poco slowly tilts the cube about 30 degrees toward screen-left; the rain inside 
 
 **開始画像**
 
-取り出し口の画面右端の前に、ポコがカメラの方を向いて両足をそろえて石畳に立っている。立方体を胸の前で画面右へ約30度傾けて両腕で抱え、中の雨は立方体の底面へ向かって斜めに降っている。ポコの体も少し画面右に傾いている。バッグはポコ自身の左腰（画面右側）。背後に自販機の下半分と閉じた取り出し口（ポコの背後から画面左へ広がる）。ポコの頭上には何もない夜の空間が広がっている。
+取り出し口の画面右半分の前に、ポコがカメラの方を向いて両足をそろえて石畳に立っている。立方体を胸の前で画面右へ約30度傾けて両腕で抱え、中の雨は立方体の底面へ向かって斜めに降っている。ポコの体も少し画面右に傾いている。バッグはポコ自身の左腰（画面右側）。背後に自販機の下半分と閉じた取り出し口（ポコの背後から画面左へ広がる）。ポコの頭上には何もない夜の空間が広がっている。
 
 **動き**
 
@@ -191,7 +191,7 @@ Poco slowly tilts the cube about 30 degrees toward screen-left; the rain inside 
 - 3.3秒〜4.3秒: 慌てて立方体を回し、元の向き（まっすぐ）に戻す。雨がまた下へ降り始める。
 - 4.3秒〜5.0秒: 上昇が止まり、ポコの体がゆっくり下がり始める。足はまだ地面からポコの身長の3分の1ほど浮いている。
 
-**終了状態**: ポコは取り出し口の画面右端の前、同じ位置の真上で、足が地面からポコの身長の3分の1ほど浮いた状態。カメラの方を向いたまま。立方体はまっすぐに戻り、中の雨は下へ降っている。ポコはゆっくり下降中。赤いバッグはポコ自身の左腰（画面右側）に戻りつつある。目はまだ少し慌てた形。
+**終了状態**: ポコは取り出し口の画面右半分の前、同じ位置の真上で、足が地面からポコの身長の3分の1ほど浮いた状態。カメラの方を向いたまま。立方体はまっすぐに戻り、中の雨は下へ降っている。ポコはゆっくり下降中。赤いバッグはポコ自身の左腰（画面右側）に戻りつつある。目はまだ少し慌てた形。
 
 **音**
 
@@ -209,7 +209,7 @@ Poco slowly tilts the cube about 30 degrees toward screen-left; the rain inside 
 **image_prompt**
 
 ```
-Medium-long shot from the screen-left foreground. Poco faces the camera and stands with both feet flat on the cobblestones in front of the screen-right end of the closed retrieval slot, holding the transparent rain cube against its chest tilted about 30 degrees toward screen-right; the rain inside falls diagonally toward the cube's own bottom face. Poco's body leans slightly toward screen-right. The red bag hangs at Poco's own left hip (on the screen-right side). Behind Poco, the lower half of the old pale-blue vending machine, with the closed retrieval slot extending from behind Poco toward screen-left; open dark-blue night space above Poco's head.
+Medium-long shot from the screen-left foreground. Poco faces the camera and stands with both feet flat on the cobblestones in front of the screen-right half of the closed retrieval slot, holding the transparent rain cube against its chest tilted about 30 degrees toward screen-right; the rain inside falls diagonally toward the cube's own bottom face. Poco's body leans slightly toward screen-right. The red bag hangs at Poco's own left hip (on the screen-right side). Behind Poco, the lower half of the old pale-blue vending machine, with the closed retrieval slot extending from behind Poco toward screen-left; open dark-blue night space above Poco's head.
 ```
 
 **video_prompt**
@@ -224,22 +224,22 @@ Poco boldly rotates the cube fully upside down. The rain inside reverses and ris
 
 - 登場: ポコ、モチ
 - カメラ: ローアングルのミディアムショット。石畳すれすれの高さで、カメラの方を向いたポコを正面から撮る。ポコの全身と足元、背後に自販機の最下部。取り出し口はポコの背後から画面左へ広がり、フラップの画面左寄りの部分がポコの体に隠れずに見えている。固定カメラ。
-- 前からのつながり: カット4の終了状態：取り出し口の画面右端の前の真上、地面からポコの身長の3分の1ほどの高さで、カメラの方を向き、立方体をまっすぐに抱えたまま下降中のポコ。
+- 前からのつながり: カット4の終了状態：取り出し口の画面右半分の前の真上、地面からポコの身長の3分の1ほどの高さで、カメラの方を向き、立方体をまっすぐに抱えたまま下降中のポコ。
 - 足の接地: 0〜1.0秒は浮遊しながら下降、1.0秒でつま先接地、1.3秒で両足とも完全に接地。以後は両足接地のまま。
 
 **開始画像**
 
-地面すれすれの低い視点。ポコがカメラの方を向き、立方体をまっすぐ胸の前に抱えたまま、取り出し口の画面右端の前で、地面からポコの身長の3分の1ほどの高さに浮いていて、ゆっくり降りてくるところ。足の下の石畳には影が落ちている。立方体の中の雨は下へ降っている。背後に自販機の最下部があり、閉じた黄ばんだフラップの取り出し口がポコの背後から画面左へ広がっている。赤いバッグはポコ自身の左腰（画面右側）。
+地面すれすれの低い視点。ポコがカメラの方を向き、立方体をまっすぐ胸の前に抱えたまま、取り出し口の画面右半分の前で、地面からポコの身長の3分の1ほどの高さに浮いていて、ゆっくり降りてくるところ。足の下の石畳には影が落ちている。立方体の中の雨は下へ降っている。背後に自販機の最下部があり、閉じた黄ばんだフラップの取り出し口がポコの背後から画面左へ広がっている。赤いバッグはポコ自身の左腰（画面右側）。
 
 **動き**
 
 - 0.0秒〜1.0秒: ポコがゆっくり降りてきて、つま先から石畳に触れる。
 - 1.0秒〜1.3秒: かかとまで下ろし、両足でしっかり着地する。体が一度だけ小さく沈んで戻る。
 - 1.3秒〜2.2秒: ポコの両足の間の石畳に、足の幅ほどの小さな虹のアーチがじわっと浮かび上がり、そのまま残る。ポコが立方体を抱えたまま足元を見下ろし、目が下向きの弧（にっこり）になる。
-- 2.2秒〜3.4秒: 画面左奥、ポコの背後から画面左へ広がる取り出し口の、フラップの画面左寄りの部分が内側から少しだけ押し上げられ、白く柔らかい四角い体のモチが上半分だけ顔を出す。黒い点の目でポコの方をじっと見ている。ポコは虹に夢中で気づかない。
+- 2.2秒〜3.4秒: 画面左奥、ポコの背後から画面左へ広がる取り出し口の、フラップの画面左寄りの部分が内側から少しだけ押し上げられ、アイボリーホワイトのフェルトの柔らかい四角い体（暖かい光で薄いクリーム色に見える）のモチが上半分だけ顔を出す。黒い点の目でポコの方をじっと見ている。ポコは虹に夢中で気づかない。
 - 3.4秒〜4.0秒: モチが一度だけまばたきする。ポコは虹を見下ろしたまま。
 
-**終了状態**: ポコは取り出し口の画面右端の前でカメラの方を向いて両足をそろえて石畳に立ち、立方体をまっすぐ胸の前に抱えて、両足の間に残った小さな虹を見下ろしている。画面左奥、取り出し口のフラップの画面左寄りの部分が少し持ち上がり、モチが顔の上半分を出してポコを見ている。ポコはモチに気づいていない。
+**終了状態**: ポコは取り出し口の画面右半分の前でカメラの方を向いて両足をそろえて石畳に立ち、立方体をまっすぐ胸の前に抱えて、両足の間に残った小さな虹を見下ろしている。画面左奥、取り出し口のフラップの画面左寄りの部分が少し持ち上がり、モチが顔の上半分を出してポコを見ている。ポコはモチに気づいていない。
 
 **音**
 
@@ -255,13 +255,13 @@ Poco boldly rotates the cube fully upside down. The rain inside reverses and ris
 **image_prompt**
 
 ```
-Very low-angle shot from just above the cobblestones. Poco faces the camera and floats about one third of its own height above the ground, in front of the screen-right end of the retrieval slot, holding the transparent rain cube upright against its chest with both arms; rain inside falls downward. A soft shadow on the cobblestones beneath its flat round feet. The red bag hangs at Poco's own left hip (on the screen-right side). Behind Poco, the bottom of the old pale-blue vending machine; the closed yellowed translucent flap of the retrieval slot extends from behind Poco toward screen-left, its screen-left part clearly visible. Deep blue night, warm fluorescent glow.
+Very low-angle shot from just above the cobblestones. Poco faces the camera and floats about one third of its own height above the ground, in front of the screen-right half of the retrieval slot, holding the transparent rain cube upright against its chest with both arms; rain inside falls downward. A soft shadow on the cobblestones beneath its round wooden disc feet. The red bag hangs at Poco's own left hip (on the screen-right side). Behind Poco, the bottom of the old pale-blue vending machine; the closed yellowed translucent flap of the retrieval slot extends from behind Poco toward screen-left, its screen-left part clearly visible. Deep blue night, warm glow of the display window.
 ```
 
 **video_prompt**
 
 ```
-Poco slowly drifts down and lands softly, toes first then heels, both feet flat, body bobbing once. A tiny rainbow arch, about as wide as Poco's foot, gently appears on the cobblestones between its feet and stays. Poco looks down at it, eyes curving into happy arcs. Then, in the screen-left background, the screen-left part of the retrieval slot flap behind Poco is pushed up slightly from inside and a soft white square mochi-like creature peeks out, showing only the top half of its face with two black dot eyes, watching Poco. Poco does not notice. The creature blinks once.
+Poco slowly drifts down and lands softly, toes first then heels, both feet flat, body bobbing once. A tiny rainbow arch, about as wide as Poco's foot, gently appears on the cobblestones between its feet and stays. Poco looks down at it, eyes curving into happy arcs. Then, in the screen-left background, the screen-left part of the retrieval slot flap behind Poco is pushed up slightly from inside and Mochi, a soft ivory-white felt cube-shaped creature that looks pale cream in the warm light, peeks out, showing only the top half of its face with two black dot eyes, watching Poco. Poco does not notice. The creature blinks once.
 ```
 
 </details>
@@ -309,7 +309,7 @@ Poco slowly drifts down and lands softly, toes first then heels, both feet flat,
 
 ## 連続性メモ（履歴に反映される内容）
 
-**この話の終わりの状況**: 午前0時過ぎ。取り出し口の画面右端の前（下段右端のボタンの真下）で、ポコはカメラの方を向いて『雨のしかく』をまっすぐ胸の前に抱えて立ち、両足の間の石畳に残った小さな虹を見下ろしている。取り出し口の画面左寄りのフラップからはモチが顔の上半分を出してポコを見ているが、ポコはまだ気づいていない。
+**この話の終わりの状況**: 午前0時過ぎ。取り出し口の画面右半分の前（下段右端のボタンの真下）で、ポコはカメラの方を向いて『雨のしかく』をまっすぐ胸の前に抱えて立ち、両足の間の石畳に残った小さな虹を見下ろしている。取り出し口の画面左寄りのフラップからはモチが顔の上半分を出してポコを見ているが、ポコはまだ気づいていない。
 
 ### 確定した出来事
 

@@ -70,6 +70,11 @@ def cmd_brief(series: Series, args) -> int:
     a("\n## 場所")
     for lid, l in series.locations.items():
         a(f"- `{lid}` {l['name']}: " + " / ".join(l.get("appearance_ja", [])))
+        if l.get("fixed_layout"):
+            a(f"    - 位置関係: {l['fixed_layout']}")
+        props = {k: v for k, v in (l.get("proportions") or {}).items() if not k.startswith("_")}
+        if props:
+            a("    - 比率: " + ", ".join(f"{k}={v}" for k, v in props.items()))
     a("\n## 関係")
     for r in state["relationships"].values():
         a(f"- {'×'.join(r['between'])}: {r['status']}（第{r['since_episode']}話〜）")
