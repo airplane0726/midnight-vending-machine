@@ -18,7 +18,8 @@
 | 次回以降の Claude Code 用の指示 | ✅ `CLAUDE.md`、`prompts/daily_episode.md`、`/daily-episode` |
 | 作品固有の設定と処理の分離 | ✅ `storyengine/`（汎用）と `series/<id>/`（作品固有） |
 | 画像生成の準備（参照画像、生成記録、再利用判定、途中再開、dry-run） | ✅ `python3 -m storyengine images`（生成サービスは未接続） |
-| 画像・動画・音声の実際の生成、素材の永続保存、SNS 投稿 | ⏳ 未接続（接続口のインターフェースのみ。下記参照） |
+| OpenAI 画像生成（GPT-Image-2.6 Sunburst、参照画像つき）の接続処理 | ✅ 実装・テスト済み（`--allow-paid` を付けたときだけ有料生成。API キー登録は下記） |
+| 動画・音声の生成、素材の永続保存、SNS 投稿 | ⏳ 未接続（接続口のインターフェースのみ。下記参照） |
 
 外部サービスへの接続・有料APIの呼び出し・SNSへの公開は一切行っていません。
 
@@ -33,7 +34,8 @@ storyengine/                  作品に依存しない処理（標準ライブ�
   render.py                   episode.md と production.json の生成（外見プロンプトの自動合成）
   storage.py                  原子的なファイル書き込み、排他ロック、内容ハッシュ
   media.py                    画像の生成記録・条件キー・再利用判定・画像の検査・生成処理
-  integrations.py             画像・動画・音声・投稿・永続保存の接続口（抽象クラスと登録表。実装は0件）
+  integrations.py             画像・動画・音声・投稿・永続保存の接続口（抽象クラスと登録表）
+  openai_images.py            OpenAI Images API の画像生成器（provider: openai）
   templates/episode_template.json
 series/midnight-vending-machine/
   series.json                 作品設定（人物・場所・参照画像・画風・形式・ルール・初期の謎・生成/保存先の設定）
@@ -62,7 +64,7 @@ python3 -m storyengine scaffold      # drafts/epNNN.json にひな形を作成
 python3 -m storyengine validate series/midnight-vending-machine/drafts/ep002.json
 python3 -m storyengine commit   series/midnight-vending-machine/drafts/ep002.json
 python3 -m storyengine images --dry-run          # 最新話の画像生成の対象・参照画像・保存先・再利用/生成の判定（何も書かない）
-python3 -m storyengine images --episode 1 --cuts 2,3   # 生成（生成サービス接続後。未接続なら何も生成しない）
+python3 -m storyengine images --episode 1 --cuts 1 --allow-paid   # 有料生成（見積もり確認後のみ。未接続なら何も生成しない）
 python3 -m unittest discover -s tests -v
 ```
 
@@ -123,11 +125,13 @@ Claude Code では `/daily-episode` と入力するか、「今日の話を作�
 
 各工程の入力は `production.json` と同じ内容です（`images` コマンドは常に `episode.json` と現在の `series.json` から組み立てるので、`production.json` が古くても最新の指示で生成します）。サービスと費用を確認したうえで、`storyengine/integrations.py` の抽象クラスを実装して登録表（`IMAGE_GENERATORS` / `ASSET_STORES`）に追加し、`series.json` で選びます。認証情報は環境変数またはシークレット設定で渡し、リポジトリには入れません（`.env.example` 参照）。
 
-1. **参照画像の用意**：ポコ・モチ・自販機の基準画像を `references/` に置き、`series.json` の `reference_images` に登録する（置き方は `references/README.md`）。
-2. **画像生成**（`ImageGenerator`）
-   - サービスとモデルの選定（縦9:16、参照画像によるキャラクター固定に対応するもの）、料金・利用規約（商用利用、生成物の権利）の確認、APIキーの取得。
-   - 実装を `IMAGE_GENERATORS` に登録し、`series.json` の `generation.image` に `provider` と `model` を設定する。シードに対応するなら `supports_seed = True`。
-   - まず `images --dry-run`、次に `images --cuts 1` で1カットだけ生成して確認する。
+1. **参照画像**：✅ 登録済み（ポコ・モチ・自販機と路地）。
+2. **画像生成（OpenAI）**
+   - ✅ 実装済み：`storyengine/openai_images.py`。`series.json` の `generation.image` は `gpt-image-2.6-sunburst`、`1152x2048`（9:16）、`quality: high`。
+   - ✅ 実行環境：作品専用のクラウド環境「midnight-vending-machine」で `api.openai.com` と公式資料への接続を許可済み。
+   - ⏳ API キー：環境のネットワーク用シークレットとして登録する（リポジトリ・会話・環境変数には書かない）。必要なら OpenAI の組織の本人確認（Organization Verification）。
+   - ⏳ 費用確認のうえ `images --dry-run --cuts 1` → `images --cuts 1 --allow-paid` で1カットだけ試す。生成記録に実際のトークン数と費用（`usage`、`cost_usd`）が残る。
+   - シード値は API にないため使わない。除外指示は指示文の末尾に「Do not include: …」として付ける。
 3. **永続保存**（`AssetStore`）
    - 保存先（クラウドのオブジェクトストレージなど）の決定、認証情報の用意、実装と `ASSET_STORES` への登録、`series.json` の `asset_storage.provider` の設定。
 4. **動画生成**（`VideoGenerator`）

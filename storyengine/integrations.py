@@ -1,6 +1,6 @@
 """画像・動画・音声の生成と、SNS 投稿・素材の永続保存の接続口。
 
-今回の段階では外部サービスに接続しない（登録済みの実装は 0 件）。各サービスと契約・費用を確認したあと、
+登録済みの実装: 画像生成 openai（storyengine/openai_images.py）。永続保存先は未実装。各サービスと契約・費用を確認したあと、
 このクラスを継承して実装し、IMAGE_GENERATORS / ASSET_STORES に登録する。
 使うサービスは series.json の generation.image.provider / asset_storage.provider で選ぶ。
 
@@ -43,12 +43,25 @@ class ImageGenerator(ABC):
     supports_seed: bool = False
     #: True の生成器（ダミー・プレースホルダー）の出力は完成素材として登録しない
     placeholder: bool = False
+    #: True の生成器は費用がかかる。CLI では --allow-paid を付けたときだけ実行する
+    paid: bool = False
+    #: 直近の生成で使ったトークン数など（サービスが返す場合）。生成記録に残す
+    last_usage: dict[str, Any] | None = None
+    last_request: dict[str, Any] | None = None
 
     def __init__(self, config: dict[str, Any] | None = None) -> None:
         self.config = config or {}
 
     @abstractmethod
     def generate(self, spec: dict[str, Any], out_path: Path) -> Path: ...
+
+    def estimate(self, spec: dict[str, Any]) -> dict[str, Any] | None:
+        """生成前の費用見積もり（わかる範囲）。わからなければ None。"""
+        return None
+
+    def cost_from_usage(self, usage: dict[str, Any] | None) -> float | None:
+        """応答の使用量から実際の費用（USD）を計算する。わからなければ None。"""
+        return None
 
 
 class VideoGenerator(ABC):
@@ -105,11 +118,16 @@ IMAGE_GENERATORS: dict[str, type[ImageGenerator]] = {}
 ASSET_STORES: dict[str, type[AssetStore]] = {}
 
 
+def _load_builtin_providers() -> None:
+    from . import openai_images  # noqa: F401  （IMAGE_GENERATORS["openai"] を登録）
+
+
 def create_image_generator(cfg: dict[str, Any] | None) -> ImageGenerator | None:
     """series.json の generation.image から生成器を作る。provider 未設定なら None（未接続）。"""
     provider = (cfg or {}).get("provider")
     if not provider:
         return None
+    _load_builtin_providers()
     if provider not in IMAGE_GENERATORS:
         raise NotConfiguredError(f"画像生成サービス {provider!r} の接続が実装されていません")
     return IMAGE_GENERATORS[provider](cfg)

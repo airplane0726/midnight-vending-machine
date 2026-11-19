@@ -85,9 +85,14 @@
   "generation": {
     "_note": "画像・動画の生成サービス。provider を storyengine/integrations.py に実装・登録してから設定する。認証情報はここに書かず環境変数で渡す。",
     "image": {
-      "provider": null,
-      "model": null,
-      "params": {}
+      "provider": "openai",
+      "model": "gpt-image-2.6-sunburst",
+      "params": {
+        "size": "1152x2048",
+        "quality": "high",
+        "output_format": "png"
+      },
+      "_note": "2026-11-19 に developers.openai.com の GPT-Image-2.6 の資料で確認。1152x2048 は 9:16 ちょうど（各辺16の倍数）。書き出し時に 1080x1920 へ縮小する。費用がかかるため images は --allow-paid を付けたときだけ実行する。"
     },
     "video": {
       "provider": null,

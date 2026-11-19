@@ -222,6 +222,15 @@ def cmd_images(series: Series, args) -> int:
 
     if args.dry_run:
         plans, notes = media.plan_images(series, n, cuts=cuts, store=store)
+    elif generator is not None and generator.paid and not args.allow_paid:
+        plans, notes = media.plan_images(series, n, cuts=cuts, store=store)
+        todo = [p for p in plans if p.action not in ("reuse", "restore", "blocked")]
+        if todo:
+            print(f"  有料の生成が {len(todo)} カット分必要です。見積もりを確認してから --allow-paid を付けて実行してください。")
+            print("  （--dry-run で見積もりを表示できます。--cuts 1 で1カットだけに絞れます）")
+            return 2
+        result = media.run_images(series, n, generator, store=store, cuts=cuts)
+        notes = result.notes
     else:
         result = media.run_images(series, n, generator, store=store, cuts=cuts)
         notes = result.notes
@@ -239,6 +248,12 @@ def cmd_images(series: Series, args) -> int:
         else:
             print("    参照画像: 未登録（series.json の reference_images に追加すると使われます）")
         print(f"    保存先: {p.planned_file}")
+        if generator is not None and p.action not in ("reuse", "restore", "blocked"):
+            est = generator.estimate(p.spec)
+            if est:
+                out = f"約${est['output_usd']:.5f}（{est['output_tokens']} トークン）" if est.get("output_usd") is not None else "未確定"
+                print(f"    見積もり: {est['model']} {est['size']} quality={est['quality']} / 出力 {out}"
+                      f" / 入力（参照画像{est['reference_images']}枚＋指示文）未確定")
         if p.current:
             print(f"    永続保存: {(p.current.get('storage') or {}).get('status', 'local_only')}")
         for old in p.previous:
@@ -272,7 +287,8 @@ def main(argv: list[str] | None = None) -> int:
     im = sub.add_parser("images", help="カットの開始画像を生成（--dry-run で確認のみ）")
     im.add_argument("--episode", type=int, help="話数（既定: 最新話）")
     im.add_argument("--cuts", help="対象カット（例: 1,3）。既定: 全カット")
-    im.add_argument("--dry-run", action="store_true", help="生成せず、対象・参照画像・保存先・再利用可否を表示")
+    im.add_argument("--dry-run", action="store_true", help="生成せず、対象・参照画像・保存先・再利用可否・見積もりを表示")
+    im.add_argument("--allow-paid", action="store_true", help="費用のかかる生成サービスで実際に生成する（見積もり確認後に指定）")
     sub.add_parser("status")
     args = p.parse_args(argv)
 

@@ -454,14 +454,17 @@ def _generate_one(series: Series, n: int, gen: ImageGenerator, store: AssetStore
         spec["seed"] = seed
     base = {"key": p.key, "cut_number": p.cut_number, "conditions": p.conditions,
             "seed": seed, "created_at": _now()}
+    gen.last_usage = gen.last_request = None
     try:
         gen.generate(spec, tmp)
         info = inspect_image(tmp)
         check_aspect(info, spec.get("resolution"))
     except Exception as e:  # noqa: BLE001 - 失敗は記録して完成品として扱わない
         tmp.unlink(missing_ok=True)
-        _append_version(rec, p.slot, dict(base, status="failed", error=f"{type(e).__name__}: {e}"[:500]))
+        _append_version(rec, p.slot, dict(base, **_usage_fields(gen), status="failed",
+                                          error=f"{type(e).__name__}: {e}"[:500]))
         return False, str(e)
+    base.update(_usage_fields(gen))
     final = out_dir / f"{p.slot}-{p.key.split(':', 1)[1][:16]}{EXT[info['format']]}"
     os.replace(tmp, final)
     version = dict(base, status="complete", file=series.rel(final), format=info["format"],
@@ -469,6 +472,18 @@ def _generate_one(series: Series, n: int, gen: ImageGenerator, store: AssetStore
     version["storage"] = _persist(series, store, final, n)
     _append_version(rec, p.slot, version)
     return True, ""
+
+
+def _usage_fields(gen: ImageGenerator) -> dict[str, Any]:
+    out: dict[str, Any] = {}
+    if gen.last_request:
+        out["request"] = gen.last_request
+    if gen.last_usage:
+        out["usage"] = gen.last_usage
+        cost = gen.cost_from_usage(gen.last_usage)
+        if cost is not None:
+            out["cost_usd"] = cost
+    return out
 
 
 def storage_summary(plans: list[SlotPlan], store: AssetStore | None) -> str:
