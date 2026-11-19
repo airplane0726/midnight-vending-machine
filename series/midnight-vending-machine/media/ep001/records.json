@@ -50,6 +50,74 @@
           },
           "status": "failed",
           "error": "OpenAIImageError: OpenAI API エラー HTTP 429（利用上限・残高・レート制限を確認してください） insufficient_quota/credit_balance_exhausted: You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/."
+        },
+        {
+          "key": "sha256:fab34f044184f30feaa3078df690129b114fef302f09d5f21690c00c4f9eb928",
+          "cut_number": 1,
+          "conditions": {
+            "kind": "image",
+            "prompt_sha256": "5c6833fe2b3dbf8b3215888fdffda3a468cc9bdadc5d3762ea4366e0832259fb",
+            "negative_prompt_sha256": "0180d525fd0ea0b62bff9af7ecdfcee911fcd2365c34d035d8eb30e377191741",
+            "model": {
+              "provider": "openai",
+              "model": "gpt-image-2.6-sunburst",
+              "params": {
+                "size": "1152x2048",
+                "quality": "high",
+                "output_format": "png"
+              }
+            },
+            "aspect_ratio": "9:16",
+            "resolution": "1080x1920",
+            "references": [
+              {
+                "subject": "poco",
+                "view": "turnaround: front / side / back",
+                "path": "references/characters/poco/poco_reference.png",
+                "sha256": "0cfb9f9a03b6b3039800fd83cffc7469d20ef0dc5c352e77306e9d3579969e06"
+              },
+              {
+                "subject": "vending-corner",
+                "view": "front, night",
+                "path": "references/locations/vending-corner/vending_corner_reference.png",
+                "sha256": "28caa9124e45c69733f005efbaf79edc3e11c5c02ea732ba305bb5dd245ecd52"
+              }
+            ]
+          },
+          "seed": null,
+          "created_at": "2026-11-19T14:08:35+00:00",
+          "request": {
+            "endpoint": "/images/edits",
+            "model": "gpt-image-2.6-sunburst",
+            "size": "1152x2048",
+            "quality": "high",
+            "reference_images": 2
+          },
+          "usage": {
+            "input_tokens": 3802,
+            "input_tokens_details": {
+              "image_tokens": 2993,
+              "text_tokens": 809
+            },
+            "output_tokens": 1413,
+            "output_tokens_details": {
+              "image_tokens": 1413,
+              "text_tokens": 0
+            },
+            "total_tokens": 5215
+          },
+          "cost_usd": 0.070379,
+          "status": "complete",
+          "file": "media/ep001/images/cut01_start-fab34f044184f30f.png",
+          "format": "png",
+          "width": 1152,
+          "height": 2048,
+          "bytes": 3814157,
+          "sha256": "a9a46dff733f4039f531ef0e78512b71601c5cb2200ddc03d7a97263a8d65978",
+          "storage": {
+            "status": "local_only",
+            "note": "永続保存先が未設定です（クラウド環境の終了で失われます）"
+          }
         }
       ]
     }
