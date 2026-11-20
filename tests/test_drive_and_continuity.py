@@ -209,6 +209,30 @@ class TestDriveWithPipeline(SeriesCase):
         self.assertFalse(self.plans()[1].persisted)
 
 
+class TestRestoreAndImport(SeriesCase):
+    def test_restore_command_never_generates(self):
+        store = GoogleDriveStore(DCFG, opener=FakeDrive())
+        media.run_images(self.series, 1, FakeGen(), store=store, cuts=[1])
+        self.assertEqual([r[1] for r in media.restore_all(self.series, store, [1], check_all=True)], ["verified"])
+        shutil.rmtree(self.root / "media" / "ep001" / "images")
+        self.assertEqual([r[1] for r in media.restore_all(self.series, store, [1])], ["restored"])
+        self.assertEqual(self.plans(store)[1].action, "reuse")
+
+    def test_import_zip_accepts_only_recorded_content(self):
+        import zipfile
+        media.run_images(self.series, 1, FakeGen(), cuts=[1])
+        f = self.root / self.plans()[1].current["file"]
+        zp = self.tmp / "imgs.zip"
+        with zipfile.ZipFile(zp, "w") as z:
+            z.writestr("ep001/" + f.name, f.read_bytes())
+            z.writestr("ep001/evil.png", b"\x89PNG not recorded")
+        f.unlink()
+        res = dict(media.import_zip(self.series, zp, [1]))
+        self.assertEqual(res[self.plans()[1].current["file"]], "imported")
+        self.assertTrue(res["ep001/evil.png"].startswith("skipped"))
+        self.assertEqual(self.plans()[1].action, "reuse")
+
+
 class TestContinuityReferences(SeriesCase):
     """第1話のカット2以降は、前のカットの採用画像を参照する。"""
 

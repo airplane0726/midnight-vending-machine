@@ -33,6 +33,8 @@ python3 -m storyengine render [--episode N]   # episode.md / production.json 再
 python3 -m storyengine rebuild                # state.json 再生成
 python3 -m storyengine images --dry-run       # 画像生成の対象・参照画像・保存先・再利用判定（書き込みなし）
 python3 -m storyengine persist                # 生成済み画像を永続保存先（Google ドライブ）へ送り、復元を確認する
+python3 -m storyengine restore [--check]      # 保存先から画像を取り戻す／全件を照合（生成はしない）
+python3 -m storyengine import-zip <zip>       # 記録と一致する画像だけを ZIP から戻す（新しい環境で画像がないとき）
 ```
 
 別の連載は `--series series/<id>` を付ける。標準ライブラリのみ（Python 3.10+）。

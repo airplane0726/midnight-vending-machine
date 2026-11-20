@@ -11,6 +11,8 @@ commands:
   rebuild   保存済みエピソードから state.json を作り直す
   status    次の話数と履歴の整合を表示
   persist   生成済み画像を永続保存先へ送る（以前の版も含む）
+  restore   永続保存した画像を取り戻す（生成はしない）
+  import-zip 記録と一致する画像だけを ZIP から戻す
   images    カットの開始画像を生成（--dry-run で確認のみ。生成サービス未接続なら生成しない）
 """
 from __future__ import annotations
@@ -304,6 +306,37 @@ def cmd_persist(series: Series, args) -> int:
     return 1 if any(st != "persisted" for _, st, _ in results) else 0
 
 
+def cmd_restore(series: Series, args) -> int:
+    from . import media
+    from .integrations import NotConfiguredError, create_asset_store
+
+    try:
+        store = create_asset_store(series.config.get("asset_storage"))
+    except (NotConfiguredError, RuntimeError) as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        return 2
+    if store is None:
+        print("永続保存先が未設定です。")
+        return 2
+    eps = [args.episode] if args.episode else [e["episode_number"] for e in load_episodes(series)]
+    results = media.restore_all(series, store, eps, check_all=args.check)
+    for f, status, detail in results:
+        print(f"  {f}: {status} {detail}")
+    if not results:
+        print("  永続保存済みの画像がありません。")
+    return 1 if any(st == "failed" for _, st, _ in results) or not results else 0
+
+
+def cmd_import_zip(series: Series, args) -> int:
+    from . import media
+
+    eps = [args.episode] if args.episode else [e["episode_number"] for e in load_episodes(series)]
+    results = media.import_zip(series, Path(args.zip), eps)
+    for f, status in results:
+        print(f"  {f}: {status}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="storyengine", description="連載ショート動画の制作管理")
     p.add_argument("--series", default=DEFAULT_SERIES, help=f"連載ディレクトリ（既定: {DEFAULT_SERIES}）")
@@ -318,6 +351,12 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("rebuild")
     ps = sub.add_parser("persist", help="完成済みでまだ永続保存されていない生成画像を保存先へ送る")
     ps.add_argument("--episode", type=int)
+    rs = sub.add_parser("restore", help="永続保存した画像を取り戻す（生成はしない）。--check で全件を照合")
+    rs.add_argument("--episode", type=int)
+    rs.add_argument("--check", action="store_true", help="手元にある画像も保存先からダウンロードして照合する")
+    iz = sub.add_parser("import-zip", help="記録と一致する画像だけを ZIP から手元に戻す（生成・通信なし）")
+    iz.add_argument("zip")
+    iz.add_argument("--episode", type=int)
     im = sub.add_parser("images", help="カットの開始画像を生成（--dry-run で確認のみ）")
     im.add_argument("--episode", type=int, help="話数（既定: 最新話）")
     im.add_argument("--cuts", help="対象カット（例: 1,3）。既定: 全カット")
@@ -327,7 +366,8 @@ def main(argv: list[str] | None = None) -> int:
     args = p.parse_args(argv)
 
     handlers = {"brief": cmd_brief, "scaffold": cmd_scaffold, "validate": cmd_validate,
-                "commit": cmd_commit, "render": cmd_render, "rebuild": cmd_rebuild, "status": cmd_status, "images": cmd_images, "persist": cmd_persist}
+                "commit": cmd_commit, "render": cmd_render, "rebuild": cmd_rebuild, "status": cmd_status, "images": cmd_images, "persist": cmd_persist,
+                "restore": cmd_restore, "import-zip": cmd_import_zip}
     try:
         series = load_series(args.series)
         return handlers[args.cmd](series, args)

@@ -66,7 +66,9 @@ python3 -m storyengine validate series/midnight-vending-machine/drafts/ep002.jso
 python3 -m storyengine commit   series/midnight-vending-machine/drafts/ep002.json
 python3 -m storyengine images --dry-run          # 最新話の画像生成の対象・参照画像・保存先・再利用/生成の判定（何も書かない）
 python3 -m storyengine images --episode 1 --cuts 1 --allow-paid   # 有料生成（見積もり確認後のみ。未接続なら何も生成しない）
-python3 -m storyengine persist                   # 完成済みでまだ永続保存されていない画像を保存先へ送る
+python3 -m storyengine persist                   # 完成済みでまだ永続保存されていない画像を保存先へ送る（保存後にダウンロードして照合）
+python3 -m storyengine restore --check           # 保存先の全画像をダウンロードして照合（生成はしない）
+python3 -m storyengine import-zip <zip>          # 記録と一致する画像だけを ZIP から手元に戻す
 python3 -m unittest discover -s tests -v
 ```
 

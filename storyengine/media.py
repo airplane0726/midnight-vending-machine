@@ -557,6 +557,83 @@ def persist_all(series: Series, store: AssetStore, episodes: list[int]) -> list[
     return results
 
 
+def restore_all(series: Series, store: AssetStore, episodes: list[int], *, check_all: bool = False
+                ) -> list[tuple[str, str, str]]:
+    """永続保存した画像を取り戻す（生成はしない）。
+
+    手元にない・壊れている画像を保存先からダウンロードし、SHA-256 が記録と一致したときだけ置く。
+    check_all=True なら手元にある画像も一時ファイルへダウンロードして照合する（手元は変更しない）。
+    """
+    results = []
+    with exclusive_lock(series.lock_path):
+        for n in episodes:
+            if not series.media_records_path(n).is_file():
+                continue
+            for slot in load_records(series, n)["slots"].values():
+                for v in slot["versions"]:
+                    uri = (v.get("storage") or {}).get("uri")
+                    if v.get("status") != "complete" or not uri:
+                        continue
+                    local_ok = _verify_local(series, v, None) is None
+                    if local_ok and not check_all:
+                        results.append((v["file"], "local_ok", ""))
+                        continue
+                    dest = series.resolve(v["file"])
+                    dest.parent.mkdir(parents=True, exist_ok=True)
+                    tmp = dest.with_name(f".tmp-restore-{dest.name}")
+                    try:
+                        store.download(uri, tmp)
+                        info = inspect_image(tmp)
+                        if info["sha256"] != v["sha256"]:
+                            raise InvalidImageError("記録と一致しません")
+                        if local_ok:
+                            tmp.unlink()
+                            results.append((v["file"], "verified", uri))
+                        else:
+                            os.replace(tmp, dest)
+                            results.append((v["file"], "restored", uri))
+                    except Exception as e:  # noqa: BLE001
+                        tmp.unlink(missing_ok=True)
+                        results.append((v["file"], "failed", str(e)[:300]))
+    return results
+
+
+def import_zip(series: Series, zip_path: Path, episodes: list[int]) -> list[tuple[str, str]]:
+    """手元にない生成画像を ZIP から戻す。記録の SHA-256 と一致するファイルだけを、記録どおりの場所に置く。"""
+    import zipfile
+
+    by_sha: dict[str, str] = {}
+    for n in episodes:
+        if series.media_records_path(n).is_file():
+            for slot in load_records(series, n)["slots"].values():
+                for v in slot["versions"]:
+                    if v.get("status") == "complete":
+                        by_sha[v["sha256"]] = v["file"]
+    results = []
+    with exclusive_lock(series.lock_path), zipfile.ZipFile(zip_path) as z:
+        for info in z.infolist():
+            if info.is_dir() or not info.filename.lower().endswith((".png", ".jpg", ".jpeg", ".webp")):
+                continue
+            if info.file_size > 64 * 1024 * 1024:
+                results.append((info.filename, "skipped: too large"))
+                continue
+            data = z.read(info)
+            rel = by_sha.get(hashlib.sha256(data).hexdigest())
+            if rel is None:
+                results.append((info.filename, "skipped: 記録にない内容"))
+                continue
+            dest = series.resolve(rel)
+            if dest.is_file() and _sha256_file_uncached(dest) == hashlib.sha256(data).hexdigest():
+                results.append((rel, "already"))
+                continue
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            tmp = dest.with_name(f".tmp-import-{dest.name}")
+            tmp.write_bytes(data)
+            os.replace(tmp, dest)
+            results.append((rel, "imported"))
+    return results
+
+
 def storage_summary(plans: list[SlotPlan], store: AssetStore | None) -> str:
     total = len(plans)
     complete = sum(1 for p in plans if p.action in ("reuse", "restore"))
