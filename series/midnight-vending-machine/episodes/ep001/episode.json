@@ -203,6 +203,13 @@
       "characters_in_shot": [
         "poco"
       ],
+      "continuity_references": [
+        {
+          "slot": "cut02_start",
+          "view": "previous shot (adopted)",
+          "prompt_note": "The cut 2 image is the previous, adopted shot of this scene: keep Poco's appearance (cream felt bean-shaped body, short horizontal black eyes, wooden arms, red felt bag with a wooden button) exactly as in that image, but use the new close-up framing, pose and the transparent rain cube described here; do not copy its composition"
+        }
+      ],
       "camera": "ポコの上半身と立方体のアップ（バストショット）。カメラの方を向いたポコを正面からやや画面左寄りに撮る。背景に自販機の水色がぼける。固定カメラ。",
       "camera_en": "Static close-up bust shot of Poco, who faces the camera, and the cube, taken from the front slightly screen-left; the pale-blue vending machine is softly blurred behind.",
       "start_image": "ポコの上半身と立方体のアップ。ポコはカメラの方を向き、両腕で透明な立方体を胸の前にまっすぐ抱え、のぞき込んでいる。立方体の中では細かな雨が真下に降り、底で小さくはねて消えている。ポコの横長の目は少し縦に大きく、雨の光が映っている。背景には自販機の水色と陳列窓の暖かい光がぼけている。赤いバッグのベルトがポコ自身の右肩（画面左側）にかかっている。",
@@ -280,6 +287,13 @@
       "location": "vending-corner",
       "characters_in_shot": [
         "poco"
+      ],
+      "continuity_references": [
+        {
+          "slot": "cut03_start",
+          "view": "previous shot (adopted)",
+          "prompt_note": "The cut 3 image is the previous, adopted shot: keep Poco's appearance and the transparent rain cube (its size, glassy look and the fine rain inside) exactly as in that image; use the vending corner reference for the machine and keep Poco about 0.6 times the machine's height. Use the new framing and pose described here; do not copy its composition"
+        }
       ],
       "camera": "ミディアムロングショット。カメラの方を向いたポコを、画面左手前寄り（ポコ自身の右斜め前）から撮る。ポコの全身と頭上の空間、背後（画面右寄り）に自販機の下半分。浮き上がるポコに合わせてカメラがわずかに上へ動く。",
       "camera_en": "Medium-long shot from the screen-left foreground (Poco's own front-right, since Poco faces the camera), showing its full body, empty space above it and the lower half of the vending machine behind it toward screen-right; the camera tilts up slightly to follow Poco as it rises.",
@@ -372,6 +386,13 @@
       ],
       "characters_in_start_image": [
         "poco"
+      ],
+      "continuity_references": [
+        {
+          "slot": "cut04_start",
+          "view": "previous shot (adopted)",
+          "prompt_note": "The cut 4 image is the previous, adopted shot: keep Poco's appearance, the transparent rain cube, Poco's position in front of the screen-right half of the retrieval slot and its size relative to the vending machine exactly as in that image. Use the new low camera angle and pose described here; do not copy its composition"
+        }
       ],
       "camera": "ローアングルのミディアムショット。石畳すれすれの高さで、カメラの方を向いたポコを正面から撮る。ポコの全身と足元、背後に自販機の最下部。取り出し口はポコの背後から画面左へ広がり、フラップの画面左寄りの部分がポコの体に隠れずに見えている。固定カメラ。",
       "camera_en": "Static low-angle medium shot from just above the cobblestones, facing Poco, who faces the camera; Poco's full body and the ground beneath it, with the bottom of the vending machine behind. The retrieval slot extends from behind Poco toward screen-left, and the screen-left part of its flap is clearly visible beside Poco.",
