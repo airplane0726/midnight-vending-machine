@@ -32,7 +32,7 @@ python3 -m storyengine commit <draft.json>    # 検証→登録→履歴更新�
 python3 -m storyengine render [--episode N]   # episode.md / production.json 再生成
 python3 -m storyengine rebuild                # state.json 再生成
 python3 -m storyengine images --dry-run       # 画像生成の対象・参照画像・保存先・再利用判定（書き込みなし）
-python3 -m storyengine persist                # 生成済み画像を永続保存先（Cloudflare R2）へ送る
+python3 -m storyengine persist                # 生成済み画像を永続保存先（Google ドライブ）へ送り、復元を確認する
 ```
 
 別の連載は `--series series/<id>` を付ける。標準ライブラリのみ（Python 3.10+）。
@@ -42,6 +42,7 @@ python3 -m storyengine persist                # 生成済み画像を永続保�
 - 秘密情報（APIキー、トークン）をコード・JSON・コミットに入れない。環境変数で渡す（`.env.example` に名前だけ記載）。
 - 外部APIの呼び出し、画像・動画生成、SNS投稿は、ユーザーが接続と費用を確認するまで行わない。`images` は `--dry-run` のみ使い、`--allow-paid` はユーザーがその回の見積もりを確認してから付ける。
 - OpenAI の API キーはクラウド環境のネットワーク用シークレットに保存されている（通信経路で付与）。キーをファイル・コミット・会話に書かない。
+- Google ドライブは、OAuth クライアント情報をネットワーク用シークレット、リフレッシュトークンを環境変数 GOOGLE_DRIVE_REFRESH_TOKEN で受け取る。値を表示・記録しない。保存先の空き容量が確認できないときは有料生成をしない。
 - ダミー画像を生成素材として登録しない。永続保存先が未設定なら「保存完了」と報告しない。
 - 左右は「画面左／画面右」と「ポコ自身の右腕・左腰」を区別して書く。
 - 登録済みの話は書き換えない（最新話のみ `commit --replace` で差し替え可）。

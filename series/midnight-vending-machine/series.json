@@ -101,11 +101,11 @@
     }
   },
   "asset_storage": {
-    "_note": "生成素材の永続保存先。Cloudflare R2（Standard・非公開バケット）を Cloudflare REST API で使う。account_id を設定したら provider を cloudflare-r2 にする。API トークンはここに書かず、クラウド環境のネットワーク用シークレット（api.cloudflare.com）に保存する。",
-    "provider": null,
+    "_note": "生成素材の永続保存先。Google ドライブ（無料の 15GB 内、drive.file スコープ）。OAuth クライアントの ID とシークレットはネットワーク用シークレット（oauth2.googleapis.com、Basic）、リフレッシュトークンは環境変数 GOOGLE_DRIVE_REFRESH_TOKEN（クラウド環境の設定で入力）。ここには書かない。",
+    "provider": "google-drive",
     "params": {
-      "account_id": null,
-      "bucket": "midnight-vending-machine-media"
+      "folder_name": "midnight-vending-machine-media",
+      "min_free_mb": 500
     }
   },
   "characters": {

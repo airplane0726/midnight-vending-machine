@@ -218,7 +218,14 @@ def cmd_images(series: Series, args) -> int:
     print(f"第{n}話 画像生成{'（dry-run：確認のみ）' if args.dry_run else ''}")
     print(f"  画像生成サービス: {model['provider'] or '未接続'} / モデル: {model['model'] or '未設定'}"
           f" / シード: {'記録する' if generator and generator.supports_seed else '使わない（未対応または未接続）'}")
-    print(f"  永続保存先: {(store_cfg or {}).get('provider') or '未設定（生成しても保存完了になりません）'}")
+    if store is None:
+        print("  永続保存先: 未設定（生成しても保存完了になりません）")
+    else:
+        try:
+            _, cap = store.check_capacity(0)
+        except Exception as e:  # noqa: BLE001
+            cap = f"接続・容量を確認できません（{e}）"
+        print(f"  永続保存先: {store.provider} / {cap}")
     print(f"  パスの基準: {os.path.relpath(series.root)}/（連載ディレクトリ）")
 
     if args.dry_run:

@@ -27,6 +27,7 @@ from .state import load_episodes
 from .storage import atomic_write_json, canonical_json, content_hash, exclusive_lock, read_json
 
 RECORDS_SCHEMA_VERSION = 1
+EXPECTED_IMAGE_BYTES = 10 * 1024 * 1024  # 生成前の空き容量確認で見込む1枚あたりの大きさ（実測は約4MB）
 MAX_FAILED_PER_SLOT = 5
 ASPECT_TOLERANCE = 0.01
 EXT = {"png": ".png", "jpeg": ".jpg", "webp": ".webp"}
@@ -448,6 +449,15 @@ def run_images(series: Series, n: int, generator: ImageGenerator | None, *, stor
                 break
             if generator.placeholder:
                 raise NotConfiguredError("プレースホルダー（ダミー）の生成器の出力は完成素材として登録できません")
+            if store is not None:
+                # 保存できない状態で費用をかけないよう、生成前に保存先の空き容量を確認する
+                try:
+                    ok, msg = store.check_capacity(EXPECTED_IMAGE_BYTES)
+                except Exception as e:  # noqa: BLE001
+                    ok, msg = False, f"保存先の空き容量を確認できません: {e}"
+                if not ok:
+                    result.failed.append((p.cut_number, f"生成を中止しました（{msg}）"))
+                    break
             ok, err = _generate_one(series, n, generator, store, p, rec)
             save_records(series, n, rec)  # 1カットごとに保存（再開できるように）
             if ok:

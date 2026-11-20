@@ -1,6 +1,6 @@
 """画像・動画・音声の生成と、SNS 投稿・素材の永続保存の接続口。
 
-登録済みの実装: 画像生成 openai（storyengine/openai_images.py）。永続保存 cloudflare-r2（storyengine/cloudflare_r2.py）。各サービスと契約・費用を確認したあと、
+登録済みの実装: 画像生成 openai（storyengine/openai_images.py）。永続保存 google-drive（storyengine/google_drive.py）。各サービスと契約・費用を確認したあと、
 このクラスを継承して実装し、IMAGE_GENERATORS / ASSET_STORES に登録する。
 使うサービスは series.json の generation.image.provider / asset_storage.provider で選ぶ。
 
@@ -112,6 +112,10 @@ class AssetStore(ABC):
     def download(self, uri: str, dest: Path) -> Path:
         """upload() が返した URI のファイルを dest に書き出す。"""
 
+    def check_capacity(self, required_bytes: int) -> tuple[bool, str]:
+        """保存先の空き容量が足りるか。(足りるか, 説明)。確認できない保存先は常に True。"""
+        return True, "容量確認なし"
+
 
 # 実サービスの実装を登録する（例: IMAGE_GENERATORS["some-service"] = SomeServiceImageGenerator）
 IMAGE_GENERATORS: dict[str, type[ImageGenerator]] = {}
@@ -119,7 +123,7 @@ ASSET_STORES: dict[str, type[AssetStore]] = {}
 
 
 def _load_builtin_providers() -> None:
-    from . import cloudflare_r2, openai_images  # noqa: F401  （openai / cloudflare-r2 を登録）
+    from . import google_drive, openai_images  # noqa: F401  （openai / google-drive を登録）
 
 
 def create_image_generator(cfg: dict[str, Any] | None) -> ImageGenerator | None:

@@ -150,8 +150,8 @@ class TestGeneration(MediaTestCase):
         plans = self.plans()
         self.assertEqual(sorted(plans), [1, 2, 3, 4, 5])
         for p in plans.values():
-            # カット2は採用したカット1の画像も参照するので、カット1ができるまで待つ
-            self.assertEqual(p.action, "blocked" if p.cut_number == 2 else "generate")
+            # カット2〜5は前のカットの採用画像も参照するので、前のカットができるまで待つ
+            self.assertEqual(p.action, "generate" if p.cut_number == 1 else "blocked")
             # 開始画像に映るのはポコと自販機の路地（モチはカット5の途中から）
             self.assertEqual([r["subject"] for r in p.references if r.get("kind") != "generated"],
                              ["poco", "vending-corner"])
@@ -225,7 +225,7 @@ class TestGeneration(MediaTestCase):
         plans = self.plans()
         # カット2はカット1の新しい画像ができるまで待つ（参照先が更新待ちのため）
         self.assertEqual({c: p.action for c, p in plans.items()},
-                         {1: "update", 2: "blocked", 3: "update", 4: "update", 5: "update"})
+                         {1: "update", 2: "blocked", 3: "blocked", 4: "blocked", 5: "blocked"})
         self.assertTrue(all(len(p.previous) == 1 for p in plans.values()))
         media.run_images(self.series, 1, FakeGen())
         self.assertEqual(len(self.image_files()), 10)
@@ -286,7 +286,7 @@ class TestReferences(MediaTestCase):
         paths = self.add_refs()
         prod, _ = media.current_production(self.series, 1)
         cut5 = prod["cuts"][4]
-        self.assertEqual({r["subject"] for r in cut5["image"]["references"]}, {"poco", "vending-corner"})
+        self.assertEqual({r["subject"] for r in cut5["image"]["references"]}, {"poco", "vending-corner", "cut04_start"})
         self.assertEqual({r["subject"] for r in cut5["video"]["references"]}, {"poco", "mochi", "vending-corner"})
 
         captured = []
@@ -369,7 +369,8 @@ class TestReplaceKeepsMedia(MediaTestCase):
         plans = self.plans()
         self.assertEqual(plans[2].action, "update")
         self.assertEqual(len(plans[2].previous), 1)
-        self.assertEqual([plans[i].action for i in (1, 3, 4, 5)], ["reuse"] * 4)
+        # カット3〜5はカット2の新しい画像ができるまで待つ（以前の画像は残っている）
+        self.assertEqual([plans[i].action for i in (1, 3, 4, 5)], ["reuse", "blocked", "blocked", "blocked"])
 
 
 class TestLegacyData(MediaTestCase):
