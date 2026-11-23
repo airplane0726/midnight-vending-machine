@@ -732,8 +732,10 @@
           "cost_usd": 0.0,
           "created_at": "2026-11-23T13:04:07+00:00",
           "storage": {
-            "status": "local_only",
-            "note": "persist で永続保存する"
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://1AluaR_WpZrsD5kzF2FaDZu2F5i8eSIMj",
+            "at": "2026-11-23T13:05:46+00:00"
           }
         }
       ]
