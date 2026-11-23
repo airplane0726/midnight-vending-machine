@@ -237,7 +237,16 @@ def cmd_budget(series: Series, args) -> int:
         print(f"  {sid} 第{ep}話: {usd * s['rate']:.0f}円（${usd:.4f}）/ 1本の上限 {s['per_episode_cap_jpy']}円（原則）")
     print("  前払いの入金（消費とは別）:")
     for d in s["deposits"]:
-        print(f"    {d.get('month', d.get('date', ''))} {d['provider']} {d['amount']} {d['currency']} 自動入金:{'ON' if d.get('auto_topup') else 'OFF'}")
+        if "face_value" in d:
+            fv, paid = d["face_value"], d.get("paid") or {}
+            shown = paid.get("shown_on_purchase_screen") or {}
+            receipt = paid.get("receipt")
+            paid_txt = (f"領収書 {receipt}" if receipt else
+                        f"購入画面 {shown.get('jpy')}円（${shown.get('usd')}）・{paid.get('status', '')}")
+            print(f"    {d.get('month', '')} {d['provider']} 額面 {fv.get('credits')}クレジット（${fv.get('usd')}）"
+                  f" / 支払額 {paid_txt} / 自動入金:{'ON' if d.get('auto_topup') else 'OFF'}")
+        else:
+            print(f"    {d.get('month', d.get('date', ''))} {d['provider']} {d['amount']} {d['currency']} 自動入金:{'ON' if d.get('auto_topup') else 'OFF'}")
     for d in s["planned_deposits"]:
         print(f"    予定 {d['provider']} {d['amount']} {d['currency']}（{d['status']}）")
     return 0

@@ -12,11 +12,22 @@
     {
       "month": "2026-11",
       "provider": "runway",
-      "amount": 10.0,
-      "currency": "USD",
-      "credits": 1000,
+      "status": "購入済み",
       "auto_topup": false,
-      "note": "カット4の動画試作用（Autobilling: Disabled）。API で残高 1000 クレジットを確認済み。クレジットの有効期限は公式資料で未確認"
+      "face_value": {
+        "credits": 1000,
+        "usd": 10.0,
+        "note": "額面（1クレジット $0.01）。消費額の計算はこの額面で行う"
+      },
+      "paid": {
+        "shown_on_purchase_screen": {
+          "jpy": 1458,
+          "usd": 8.8
+        },
+        "receipt": null,
+        "status": "領収書で実際の支払額を確認待ち"
+      },
+      "note": "Autobilling: Disabled。API で残高 1000 クレジットを確認済み。クレジットの有効期限は公式資料で未確認"
     }
   ],
   "planned_deposits": [],
