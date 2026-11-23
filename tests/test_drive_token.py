@@ -301,6 +301,12 @@ class TestCliThen(Base):
         self.assertEqual(code, 0)
         self.assertEqual(captured["args"], ("a" * 32, "x.log"))
         self.assertEqual(calls, [(["persist", "--episode", "1"], "tok")])
+        calls.clear()
+        with mock.patch.object(dt, "finish", fake_finish), mock.patch.object(cli, "main", spy_main):
+            with redirect_stdout(io.StringIO()):
+                real_main(["drive-token", "finish", "--request-id", "a" * 32, "--log", "x.log",
+                           "--then", "images", "--dry-run", "+", "restore", "--check"])
+        self.assertEqual(calls, [(["images", "--dry-run"], "tok"), (["restore", "--check"], "tok")])
         self.assertEqual(google_drive._SESSION_TOKEN, {})  # 実行後にメモリから消す
 
 

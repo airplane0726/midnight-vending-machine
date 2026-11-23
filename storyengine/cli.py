@@ -372,7 +372,22 @@ def cmd_drive_token(series: Series, args) -> int:
             print("dummy のトークンでは後続のコマンドを実行しません")
             return 0
         google_drive.set_session_token(token, header["issued_at"] + int(header["expires_in"]) - 120)
-        return main(["--series", str(series.root), *then])
+        # 「+」で区切って複数のコマンドを順に実行する（失敗したらそこで止める）
+        commands, cur = [], []
+        for a in then:
+            if a == "+":
+                commands.append(cur)
+                cur = []
+            else:
+                cur.append(a)
+        commands.append(cur)
+        code = 0
+        for c in (c for c in commands if c):
+            print(f"--- {' '.join(c)}")
+            code = main(["--series", str(series.root), *c])
+            if code != 0:
+                break
+        return code
     finally:
         google_drive.clear_session_token()
         del token
@@ -404,7 +419,7 @@ def main(argv: list[str] | None = None) -> int:
     dtp.add_argument("--request-id")
     dtp.add_argument("--log", help="ワークフローのログを保存したファイル（処理後に削除）")
     dtp.add_argument("--then", nargs=argparse.REMAINDER, default=[],
-                     help="最後に置く。トークンを使って続けて実行する storyengine のコマンド（例: --then persist --episode 1）")
+                     help="最後に置く。トークンを使って続けて実行する storyengine のコマンド。複数は + で区切る（例: --then images --dry-run + restore --check）")
     im = sub.add_parser("images", help="カットの開始画像を生成（--dry-run で確認のみ）")
     im.add_argument("--episode", type=int, help="話数（既定: 最新話）")
     im.add_argument("--cuts", help="対象カット（例: 1,3）。既定: 全カット")
