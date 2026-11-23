@@ -108,6 +108,23 @@ class TestVideoTrial(unittest.TestCase):
         self.assertEqual(g2._opener.requests, [])
         self.assertEqual(vt.run(self.series, 1, 4, g2, store=None, again=True)["action"], "generated")
 
+    def test_download_failure_then_refetch_same_task_without_new_request(self):
+        class DownloadBlocked(FakeRunway):
+            def __call__(self, req, timeout=None):
+                if req.full_url == "https://cdn.example/out.mp4":
+                    raise urllib.error.URLError("blocked")
+                return super().__call__(req, timeout)
+        g = RunwayVideoGenerator(CFG, opener=DownloadBlocked(self.video), sleep=lambda s: None, poll_interval=1)
+        with self.assertRaises(vt.TrialError):
+            vt.run(self.series, 1, 4, g, store=None)
+        g2 = self.gen()
+        res = vt.run(self.series, 1, 4, g2, store=None, resume_task="task-1")
+        self.assertEqual(res["action"], "refetched")
+        self.assertEqual(res["version"]["cost_usd"], 0.0)
+        self.assertFalse(any(r.full_url.endswith("/image_to_video") for r in g2._opener.requests))
+        with self.assertRaises(vt.TrialError):
+            vt._refetch(self.series, 1, vt.plan(self.series, 1, 4, g2), g2, None, "unknown-task")
+
     def test_timeout_does_not_resubmit(self):
         g = RunwayVideoGenerator(CFG, opener=FakeRunway(self.video, polls=999), sleep=lambda s: None,
                                  poll_interval=1, max_wait_sec=3)

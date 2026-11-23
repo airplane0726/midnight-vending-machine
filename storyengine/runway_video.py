@@ -111,6 +111,14 @@ class RunwayVideoGenerator(VideoGenerator):
         if not task_id:
             raise RunwayError("タスク ID が返りませんでした")
         self.last_task = {"id": task_id, "status": "SUBMITTED"}
+        return self._wait_and_download(task_id, out_path)
+
+    def fetch(self, task_id: str, out_path: Path) -> Path:
+        """既存のタスクの結果を取り直す（新しい生成依頼は送らない・追加費用なし）。"""
+        self.last_task = {"id": task_id, "status": "REFETCH"}
+        return self._wait_and_download(task_id, out_path)
+
+    def _wait_and_download(self, task_id: str, out_path: Path) -> Path:
         waited = 0.0
         while True:  # 結果を待つだけ。失敗しても送り直さない
             info = self._req("GET", f"{API_BASE}/v1/tasks/{task_id}")

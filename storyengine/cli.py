@@ -495,6 +495,15 @@ def cmd_video_trial(series: Series, args) -> int:
     if gen is None:
         print("エラー: 動画生成サービスが未接続です", file=sys.stderr)
         return 2
+    if args.resume_task:
+        try:
+            res = vt.run(series, n, args.cut, gen, store=store, resume_task=args.resume_task)
+        except vt.TrialError as e:
+            print(f"エラー: {e}", file=sys.stderr)
+            return 1
+        v = res["version"]
+        print(f"  取り直し完了（新しい依頼なし）: {v['file']}（{v['duration']}秒、永続保存: {(v.get('storage') or {}).get('status')}）")
+        return 0
     if gen.paid and not args.allow_paid:
         print("  有料です。見積もりを確認してから --allow-paid を付けて実行してください。")
         return 2
@@ -551,6 +560,7 @@ def main(argv: list[str] | None = None) -> int:
     vtp.add_argument("--allow-paid", action="store_true")
     vtp.add_argument("--again", action="store_true", help="同じ条件で依頼済みでも、利用者の明示の指示でもう一度だけ送る")
     vtp.add_argument("--allow-over-episode-cap", action="store_true")
+    vtp.add_argument("--resume-task", help="記録済みのタスクの結果を取り直す（新しい生成依頼は送らない）")
     bp = sub.add_parser("budget", help="今月の制作費（消費）と上限、前払いの入金を表示")
     bp.add_argument("--month", help="YYYY-MM（既定: 今月）")
     bp.add_argument("--episode", type=int)

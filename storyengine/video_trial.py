@@ -53,13 +53,45 @@ def plan(series: Series, n: int, cut_number: int, generator: VideoGenerator | No
             "estimate": generator.estimate(spec) if generator else None}
 
 
+def _refetch(series: Series, n: int, pl: dict[str, Any], generator: VideoGenerator, store: AssetStore | None,
+             task_id: str) -> dict[str, Any]:
+    """記録済みの依頼（タスク）の結果を取り直す。新しい生成依頼は送らず、費用も加えない。"""
+    known = [v for v in pl["previous_attempts"] if (v.get("task") or {}).get("id") == task_id]
+    if not known:
+        raise TrialError(f"タスク {task_id} はこの試作の記録にありません")
+    out_dir = series.resolve(series.media_rel(n, "videos"))
+    tmp = out_dir / f".tmp-{pl['slot']}-refetch-{os.getpid()}.mp4"
+    try:
+        generator.fetch(task_id, tmp)
+        info = inspect_media(tmp)
+    except Exception as e:  # noqa: BLE001
+        tmp.unlink(missing_ok=True)
+        raise TrialError(f"結果の取り直しに失敗しました（新しい依頼は送っていません）: {e}") from None
+    final = out_dir / f"{pl['slot']}-{pl['key'].split(':', 1)[1][:16]}.mp4"
+    os.replace(tmp, final)
+    rec = load_records(series, n)
+    entry = rec["slots"].setdefault(pl["slot"], {"kind": "video", "versions": []})
+    version = {"key": pl["key"], "kind": "video_trial", "conditions": pl["conditions"], "status": "complete",
+               "created_at": _dt.datetime.now(_dt.timezone.utc).replace(microsecond=0).isoformat(),
+               "task": {"id": task_id, "status": "SUCCEEDED"}, "cost_usd": 0.0,
+               "cost_note": "同じタスクの結果を取り直したもの（費用は元の依頼の記録に計上済み）",
+               "file": series.rel(final), "format": "mp4", "width": info["width"], "height": info["height"],
+               "duration": round(info["duration"], 3), "bytes": info["bytes"], "sha256": info["sha256"]}
+    version["storage"] = _persist(series, store, final, n)
+    entry["versions"].append(version)
+    save_records(series, n, rec)
+    return {"action": "refetched", "version": version}
+
+
 def run(series: Series, n: int, cut_number: int, generator: VideoGenerator, *,
-        store: AssetStore | None, again: bool = False) -> dict[str, Any]:
+        store: AssetStore | None, again: bool = False, resume_task: str | None = None) -> dict[str, Any]:
     with exclusive_lock(series.lock_path):
         pl = plan(series, n, cut_number, generator)
         done = [v for v in pl["previous_attempts"] if v.get("status") == "complete"]
         if done:
             return {"action": "reuse", "version": done[-1]}
+        if resume_task:
+            return _refetch(series, n, pl, generator, store, resume_task)
         if pl["previous_attempts"] and not again:
             raise TrialError("同じ条件の試作を一度依頼済みです。自動では作り直しません（明示の指示があるときだけ again を使う）")
         est = pl["estimate"]
