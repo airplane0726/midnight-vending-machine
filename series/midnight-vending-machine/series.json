@@ -101,7 +101,7 @@
     }
   },
   "asset_storage": {
-    "_note": "生成素材の永続保存先。Google ドライブ（無料の 15GB 内、drive.file スコープ）。OAuth クライアントの ID とシークレットはネットワーク用シークレット（oauth2.googleapis.com、Basic）、リフレッシュトークンは環境変数 GOOGLE_DRIVE_REFRESH_TOKEN（クラウド環境の設定で入力）。ここには書かない。",
+    "_note": "生成素材の永続保存先。Google ドライブ（無料の 15GB 内、drive.file スコープ）。クラウド環境では、OAuth Playground で発行したアクセストークン（約1時間有効）を www.googleapis.com 宛てのネットワーク用シークレット（Bearer）として保存して使う。リフレッシュトークンはクラウド環境に置かない。期限があるため手動の保存確認向けで、毎日の自動運用には別の仕組みが必要。",
     "provider": "google-drive",
     "params": {
       "folder_name": "midnight-vending-machine-media",

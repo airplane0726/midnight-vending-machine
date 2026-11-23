@@ -93,6 +93,13 @@ class FakeDrive:
         raise AssertionError(f"unexpected request {method} {url}")
 
 
+class FakeDrive401(FakeDrive):
+    def __call__(self, req, timeout=None):
+        if req.get_header("Authorization") != "Bearer at-123" and "oauth2" not in req.full_url:
+            raise urllib.error.HTTPError(req.full_url, 401, "x", {}, io.BytesIO(b'{"error":{"message":"Invalid Credentials"}}'))
+        return super().__call__(req, timeout)
+
+
 class TestDriveStore(unittest.TestCase):
     def setUp(self):
         self.tmp = Path(tempfile.mkdtemp())
@@ -134,11 +141,22 @@ class TestDriveStore(unittest.TestCase):
         with self.assertRaises(DriveError):
             GoogleDriveStore(DCFG, opener=FakeDrive(corrupt=True)).upload(self.file, "k/a.png")
 
-    def test_missing_refresh_token_and_expired_grant(self):
+    def test_injected_bearer_mode_without_refresh_token(self):
+        class InjectingDrive(FakeDrive):  # 通信経路が Authorization を置き換えるのを模擬
+            def __call__(self, req, timeout=None):
+                self.seen = req.get_header("Authorization")
+                if req.full_url.startswith("https://www.googleapis.com/"):
+                    req.headers["Authorization"] = "Bearer at-123"
+                return super().__call__(req, timeout)
+        fake = InjectingDrive()
         with mock.patch.dict(os.environ, {}, clear=True):
-            with self.assertRaises(DriveError) as cm:
-                GoogleDriveStore(DCFG, opener=FakeDrive()).quota()
-            self.assertIn("GOOGLE_DRIVE_REFRESH_TOKEN", str(cm.exception))
+            store = GoogleDriveStore(DCFG, opener=fake)
+            uri = store.upload(self.file, "k/a.png")
+        self.assertTrue(uri.startswith("gdrive://"))
+        self.assertEqual(fake.seen, "Bearer injected-by-environment-proxy")
+        self.assertFalse(any(r.full_url.startswith("https://oauth2") for r in fake.requests))  # トークン発行に行かない
+
+    def test_expired_grant(self):
         with self.assertRaises(DriveError) as cm:
             GoogleDriveStore(DCFG, opener=FakeDrive(token_status=400)).quota()
         self.assertIn("HTTP 400", str(cm.exception))
@@ -189,9 +207,9 @@ class TestDriveWithPipeline(SeriesCase):
         self.assertIn("空き容量が不足", res.failed[0][1])
 
     def test_unreachable_store_stops_paid_generation(self):
-        with mock.patch.dict(os.environ, {}, clear=True):
+        with mock.patch.dict(os.environ, {}, clear=True):  # アクセストークン未登録（通信経路が置き換えない）→ 401
             gen = FakeGen()
-            res = media.run_images(self.series, 1, gen, store=GoogleDriveStore(DCFG, opener=FakeDrive()), cuts=[1])
+            res = media.run_images(self.series, 1, gen, store=GoogleDriveStore(DCFG, opener=FakeDrive401()), cuts=[1])
         self.assertEqual(gen.calls, [])
         self.assertIn("確認できません", res.failed[0][1])
 

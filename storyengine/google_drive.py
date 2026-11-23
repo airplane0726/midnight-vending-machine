@@ -1,6 +1,11 @@
 """Google ドライブへの生成素材の永続保存（Drive API v3、標準ライブラリのみ）。
 
 認証の仕組み（認証情報をコード・Git・チャットに置かない）:
+- 方式A（クラウド環境の既定）: OAuth Playground で発行したアクセストークン（約1時間有効）を、
+  www.googleapis.com 宛てのネットワーク用シークレット（Bearer）として保存する。通信経路が Authorization を付与する。
+  リフレッシュトークンはクラウド環境に置かない（本文でしか送れず、安全に保存する場所がないため）。
+  有効期限があるので、保存確認などの手動作業向け。毎日の自動運用には使えない。
+- 方式B（リフレッシュトークンを安全に置ける実行環境向け）:
 - OAuth クライアントの ID とシークレット: クラウド環境のネットワーク用シークレット（oauth2.googleapis.com 宛て、
   Basic 認証）として保存し、通信経路で Authorization ヘッダーに付与される。コードは置き換え用の仮の値を送る。
 - リフレッシュトークン: Google のトークン発行 API は本文でしか受け取らないため、環境変数
@@ -33,6 +38,7 @@ API = "https://www.googleapis.com/drive/v3"
 UPLOAD_API = "https://www.googleapis.com/upload/drive/v3"
 FOLDER_MIME = "application/vnd.google-apps.folder"
 REFRESH_ENV = "GOOGLE_DRIVE_REFRESH_TOKEN"
+PLACEHOLDER_BEARER = "injected-by-environment-proxy"
 PLACEHOLDER_BASIC = base64.b64encode(b"injected-by-environment-proxy:x").decode()
 TIMEOUT_SEC = 300
 
@@ -67,7 +73,8 @@ class GoogleDriveStore(AssetStore):
                 detail = f" {err.get('message', '')}" if isinstance(err, dict) else f" {err}: {body.get('error_description', '')}"
             except Exception:  # noqa: BLE001
                 pass
-            hint = {400: "（リフレッシュトークンが無効・期限切れの可能性）", 401: "（認証情報を確認してください）",
+            hint = {400: "（リフレッシュトークンが無効・期限切れの可能性）",
+                    401: "（アクセストークンが未登録・期限切れ（約1時間）の可能性。Playground で取り直して登録してください）",
                     403: "（権限・容量・API の有効化を確認してください）", 404: "（ファイルが見つかりません）"}.get(e.code, "")
             raise DriveError(f"Google ドライブ エラー HTTP {e.code}{hint}{detail}"[:600]) from None
         except urllib.error.URLError as e:
@@ -78,7 +85,9 @@ class GoogleDriveStore(AssetStore):
             return self._token
         refresh = os.environ.get(REFRESH_ENV)
         if not refresh:
-            raise DriveError(f"環境変数 {REFRESH_ENV} が未設定です（クラウド環境の設定で入力し、新しいセッションで読み込まれます）")
+            # クラウド環境: アクセストークン（約1時間有効）を www.googleapis.com 宛てのネットワーク用シークレットに
+            # 保存しておくと、通信経路が Authorization ヘッダーを置き換える。ここでは仮の値を送るだけ。
+            return PLACEHOLDER_BEARER
         form = {"grant_type": "refresh_token", "refresh_token": refresh}
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         cid, csec = os.environ.get("GOOGLE_OAUTH_CLIENT_ID"), os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
