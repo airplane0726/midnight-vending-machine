@@ -13,6 +13,7 @@ from pathlib import Path
 from storyengine import media, video_trial as vt
 from storyengine.runway_video import RunwayVideoGenerator, RunwayError, estimate_usd
 from storyengine.series import load_series
+from storyengine.state import load_episodes
 from storyengine.storage import read_json
 from tests.test_media import SERIES_SRC, FakeGen
 
@@ -81,13 +82,17 @@ class TestVideoTrial(unittest.TestCase):
         with self.assertRaises(RunwayError):
             g.build_request({"prompt": "p", "duration_sec": 5}, self.tmp / "x.png")
 
-    def test_request_shape_uses_adopted_image_and_half_turn_prompt(self):
+    def test_request_shape_uses_adopted_image_and_episode_prompt(self):
         g = self.gen()
         res = vt.run(self.series, 1, 4, g, store=None)
         self.assertEqual(res["action"], "generated")
         body = json.loads(g._opener.requests[0].data)
         self.assertEqual((body["model"], body["ratio"], body["duration"]), ("gen4_turbo", "720:1280", 5))
-        self.assertIn("half turn (180 degrees)", body["promptText"])
+        cut4 = next(c for c in load_episodes(self.series)[0]["cuts"] if c["cut_number"] == 4)
+        self.assertEqual(body["promptText"], cut4["video_trial"]["prompt"])
+        self.assertIn("no mouth", body["promptText"])
+        self.assertIn("both wooden arms", body["promptText"])
+        self.assertNotIn("180", body["promptText"])
         self.assertTrue(body["promptImage"][0]["uri"].startswith("data:image/jpeg;base64,"))
         self.assertEqual(body["promptImage"][0]["position"], "first")
         self.assertEqual(g._opener.requests[0].get_header("X-runway-version"), "2024-11-06")
