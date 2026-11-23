@@ -133,7 +133,7 @@ Poco, in side view facing screen-right, lowers its own right arm from the lit bu
 
 **開始画像**
 
-ポコの上半身と立方体のアップ。ポコはカメラの方を向き、両腕で透明な立方体を胸の前にまっすぐ抱え、のぞき込んでいる。立方体の中では細かな雨が真下に降り、底で小さくはねて消えている。ポコの横長の目は少し縦に大きく、雨の光が映っている。背景には自販機の水色と陳列窓の暖かい光がぼけている。赤いバッグのベルトがポコ自身の右肩（画面左側）にかかっている。
+ポコの上半身と立方体のアップ。ポコはカメラの方を向き、両腕で透明な立方体を胸の前にまっすぐ抱え、のぞき込んでいる。立方体の中では細かな雨が真下に降り、底で小さくはねて消えている。ポコの横長の目は少し縦に大きく、雨の光が映っている。背景には自販機の水色と陳列窓の暖かい光がぼけている。赤いバッグのベルトはポコ自身の右肩（画面左側）から胸の前を斜めに横切り、バッグ本体はポコ自身の左腰（カメラの方を向いているので画面右側）にある。
 
 **動き**
 
@@ -160,7 +160,7 @@ Poco, in side view facing screen-right, lowers its own right arm from the lit bu
 **image_prompt**
 
 ```
-Close-up bust shot of Poco facing the camera, holding a transparent glass cube upright against its chest with both wooden arms, looking into it. Inside the cube fine silver rain falls straight down and vanishes in tiny splashes at the bottom; no water outside the cube. Poco's horizontal oval eyes are slightly taller, reflecting tiny glints of the rain. The red bag strap crosses Poco's own right shoulder (on the screen-left side). Background: softly blurred pale-blue vending machine and warm glow of the display window, deep blue night.
+Close-up bust shot of Poco facing the camera, holding a transparent glass cube upright against its chest with both wooden arms, looking into it. Inside the cube fine silver rain falls straight down and vanishes in tiny splashes at the bottom; no water outside the cube. Poco's horizontal oval eyes are slightly taller, reflecting tiny glints of the rain. The red bag strap runs from Poco's own right shoulder (on the screen-left side, because Poco faces the camera) diagonally across its chest down to the bag at Poco's own left hip, which is on the SCREEN-RIGHT side; the bag must not be on the screen-left side. Background: softly blurred pale-blue vending machine and warm glow of the display window, deep blue night.
 ```
 
 **video_prompt**

@@ -212,7 +212,7 @@
       ],
       "camera": "ポコの上半身と立方体のアップ（バストショット）。カメラの方を向いたポコを正面からやや画面左寄りに撮る。背景に自販機の水色がぼける。固定カメラ。",
       "camera_en": "Static close-up bust shot of Poco, who faces the camera, and the cube, taken from the front slightly screen-left; the pale-blue vending machine is softly blurred behind.",
-      "start_image": "ポコの上半身と立方体のアップ。ポコはカメラの方を向き、両腕で透明な立方体を胸の前にまっすぐ抱え、のぞき込んでいる。立方体の中では細かな雨が真下に降り、底で小さくはねて消えている。ポコの横長の目は少し縦に大きく、雨の光が映っている。背景には自販機の水色と陳列窓の暖かい光がぼけている。赤いバッグのベルトがポコ自身の右肩（画面左側）にかかっている。",
+      "start_image": "ポコの上半身と立方体のアップ。ポコはカメラの方を向き、両腕で透明な立方体を胸の前にまっすぐ抱え、のぞき込んでいる。立方体の中では細かな雨が真下に降り、底で小さくはねて消えている。ポコの横長の目は少し縦に大きく、雨の光が映っている。背景には自販機の水色と陳列窓の暖かい光がぼけている。赤いバッグのベルトはポコ自身の右肩（画面左側）から胸の前を斜めに横切り、バッグ本体はポコ自身の左腰（カメラの方を向いているので画面右側）にある。",
       "motion": [
         {
           "start_sec": 0.0,
@@ -244,7 +244,7 @@
         "carry_in": "カット2の終了状態：取り出し口の画面右半分の前でカメラの方を向いて両足で立ち、立方体を胸の前にまっすぐ抱えて中の雨をのぞき込むポコ。",
         "carry_out": "ポコはカメラの方を向いて両足で立ったまま、立方体を画面右（ポコ自身の左側）へ約30度傾けて胸の前に抱えている。雨は立方体の底面へ向かって斜めに降っている。ポコの体も少し画面右へ傾いている。",
         "footing": "フレーム外だが両足とも接地したまま（足は動かさない）。",
-        "props": "立方体を両腕で保持。カット終わりで画面右へ約30度傾いた状態。赤いバッグのベルトはポコ自身の右肩（画面左側）。"
+        "props": "立方体を両腕で保持。カット終わりで画面右へ約30度傾いた状態。赤いバッグのベルトはポコ自身の右肩（画面左側）から胸の前を斜めに、バッグ本体はポコ自身の左腰（画面右側）。"
       },
       "sound": {
         "ambience": "自販機の作動音（小）。立方体の中の雨音が続く。",
@@ -277,7 +277,7 @@
         ],
         "music": "ピチカートが雨のリズムを刻み、傾けるたびにオルゴールが下降（左）・上昇（右）する短い音型を鳴らす。"
       },
-      "image_prompt": "Close-up bust shot of Poco facing the camera, holding a transparent glass cube upright against its chest with both wooden arms, looking into it. Inside the cube fine silver rain falls straight down and vanishes in tiny splashes at the bottom; no water outside the cube. Poco's horizontal oval eyes are slightly taller, reflecting tiny glints of the rain. The red bag strap crosses Poco's own right shoulder (on the screen-left side). Background: softly blurred pale-blue vending machine and warm glow of the display window, deep blue night.",
+      "image_prompt": "Close-up bust shot of Poco facing the camera, holding a transparent glass cube upright against its chest with both wooden arms, looking into it. Inside the cube fine silver rain falls straight down and vanishes in tiny splashes at the bottom; no water outside the cube. Poco's horizontal oval eyes are slightly taller, reflecting tiny glints of the rain. The red bag strap runs from Poco's own right shoulder (on the screen-left side, because Poco faces the camera) diagonally across its chest down to the bag at Poco's own left hip, which is on the SCREEN-RIGHT side; the bag must not be on the screen-left side. Background: softly blurred pale-blue vending machine and warm glow of the display window, deep blue night.",
       "video_prompt": "Poco slowly tilts the cube about 30 degrees toward screen-left; the rain inside tilts with the cube, always falling toward the cube's own bottom face, and Poco's body leans the same way. It pauses, eyes round with wonder, then tilts the cube back past upright to about 30 degrees toward screen-right; the rain follows. Poco's body leans toward screen-right. End holding the cube tilted 30 degrees toward screen-right, eyes narrowing slightly as if getting an idea."
     },
     {
