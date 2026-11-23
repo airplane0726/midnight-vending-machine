@@ -65,6 +65,12 @@ class TestVideoTrial(unittest.TestCase):
         cfg = read_json(self.root / "series.json")
         cfg["generation"]["image"] = {"provider": "test", "model": "m", "params": {}}
         (self.root / "series.json").write_text(json.dumps(cfg, ensure_ascii=False), encoding="utf-8")
+        ep_path = self.root / "episodes" / "ep001" / "episode.json"
+        ep = read_json(ep_path)  # 本物のデータでは取り消し済み。試作の仕組みの試験のため、写しでは有効に戻す
+        for c in ep["cuts"]:
+            if c.get("video_trial"):
+                c["video_trial"].pop("status", None)
+        ep_path.write_text(json.dumps(ep, ensure_ascii=False), encoding="utf-8")
         self.series = load_series(self.root)
         media.run_images(self.series, 1, FakeGen())
         self.video = tiny_mp4(self.tmp / "v.mp4")
@@ -140,6 +146,24 @@ class TestVideoTrial(unittest.TestCase):
         self.assertEqual(v["cost_usd"], res["version"]["cost_usd"])
         with self.assertRaises(vt.TrialError):
             vt.review(self.series, 1, 4, "ffff", {"adopted": True, "use": "x", "checks": []})
+
+    def test_cancelled_trial_is_never_sent(self):
+        import storyengine.video_trial as m
+        orig = m.load_episodes
+        def patched(series):
+            eps = orig(series)
+            for c in eps[0]["cuts"]:
+                if c["cut_number"] == 4:
+                    c["video_trial"] = dict(c["video_trial"], status="cancelled", cancelled_reason="テスト")
+            return eps
+        m.load_episodes = patched
+        try:
+            g = self.gen()
+            with self.assertRaises(vt.TrialError):
+                vt.run(self.series, 1, 4, g, store=None)
+            self.assertEqual(g._opener.requests, [])
+        finally:
+            m.load_episodes = orig
 
     def test_timeout_does_not_resubmit(self):
         g = RunwayVideoGenerator(CFG, opener=FakeRunway(self.video, polls=999), sleep=lambda s: None,

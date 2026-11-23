@@ -488,7 +488,9 @@
         "budget": {
           "max_cost_usd_per_attempt": 0.25,
           "auto_regeneration": false
-        }
+        },
+        "status": "cancelled",
+        "cancelled_reason": "試作を繰り返す段階を終え、第1話の完成を優先するため取り消し（未実行・費用なし）"
       }
     },
     {

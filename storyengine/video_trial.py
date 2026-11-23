@@ -35,6 +35,8 @@ def plan(series: Series, n: int, cut_number: int, generator: VideoGenerator | No
     if not cut or not cut.get("video_trial"):
         raise TrialError(f"カット{cut_number}に video_trial（試作の指示）がありません")
     trial = cut["video_trial"]
+    if trial.get("status") == "cancelled":
+        raise TrialError(f"カット{cut_number}の試作は取り消されています（{trial.get('cancelled_reason', '')}）")
     p = {x.cut_number: x for x in plan_images(series, n)[0]}.get(cut_number)
     if not p or p.action != "reuse":
         raise TrialError(f"カット{cut_number}の採用済みの開始画像がありません")
