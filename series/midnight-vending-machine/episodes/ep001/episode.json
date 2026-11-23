@@ -332,7 +332,7 @@
       ],
       "continuity": {
         "carry_in": "カット3の終了状態：カメラの方を向いて両足で立ち、立方体を画面右へ約30度傾けて抱えるポコ。",
-        "carry_out": "ポコは取り出し口の画面右半分の前、同じ位置の真上で、足が地面からポコの身長の3分の1ほど浮いた状態。カメラの方を向いたまま。立方体はまっすぐに戻り、中の雨は下へ降っている。ポコはゆっくり下降中。赤いバッグはポコ自身の左腰（画面右側）に戻りつつある。目はまだ少し慌てた形。",
+        "carry_out": "採用した画像に合わせた終了状態：ポコは自販機の左寄りの前（左端の近く、自販機から1歩手前）の真上で、足が地面からポコの身長の3分の1ほど浮いた状態。カメラの方を向いたまま。立方体はまっすぐに戻り、中の雨は下へ降っている。ポコはゆっくり下降中。赤いバッグはポコ自身の左腰（画面右側）。黄ばんだフラップの取り出し口は、ポコの画面右側に見えている。",
         "footing": "0〜1.0秒は両足接地。1.0〜1.3秒でかかと→つま先の順に離れる。以後は浮遊（立方体を逆さにしている作用によるもの）。終了時も浮いたまま。",
         "props": "立方体を両腕で保持：0〜1.0秒で逆さに、3.3〜4.3秒で元の向きに戻る。赤いバッグは浮遊中にふわりと持ち上がる。"
       },
@@ -391,12 +391,12 @@
         {
           "slot": "cut04_start",
           "view": "previous shot (adopted)",
-          "prompt_note": "The cut 4 image is the previous, adopted shot: keep Poco's appearance, the transparent rain cube, Poco's position in front of the screen-right half of the retrieval slot and its size relative to the vending machine exactly as in that image. Use the new low camera angle and pose described here; do not copy its composition"
+          "prompt_note": "The cut 4 image is the previous, adopted shot: keep Poco's appearance, the transparent rain cube, Poco's position in front of the left part of the vending machine and its size relative to the machine exactly as in that image, with the retrieval flap visible to the screen-right of Poco. Use the new low camera angle and pose described here; do not copy its composition"
         }
       ],
-      "camera": "ローアングルのミディアムショット。石畳すれすれの高さで、カメラの方を向いたポコを正面から撮る。ポコの全身と足元、背後に自販機の最下部。取り出し口はポコの背後から画面左へ広がり、フラップの画面左寄りの部分がポコの体に隠れずに見えている。固定カメラ。",
-      "camera_en": "Static low-angle medium shot from just above the cobblestones, facing Poco, who faces the camera; Poco's full body and the ground beneath it, with the bottom of the vending machine behind. The retrieval slot extends from behind Poco toward screen-left, and the screen-left part of its flap is clearly visible beside Poco.",
-      "start_image": "地面すれすれの低い視点。ポコがカメラの方を向き、立方体をまっすぐ胸の前に抱えたまま、取り出し口の画面右半分の前で、地面からポコの身長の3分の1ほどの高さに浮いていて、ゆっくり降りてくるところ。足の下の石畳には影が落ちている。立方体の中の雨は下へ降っている。背後に自販機の最下部があり、閉じた黄ばんだフラップの取り出し口がポコの背後から画面左へ広がっている。赤いバッグはポコ自身の左腰（画面右側）。",
+      "camera": "ローアングルのミディアムショット。石畳すれすれの高さで、カメラの方を向いたポコを正面から撮る。ポコの全身と足元、背後に自販機の下側。ポコは自販機の左寄りの前にいるので、取り出し口のフラップはポコの画面右側にさえぎられずに見えている。固定カメラ。",
+      "camera_en": "Static low-angle medium shot from just above the cobblestones, facing Poco, who faces the camera; Poco's full body and the ground beneath it, with the lower part of the vending machine behind. Poco is in front of the left part of the machine, so the retrieval flap is clearly visible, unobstructed, to the screen-right of Poco.",
+      "start_image": "地面すれすれの低い視点。ポコがカメラの方を向き、立方体をまっすぐ胸の前に抱えたまま、自販機の左寄りの前（左端の近く）で、地面からポコの身長の3分の1ほどの高さに浮いていて、ゆっくり降りてくるところ。足の下の石畳には影が落ちている。立方体の中の雨は下へ降っている。赤いバッグはポコ自身の左腰（画面右側）。背後には自販機の下側があり、閉じた黄ばんだ半透明のフラップの取り出し口が、ポコの画面右側にさえぎられずに見えている。モチはまだ見えない。",
       "motion": [
         {
           "start_sec": 0.0,
@@ -416,7 +416,7 @@
         {
           "start_sec": 2.2,
           "end_sec": 3.4,
-          "action": "画面左奥、ポコの背後から画面左へ広がる取り出し口の、フラップの画面左寄りの部分が内側から少しだけ押し上げられ、アイボリーホワイトのフェルトの柔らかい四角い体（暖かい光で薄いクリーム色に見える）のモチが上半分だけ顔を出す。黒い点の目でポコの方をじっと見ている。ポコは虹に夢中で気づかない。"
+          "action": "ポコの画面右側に見えている取り出し口のフラップが、内側から少しだけ押し上げられ、アイボリーホワイトのフェルトの柔らかい四角い体（暖かい光で薄いクリーム色に見える）のモチが上半分だけ顔を出す。黒い点の目で画面左のポコをじっと見ている。ポコは足元の虹に夢中で気づかない。"
         },
         {
           "start_sec": 3.4,
@@ -425,10 +425,10 @@
         }
       ],
       "continuity": {
-        "carry_in": "カット4の終了状態：取り出し口の画面右半分の前の真上、地面からポコの身長の3分の1ほどの高さで、カメラの方を向き、立方体をまっすぐに抱えたまま下降中のポコ。",
-        "carry_out": "ポコは取り出し口の画面右半分の前でカメラの方を向いて両足をそろえて石畳に立ち、立方体をまっすぐ胸の前に抱えて、両足の間に残った小さな虹を見下ろしている。画面左奥、取り出し口のフラップの画面左寄りの部分が少し持ち上がり、モチが顔の上半分を出してポコを見ている。ポコはモチに気づいていない。",
+        "carry_in": "カット4の終了状態：自販機の左寄りの前の真上、地面からポコの身長の3分の1ほどの高さで、カメラの方を向き、立方体をまっすぐに抱えたまま下降中のポコ。取り出し口はポコの画面右側に見えている。",
+        "carry_out": "ポコは自販機の左寄りの前でカメラの方を向いて両足をそろえて石畳に立ち、立方体をまっすぐ胸の前に抱えて、両足の間に残った小さな虹を見下ろしている。ポコの画面右側の取り出し口のフラップが少し持ち上がり、モチが顔の上半分を出してポコを見ている。ポコはモチに気づいていない。",
         "footing": "0〜1.0秒は浮遊しながら下降、1.0秒でつま先接地、1.3秒で両足とも完全に接地。以後は両足接地のまま。",
-        "props": "立方体はまっすぐ（雨は下へ降る）。小さな虹がポコの両足の間の石畳に残る。取り出し口のフラップは2.2秒から画面左寄りの部分が少し開いたまま。赤いバッグはポコ自身の左腰（画面右側）。"
+        "props": "立方体はまっすぐ（雨は下へ降る）。小さな虹がポコの両足の間の石畳に残る。取り出し口（ポコの画面右側）のフラップは2.2秒から少し開いたまま。赤いバッグはポコ自身の左腰（画面右側）。"
       },
       "sound": {
         "ambience": "自販機の作動音（小）と立方体の雨音。最後は作動音だけが残る。",
@@ -456,8 +456,8 @@
         ],
         "music": "1.4秒でオルゴールが主旋律に戻り、虹とともにヘ長調の和音で解決。2.2秒以降はオルゴールが1音ずつ間を空けて鳴り、3.4秒のまばたきと同時に最後の1音。残りは自販機の作動音だけになり、カット1の冒頭へつながる。"
       },
-      "image_prompt": "Very low-angle shot from just above the cobblestones. Poco faces the camera and floats about one third of its own height above the ground, in front of the screen-right half of the retrieval slot, holding the transparent rain cube upright against its chest with both arms; rain inside falls downward. A soft shadow on the cobblestones beneath its round wooden disc feet. The red bag hangs at Poco's own left hip (on the screen-right side). Behind Poco, the bottom of the old pale-blue vending machine; the closed yellowed translucent flap of the retrieval slot extends from behind Poco toward screen-left, its screen-left part clearly visible. Deep blue night, warm glow of the display window.",
-      "video_prompt": "Poco slowly drifts down and lands softly, toes first then heels, both feet flat, body bobbing once. A tiny rainbow arch, about as wide as Poco's foot, gently appears on the cobblestones between its feet and stays. Poco looks down at it, eyes curving into happy arcs. Then, in the screen-left background, the screen-left part of the retrieval slot flap behind Poco is pushed up slightly from inside and Mochi, a soft ivory-white felt cube-shaped creature that looks pale cream in the warm light, peeks out, showing only the top half of its face with two black dot eyes, watching Poco. Poco does not notice. The creature blinks once."
+      "image_prompt": "Very low-angle shot from just above the cobblestones. Poco faces the camera and floats about one third of its own height above the ground, in front of the left part of the vending machine (near its screen-left edge), holding the transparent rain cube upright against its chest with both arms; rain inside falls downward. A soft shadow on the cobblestones beneath its round wooden disc feet. The red bag hangs at Poco's own left hip (on the screen-right side). Behind Poco is the lower part of the old pale-blue vending machine; the wide, closed, yellowed translucent flap of the retrieval slot is clearly visible and unobstructed to the screen-right of Poco. Deep blue night, warm glow of the display window.",
+      "video_prompt": "Poco slowly drifts down and lands softly, toes first then heels, both feet flat, body bobbing once. A tiny rainbow arch, about as wide as Poco's foot, gently appears on the cobblestones between its feet and stays. Poco looks down at it, eyes curving into happy arcs, and keeps looking down. Then, to the screen-right of Poco, the retrieval slot flap is pushed up slightly from inside and Mochi, a soft ivory-white felt cube-shaped creature that looks pale cream in the warm light, peeks out, showing only the top half of its face with two black dot eyes, looking toward Poco on the screen-left. Poco does not notice and never turns toward Mochi. Mochi blinks once."
     }
   ],
   "posts": {
@@ -501,7 +501,7 @@
     }
   },
   "continuity": {
-    "end_state": "午前0時過ぎ。取り出し口の画面右半分の前（下段右端のボタンの真下）で、ポコはカメラの方を向いて『雨のしかく』をまっすぐ胸の前に抱えて立ち、両足の間の石畳に残った小さな虹を見下ろしている。取り出し口の画面左寄りのフラップからはモチが顔の上半分を出してポコを見ているが、ポコはまだ気づいていない。",
+    "end_state": "午前0時過ぎ。自販機の左寄りの前で、ポコはカメラの方を向いて『雨のしかく』をまっすぐ胸の前に抱えて立ち、両足の間の石畳に残った小さな虹を見下ろしている。ポコの画面右側の取り出し口からはモチが顔の上半分を出してポコを見ているが、ポコはまだ気づいていない。",
     "new_facts": [
       "第1話の夜、自販機は下段右端のボタンを光らせ、『雨のしかく』（透明な立方体）を出した。",
       "ポコは『雨のしかく』を逆さにして一時的に浮き、元に戻して着地した。着地した足元の石畳に小さな虹が残った。",
