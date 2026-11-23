@@ -115,8 +115,10 @@
           "bytes": 3814157,
           "sha256": "a9a46dff733f4039f531ef0e78512b71601c5cb2200ddc03d7a97263a8d65978",
           "storage": {
-            "status": "local_only",
-            "note": "永続保存先が未設定です（クラウド環境の終了で失われます）"
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://1i5lbtWWdDCdVj8KaTB6626L8oUB4_Nmc",
+            "at": "2026-11-23T05:20:29+00:00"
           }
         },
         {
@@ -183,8 +185,10 @@
           "bytes": 3868211,
           "sha256": "f7392e3781eb3ba17725417c4add349a78bb83baf51a75157ec7c4f2a5dd79b9",
           "storage": {
-            "status": "local_only",
-            "note": "永続保存先が未設定です（クラウド環境の終了で失われます）"
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://1oLqa0K91FA_OHKk3T5_-LZjWT96R4ysV",
+            "at": "2026-11-23T05:20:32+00:00"
           }
         }
       ]
@@ -262,8 +266,10 @@
           "bytes": 3688766,
           "sha256": "400485ac1a8cadac783929f08f213de0f9255b625d99bf5a6957edd13bd09e66",
           "storage": {
-            "status": "local_only",
-            "note": "永続保存先が未設定です（クラウド環境の終了で失われます）"
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://1zsT0coVU6bmLvJIGCLJYkhCHKk-Av8al",
+            "at": "2026-11-23T05:20:35+00:00"
           }
         }
       ]
@@ -341,8 +347,10 @@
           "bytes": 3271706,
           "sha256": "9dfd0fd2fe6dfed50b1205639ce6d078bfc7ae5e8531a921d7f19d2a523b53c3",
           "storage": {
-            "status": "local_only",
-            "note": "永続保存先が未設定です（クラウド環境の終了で失われます）"
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://1Lky19Nh2DRiMXqRKpq20V-ECt9mNT3BY",
+            "at": "2026-11-23T05:20:38+00:00"
           }
         }
       ]
