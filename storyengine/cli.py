@@ -411,6 +411,54 @@ def cmd_animatic(series: Series, args) -> int:
     return 0
 
 
+def cmd_video_trial(series: Series, args) -> int:
+    from . import video_trial as vt
+    from .integrations import NotConfiguredError, create_asset_store, create_video_generator
+
+    n = args.episode or _latest_episode(series)
+    try:
+        gen = create_video_generator(series.config.get("generation", {}).get("video"))
+        store = create_asset_store(series.config.get("asset_storage"))
+        pl = vt.plan(series, n, args.cut, gen)
+    except (vt.TrialError, NotConfiguredError, RuntimeError) as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        return 2
+    t = pl["trial"]
+    print(f"第{n}話 カット{args.cut} 動画の試作（{t.get('purpose', '')}）")
+    print(f"  開始画像: {pl['init_image']}")
+    print(f"  長さ: {pl['spec']['duration_sec']}秒 / 縦横: {pl['spec']['aspect_ratio']}")
+    est = pl["estimate"]
+    if est:
+        print(f"  見積もり: {est['model']} ${est['usd']:.2f}（1回の上限 ${est['max_cost_usd']:.2f}、"
+              f"{'範囲内' if est['within_cap'] else '上限超過のため送らない'}）")
+    else:
+        print("  動画生成サービス: 未接続")
+    for o in t.get("omitted", []):
+        print(f"  省く動き: {o}")
+    if t.get("unresolved"):
+        print(f"  未解決: {t['unresolved']}")
+    if pl["previous_attempts"]:
+        print(f"  同じ条件の依頼: {len(pl['previous_attempts'])} 回（自動では作り直さない）")
+    if args.dry_run:
+        print("  dry-run のため送っていません。")
+        return 0
+    if gen is None:
+        print("エラー: 動画生成サービスが未接続です", file=sys.stderr)
+        return 2
+    if gen.paid and not args.allow_paid:
+        print("  有料です。見積もりを確認してから --allow-paid を付けて実行してください。")
+        return 2
+    try:
+        res = vt.run(series, n, args.cut, gen, store=store, again=args.again)
+    except vt.TrialError as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        return 1
+    v = res["version"]
+    print(f"  {'再利用' if res['action'] == 'reuse' else '完成'}: {v['file']}（{v['duration']}秒、"
+          f"永続保存: {(v.get('storage') or {}).get('status')}）")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="storyengine", description="連載ショート動画の制作管理")
     p.add_argument("--series", default=DEFAULT_SERIES, help=f"連載ディレクトリ（既定: {DEFAULT_SERIES}）")
@@ -440,6 +488,12 @@ def main(argv: list[str] | None = None) -> int:
                      help="最後に置く。トークンを使って続けて実行する storyengine のコマンド。複数は + で区切る（例: --then images --dry-run + restore --check）")
     an = sub.add_parser("animatic", help="採用済みの開始画像だけで構成確認用の動画を作る（無料）")
     an.add_argument("--episode", type=int)
+    vtp = sub.add_parser("video-trial", help="カット単位の動画の試作（技術確認）。有料は --allow-paid が必要、自動で作り直さない")
+    vtp.add_argument("--episode", type=int)
+    vtp.add_argument("--cut", type=int, required=True)
+    vtp.add_argument("--dry-run", action="store_true")
+    vtp.add_argument("--allow-paid", action="store_true")
+    vtp.add_argument("--again", action="store_true", help="同じ条件で依頼済みでも、利用者の明示の指示でもう一度だけ送る")
     im = sub.add_parser("images", help="カットの開始画像を生成（--dry-run で確認のみ）")
     im.add_argument("--episode", type=int, help="話数（既定: 最新話）")
     im.add_argument("--cuts", help="対象カット（例: 1,3）。既定: 全カット")
@@ -451,7 +505,8 @@ def main(argv: list[str] | None = None) -> int:
     handlers = {"brief": cmd_brief, "scaffold": cmd_scaffold, "validate": cmd_validate,
                 "commit": cmd_commit, "render": cmd_render, "rebuild": cmd_rebuild, "status": cmd_status, "images": cmd_images, "persist": cmd_persist,
                 "restore": cmd_restore, "import-zip": cmd_import_zip,
-                "drive-token": cmd_drive_token, "animatic": cmd_animatic}
+                "drive-token": cmd_drive_token, "animatic": cmd_animatic,
+                "video-trial": cmd_video_trial}
     try:
         series = load_series(args.series)
         return handlers[args.cmd](series, args)

@@ -95,9 +95,12 @@
       "_note": "2026-11-19 に developers.openai.com の GPT-Image-2.6 の資料で確認。1152x2048 は 9:16 ちょうど（各辺16の倍数）。書き出し時に 1080x1920 へ縮小する。費用がかかるため images は --allow-paid を付けたときだけ実行する。"
     },
     "video": {
-      "provider": null,
-      "model": null,
-      "params": {}
+      "provider": "runway",
+      "model": "gen4_turbo",
+      "params": {
+        "max_cost_usd": 0.25
+      },
+      "_note": "Runway API（前払いクレジット、Autobilling は使わない）。1回 $0.25 まで、自動の作り直しなし。API キーはネットワーク用シークレット（api.dev.runwayml.com）。未入金・未登録の間は有料実行しない。"
     }
   },
   "asset_storage": {

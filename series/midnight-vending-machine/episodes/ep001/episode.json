@@ -441,6 +441,40 @@
           ]
         ],
         "note": "カメラを上へ振って浮き上がりを示す（ポコ自身は動かない）"
+      },
+      "video_trial": {
+        "purpose": "技術確認：立方体を180度（半回転）回す→雨が上向きになる→ポコが浮く、を5秒で表現できるか",
+        "duration_sec": 5,
+        "timeline": [
+          {
+            "start_sec": 0.0,
+            "end_sec": 1.5,
+            "action": "ポコが立方体を180度（半回転）、ゆっくり回して逆さにする"
+          },
+          {
+            "start_sec": 1.5,
+            "end_sec": 4.0,
+            "action": "立方体の中の雨が上へ昇り始め、ポコの足が地面から離れて身長の3分の1ほどまでゆっくり浮く。目が少し大きくなる"
+          },
+          {
+            "start_sec": 4.0,
+            "end_sec": 5.0,
+            "action": "浮いたまま止まる。バッグが少し持ち上がり、短い脚が小さく揺れる"
+          }
+        ],
+        "prompt": "Static camera. Poco slowly turns the transparent cube upside down with a single half turn (180 degrees). The rain inside reverses and drifts upward. Poco's flat wooden feet gently lift off the cobblestones and it floats up slowly to about one third of its own height; its eyes grow slightly wider, the red bag lifts a little, short legs dangle. Keep Poco's design, the bag on Poco's own left hip (screen right), and the vending machine unchanged. No text.",
+        "omitted": [
+          "足元を見下ろして慌てる表情",
+          "慌てて立方体を元の向きに戻す動き",
+          "雨がまた下へ降り始めること",
+          "上昇が止まって降り始めること",
+          "浮く高さ（元の案の身長の半分→3分の1に抑える）"
+        ],
+        "unresolved": "完成版では、立方体を元に戻して着地するまでのつながりが必要。省いた動き（元に戻す・雨が下へ戻る・降り始める）をどこで見せるかは未解決。",
+        "budget": {
+          "max_cost_usd_per_attempt": 0.25,
+          "auto_regeneration": false
+        }
       }
     },
     {

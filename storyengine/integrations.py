@@ -75,8 +75,14 @@ class VideoGenerator(ABC):
     def __init__(self, config: dict[str, Any] | None = None) -> None:
         self.config = config or {}
 
+    #: True の生成器は費用がかかる。CLI では --allow-paid を付けたときだけ実行する
+    paid: bool = False
+
     @abstractmethod
     def generate(self, spec: dict[str, Any], init_image: Path, out_path: Path) -> Path: ...
+
+    def estimate(self, spec: dict[str, Any]) -> dict[str, Any] | None:
+        return None
 
 
 class AudioProducer(ABC):
@@ -120,10 +126,11 @@ class AssetStore(ABC):
 # 実サービスの実装を登録する（例: IMAGE_GENERATORS["some-service"] = SomeServiceImageGenerator）
 IMAGE_GENERATORS: dict[str, type[ImageGenerator]] = {}
 ASSET_STORES: dict[str, type[AssetStore]] = {}
+VIDEO_GENERATORS: dict[str, type[VideoGenerator]] = {}
 
 
 def _load_builtin_providers() -> None:
-    from . import google_drive, openai_images  # noqa: F401  （openai / google-drive を登録）
+    from . import google_drive, openai_images, runway_video  # noqa: F401  （openai / google-drive / runway を登録）
 
 
 def create_image_generator(cfg: dict[str, Any] | None) -> ImageGenerator | None:
@@ -135,6 +142,17 @@ def create_image_generator(cfg: dict[str, Any] | None) -> ImageGenerator | None:
     if provider not in IMAGE_GENERATORS:
         raise NotConfiguredError(f"画像生成サービス {provider!r} の接続が実装されていません")
     return IMAGE_GENERATORS[provider](cfg)
+
+
+def create_video_generator(cfg: dict[str, Any] | None) -> VideoGenerator | None:
+    """series.json の generation.video から動画生成器を作る。provider 未設定なら None（未接続）。"""
+    provider = (cfg or {}).get("provider")
+    if not provider:
+        return None
+    _load_builtin_providers()
+    if provider not in VIDEO_GENERATORS:
+        raise NotConfiguredError(f"動画生成サービス {provider!r} の接続が実装されていません")
+    return VIDEO_GENERATORS[provider](cfg)
 
 
 def create_asset_store(cfg: dict[str, Any] | None) -> AssetStore | None:
