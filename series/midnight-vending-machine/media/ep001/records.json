@@ -430,6 +430,87 @@
           }
         }
       ]
+    },
+    "cut04_start": {
+      "kind": "image",
+      "versions": [
+        {
+          "key": "sha256:483422b202a91c6612c8e5b967e59a8cfa79836be855042d5be7fbcd20c3d5ed",
+          "cut_number": 4,
+          "conditions": {
+            "kind": "image",
+            "prompt_sha256": "b50e1f0ab63bf0fa283302cb338133f09ceaea2c165b8ec6980077c40ab71051",
+            "negative_prompt_sha256": "0180d525fd0ea0b62bff9af7ecdfcee911fcd2365c34d035d8eb30e377191741",
+            "model": {
+              "provider": "openai",
+              "model": "gpt-image-2.6-sunburst",
+              "params": {
+                "size": "1152x2048",
+                "quality": "high",
+                "output_format": "png"
+              }
+            },
+            "aspect_ratio": "9:16",
+            "resolution": "1080x1920",
+            "references": [
+              {
+                "subject": "poco",
+                "view": "turnaround: front / side / back",
+                "path": "references/characters/poco/poco_reference.png",
+                "sha256": "0cfb9f9a03b6b3039800fd83cffc7469d20ef0dc5c352e77306e9d3579969e06"
+              },
+              {
+                "subject": "vending-corner",
+                "view": "front, night",
+                "path": "references/locations/vending-corner/vending_corner_reference.png",
+                "sha256": "28caa9124e45c69733f005efbaf79edc3e11c5c02ea732ba305bb5dd245ecd52"
+              },
+              {
+                "subject": "cut03_start",
+                "view": "previous shot (adopted)",
+                "path": "media/ep001/images/cut03_start-3e02072f3995d5c0.png",
+                "sha256": "119dbd556a37c4a14a4bbb50b6dbfd1a466677a8de3636aca5221993154b1f67"
+              }
+            ]
+          },
+          "seed": null,
+          "created_at": "2026-11-23T12:34:10+00:00",
+          "request": {
+            "endpoint": "/images/edits",
+            "model": "gpt-image-2.6-sunburst",
+            "size": "1152x2048",
+            "quality": "high",
+            "reference_images": 3
+          },
+          "usage": {
+            "input_tokens": 5320,
+            "input_tokens_details": {
+              "image_tokens": 4501,
+              "text_tokens": 819
+            },
+            "output_tokens": 1413,
+            "output_tokens_details": {
+              "image_tokens": 1413,
+              "text_tokens": 0
+            },
+            "total_tokens": 6733
+          },
+          "cost_usd": 0.082493,
+          "status": "complete",
+          "file": "media/ep001/images/cut04_start-483422b202a91c66.png",
+          "format": "png",
+          "width": 1152,
+          "height": 2048,
+          "bytes": 3564957,
+          "sha256": "cdaefe03ae984a3cf55e39a809ab93c22554b668e8ed4d63c306bb9a89f5e695",
+          "storage": {
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://1pPhuweOYqvxJl4hruwFidvZrl-l7njkw",
+            "at": "2026-11-23T12:34:47+00:00"
+          }
+        }
+      ]
     }
   }
 }
