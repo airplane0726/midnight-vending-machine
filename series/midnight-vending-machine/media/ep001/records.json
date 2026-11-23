@@ -592,6 +592,151 @@
           }
         }
       ]
+    },
+    "animatic": {
+      "kind": "video",
+      "versions": [
+        {
+          "key": "sha256:a39be82ea90e5efda2a3c4c753a9eafcc47e8e4e3adf3b8d6979370d2057036a",
+          "status": "complete",
+          "kind": "animatic",
+          "conditions": {
+            "kind": "animatic",
+            "version": 1,
+            "fps": 30,
+            "size": "1080x1920",
+            "fade": {
+              "in": 0.3,
+              "out": 0.5
+            },
+            "cuts": [
+              {
+                "cut_number": 1,
+                "duration_sec": 3,
+                "image": "media/ep001/images/cut01_start-696ceaab71273c70.png",
+                "image_sha256": "f7392e3781eb3ba17725417c4add349a78bb83baf51a75157ec7c4f2a5dd79b9",
+                "move": {
+                  "zoom": [
+                    1.0,
+                    1.1
+                  ],
+                  "focus": [
+                    [
+                      0.5,
+                      0.5
+                    ],
+                    [
+                      0.6,
+                      0.55
+                    ]
+                  ]
+                }
+              },
+              {
+                "cut_number": 2,
+                "duration_sec": 4,
+                "image": "media/ep001/images/cut02_start-39312c13f6bfba88.png",
+                "image_sha256": "400485ac1a8cadac783929f08f213de0f9255b625d99bf5a6957edd13bd09e66",
+                "move": {
+                  "zoom": [
+                    1.0,
+                    1.15
+                  ],
+                  "focus": [
+                    [
+                      0.5,
+                      0.5
+                    ],
+                    [
+                      0.68,
+                      0.58
+                    ]
+                  ]
+                }
+              },
+              {
+                "cut_number": 3,
+                "duration_sec": 4,
+                "image": "media/ep001/images/cut03_start-3e02072f3995d5c0.png",
+                "image_sha256": "119dbd556a37c4a14a4bbb50b6dbfd1a466677a8de3636aca5221993154b1f67",
+                "move": {
+                  "zoom": [
+                    1.0,
+                    1.15
+                  ],
+                  "focus": [
+                    [
+                      0.5,
+                      0.55
+                    ],
+                    [
+                      0.5,
+                      0.52
+                    ]
+                  ]
+                }
+              },
+              {
+                "cut_number": 4,
+                "duration_sec": 5,
+                "image": "media/ep001/images/cut04_start-483422b202a91c66.png",
+                "image_sha256": "cdaefe03ae984a3cf55e39a809ab93c22554b668e8ed4d63c306bb9a89f5e695",
+                "move": {
+                  "zoom": [
+                    1.12,
+                    1.12
+                  ],
+                  "focus": [
+                    [
+                      0.45,
+                      0.62
+                    ],
+                    [
+                      0.45,
+                      0.5
+                    ]
+                  ]
+                }
+              },
+              {
+                "cut_number": 5,
+                "duration_sec": 4,
+                "image": "media/ep001/images/cut05_start-913aa60bc5ae165e.png",
+                "image_sha256": "6828797548fc644919823d0349087adf53bfbf4854aabb170205b39abfddc663",
+                "move": {
+                  "zoom": [
+                    1.0,
+                    1.12
+                  ],
+                  "focus": [
+                    [
+                      0.45,
+                      0.6
+                    ],
+                    [
+                      0.58,
+                      0.62
+                    ]
+                  ]
+                }
+              }
+            ]
+          },
+          "file": "media/ep001/videos/animatic-a39be82ea90e5efd.mp4",
+          "format": "mp4",
+          "width": 1080,
+          "height": 1920,
+          "duration": 20.0,
+          "bytes": 10370183,
+          "sha256": "e449a02f6040d71dc1ddf24605970826c720cafe64ce1e688186e89ba1fa1b05",
+          "cost_usd": 0.0,
+          "created_at": "2026-11-23T13:04:07+00:00",
+          "storage": {
+            "status": "local_only",
+            "note": "persist で永続保存する"
+          }
+        }
+      ]
     }
   }
 }

@@ -150,6 +150,26 @@ def _inspect_webp(data: bytes) -> tuple[int, int]:
     raise InvalidImageError("WebP の形式が読み取れません")
 
 
+def inspect_media(path: Path) -> dict[str, Any]:
+    """画像なら inspect_image、MP4 なら ffprobe で読み込めるか確認する。"""
+    if str(path).lower().endswith(".mp4"):
+        import json as _json
+        import subprocess
+        data = Path(path).read_bytes()
+        try:
+            out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration:stream=codec_type,width,height",
+                                  "-of", "json", str(path)], capture_output=True, check=True, timeout=60).stdout
+            meta = _json.loads(out)
+            video = [st for st in meta.get("streams", []) if st.get("codec_type") == "video"]
+            if not video:
+                raise InvalidImageError("映像がありません")
+        except (subprocess.SubprocessError, ValueError, OSError) as e:
+            raise InvalidImageError(f"動画として読み込めません: {e}") from e
+        return {"format": "mp4", "width": video[0]["width"], "height": video[0]["height"], "bytes": len(data),
+                "duration": float(meta["format"]["duration"]), "sha256": hashlib.sha256(data).hexdigest()}
+    return inspect_image(path)
+
+
 def check_aspect(info: dict[str, Any], resolution: str | None) -> None:
     if not resolution:
         return
@@ -268,10 +288,10 @@ def _verify_local(series: Series, version: dict[str, Any], resolution: str | Non
     if not p.is_file():
         return "ファイルがありません"
     try:
-        info = inspect_image(p)
+        info = inspect_media(p)
         check_aspect(info, resolution)
     except InvalidImageError as e:
-        return f"画像として読み込めません: {e}"
+        return f"読み込めません: {e}"
     if info["sha256"] != version.get("sha256"):
         return "記録と内容が違います"
     return None
@@ -481,7 +501,7 @@ def _restore(series: Series, store: AssetStore | None, p: SlotPlan) -> bool:
     tmp = dest.with_name(f".tmp-{dest.name}")
     try:
         store.download(p.current["storage"]["uri"], tmp)
-        info = inspect_image(tmp)
+        info = inspect_media(tmp)
         if info["sha256"] != p.current["sha256"]:
             raise InvalidImageError("復元したファイルが記録と一致しません")
         os.replace(tmp, dest)
@@ -583,7 +603,7 @@ def restore_all(series: Series, store: AssetStore, episodes: list[int], *, check
                     tmp = dest.with_name(f".tmp-restore-{dest.name}")
                     try:
                         store.download(uri, tmp)
-                        info = inspect_image(tmp)
+                        info = inspect_media(tmp)
                         if info["sha256"] != v["sha256"]:
                             raise InvalidImageError("記録と一致しません")
                         if local_ok:

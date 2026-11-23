@@ -393,6 +393,24 @@ def cmd_drive_token(series: Series, args) -> int:
         del token
 
 
+def cmd_animatic(series: Series, args) -> int:
+    from . import animatic
+
+    n = args.episode or _latest_episode(series)
+    try:
+        res = animatic.build(series, n)
+    except animatic.AnimaticError as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        return 1
+    v = res["version"]
+    print(f"第{n}話の構成確認用動画（{'再利用' if res['action'] == 'reuse' else '作成'}）: {v['file']}")
+    print(f"  {v['width']}x{v['height']} / {v['duration']:.2f}秒 / {v['bytes'] / 1024 ** 2:.1f}MB / 費用 $0（追加の生成なし）")
+    for c in v["conditions"]["cuts"]:
+        print(f"  カット{c['cut_number']}: {c['duration_sec']}秒 zoom {c['move']['zoom']} focus {c['move']['focus']}")
+    print(f"  永続保存: {v['storage']['status']}（persist で Google ドライブへ）")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="storyengine", description="連載ショート動画の制作管理")
     p.add_argument("--series", default=DEFAULT_SERIES, help=f"連載ディレクトリ（既定: {DEFAULT_SERIES}）")
@@ -420,6 +438,8 @@ def main(argv: list[str] | None = None) -> int:
     dtp.add_argument("--log", help="ワークフローのログを保存したファイル（処理後に削除）")
     dtp.add_argument("--then", nargs=argparse.REMAINDER, default=[],
                      help="最後に置く。トークンを使って続けて実行する storyengine のコマンド。複数は + で区切る（例: --then images --dry-run + restore --check）")
+    an = sub.add_parser("animatic", help="採用済みの開始画像だけで構成確認用の動画を作る（無料）")
+    an.add_argument("--episode", type=int)
     im = sub.add_parser("images", help="カットの開始画像を生成（--dry-run で確認のみ）")
     im.add_argument("--episode", type=int, help="話数（既定: 最新話）")
     im.add_argument("--cuts", help="対象カット（例: 1,3）。既定: 全カット")
@@ -431,7 +451,7 @@ def main(argv: list[str] | None = None) -> int:
     handlers = {"brief": cmd_brief, "scaffold": cmd_scaffold, "validate": cmd_validate,
                 "commit": cmd_commit, "render": cmd_render, "rebuild": cmd_rebuild, "status": cmd_status, "images": cmd_images, "persist": cmd_persist,
                 "restore": cmd_restore, "import-zip": cmd_import_zip,
-                "drive-token": cmd_drive_token}
+                "drive-token": cmd_drive_token, "animatic": cmd_animatic}
     try:
         series = load_series(args.series)
         return handlers[args.cmd](series, args)
