@@ -461,6 +461,26 @@ def cmd_animatic(series: Series, args) -> int:
     return 0
 
 
+def cmd_roughcut(series: Series, args) -> int:
+    from . import roughcut
+
+    n = args.episode or _latest_episode(series)
+    spec_path = args.spec or f"edits/ep{n:03d}_roughcut.json"
+    try:
+        spec = roughcut.load_spec(series, spec_path)
+        res = roughcut.build(series, n, spec)
+    except roughcut.RoughcutError as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        return 1
+    v = res["version"]
+    print(f"第{n}話の仮編集（{'再利用' if res['action'] == 'reuse' else '作成'}）: {v['file']}")
+    print(f"  {v['width']}x{v['height']} / {v['duration']:.2f}秒 / {v['bytes'] / 1024 ** 2:.1f}MB / 費用 $0（追加の生成なし）")
+    for p in spec.get("placeholders", []):
+        print(f"  仮: {p}")
+    print(f"  永続保存: {v['storage']['status']}（persist で Google ドライブへ）")
+    return 0
+
+
 def cmd_video_trial(series: Series, args) -> int:
     from . import video_trial as vt
     from .integrations import NotConfiguredError, create_asset_store, create_video_generator
@@ -561,6 +581,9 @@ def main(argv: list[str] | None = None) -> int:
     dtp.add_argument("--log", help="ワークフローのログを保存したファイル（処理後に削除）")
     dtp.add_argument("--then", nargs=argparse.REMAINDER, default=[],
                      help="最後に置く。トークンを使って続けて実行する storyengine のコマンド。複数は + で区切る（例: --then images --dry-run + restore --check）")
+    rcp = sub.add_parser("roughcut", help="既存素材だけで合成・音・編集を入れた仮編集の動画を作る（無料）")
+    rcp.add_argument("--episode", type=int)
+    rcp.add_argument("--spec", help="編集指示 JSON（連載ディレクトリからの相対パス。既定 edits/epNNN_roughcut.json）")
     an = sub.add_parser("animatic", help="採用済みの開始画像だけで構成確認用の動画を作る（無料）")
     an.add_argument("--episode", type=int)
     vtp = sub.add_parser("video-trial", help="カット単位の動画の試作（技術確認）。有料は --allow-paid が必要、自動で作り直さない")
@@ -587,7 +610,7 @@ def main(argv: list[str] | None = None) -> int:
     handlers = {"brief": cmd_brief, "scaffold": cmd_scaffold, "validate": cmd_validate,
                 "commit": cmd_commit, "render": cmd_render, "rebuild": cmd_rebuild, "status": cmd_status, "images": cmd_images, "persist": cmd_persist,
                 "restore": cmd_restore, "import-zip": cmd_import_zip,
-                "drive-token": cmd_drive_token, "animatic": cmd_animatic,
+                "drive-token": cmd_drive_token, "animatic": cmd_animatic, "roughcut": cmd_roughcut,
                 "video-trial": cmd_video_trial, "budget": cmd_budget}
     try:
         series = load_series(args.series)
