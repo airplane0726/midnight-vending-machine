@@ -1,0 +1,359 @@
+{
+  "schema_version": 1,
+  "_note": "生成記録（自動生成）。パスは連載ディレクトリからの相対パス。",
+  "episode_number": 1,
+  "slots": {
+    "cut01_start": {
+      "kind": "image",
+      "versions": [
+        {
+          "key": "sha256:fab34f044184f30feaa3078df690129b114fef302f09d5f21690c00c4f9eb928",
+          "cut_number": 1,
+          "conditions": {
+            "kind": "image",
+            "prompt_sha256": "5c6833fe2b3dbf8b3215888fdffda3a468cc9bdadc5d3762ea4366e0832259fb",
+            "negative_prompt_sha256": "0180d525fd0ea0b62bff9af7ecdfcee911fcd2365c34d035d8eb30e377191741",
+            "model": {
+              "provider": "openai",
+              "model": "gpt-image-2.6-sunburst",
+              "params": {
+                "size": "1152x2048",
+                "quality": "high",
+                "output_format": "png"
+              }
+            },
+            "aspect_ratio": "9:16",
+            "resolution": "1080x1920",
+            "references": [
+              {
+                "subject": "poco",
+                "view": "turnaround: front / side / back",
+                "path": "references/characters/poco/poco_reference.png",
+                "sha256": "0cfb9f9a03b6b3039800fd83cffc7469d20ef0dc5c352e77306e9d3579969e06"
+              },
+              {
+                "subject": "vending-corner",
+                "view": "front, night",
+                "path": "references/locations/vending-corner/vending_corner_reference.png",
+                "sha256": "28caa9124e45c69733f005efbaf79edc3e11c5c02ea732ba305bb5dd245ecd52"
+              }
+            ]
+          },
+          "seed": null,
+          "created_at": "2026-11-19T12:54:40+00:00",
+          "request": {
+            "endpoint": "/images/edits",
+            "model": "gpt-image-2.6-sunburst",
+            "size": "1152x2048",
+            "quality": "high",
+            "reference_images": 2
+          },
+          "status": "failed",
+          "error": "OpenAIImageError: OpenAI API エラー HTTP 429（利用上限・残高・レート制限を確認してください） insufficient_quota/credit_balance_exhausted: You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/."
+        },
+        {
+          "key": "sha256:fab34f044184f30feaa3078df690129b114fef302f09d5f21690c00c4f9eb928",
+          "cut_number": 1,
+          "conditions": {
+            "kind": "image",
+            "prompt_sha256": "5c6833fe2b3dbf8b3215888fdffda3a468cc9bdadc5d3762ea4366e0832259fb",
+            "negative_prompt_sha256": "0180d525fd0ea0b62bff9af7ecdfcee911fcd2365c34d035d8eb30e377191741",
+            "model": {
+              "provider": "openai",
+              "model": "gpt-image-2.6-sunburst",
+              "params": {
+                "size": "1152x2048",
+                "quality": "high",
+                "output_format": "png"
+              }
+            },
+            "aspect_ratio": "9:16",
+            "resolution": "1080x1920",
+            "references": [
+              {
+                "subject": "poco",
+                "view": "turnaround: front / side / back",
+                "path": "references/characters/poco/poco_reference.png",
+                "sha256": "0cfb9f9a03b6b3039800fd83cffc7469d20ef0dc5c352e77306e9d3579969e06"
+              },
+              {
+                "subject": "vending-corner",
+                "view": "front, night",
+                "path": "references/locations/vending-corner/vending_corner_reference.png",
+                "sha256": "28caa9124e45c69733f005efbaf79edc3e11c5c02ea732ba305bb5dd245ecd52"
+              }
+            ]
+          },
+          "seed": null,
+          "created_at": "2026-11-19T14:08:35+00:00",
+          "request": {
+            "endpoint": "/images/edits",
+            "model": "gpt-image-2.6-sunburst",
+            "size": "1152x2048",
+            "quality": "high",
+            "reference_images": 2
+          },
+          "usage": {
+            "input_tokens": 3802,
+            "input_tokens_details": {
+              "image_tokens": 2993,
+              "text_tokens": 809
+            },
+            "output_tokens": 1413,
+            "output_tokens_details": {
+              "image_tokens": 1413,
+              "text_tokens": 0
+            },
+            "total_tokens": 5215
+          },
+          "cost_usd": 0.070379,
+          "status": "complete",
+          "file": "media/ep001/images/cut01_start-fab34f044184f30f.png",
+          "format": "png",
+          "width": 1152,
+          "height": 2048,
+          "bytes": 3814157,
+          "sha256": "a9a46dff733f4039f531ef0e78512b71601c5cb2200ddc03d7a97263a8d65978",
+          "storage": {
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://1i5lbtWWdDCdVj8KaTB6626L8oUB4_Nmc",
+            "at": "2026-11-23T05:20:29+00:00"
+          }
+        },
+        {
+          "key": "sha256:696ceaab71273c706d8055658638348692f3a6bb5eceea13d81d841b49ffe1d2",
+          "cut_number": 1,
+          "conditions": {
+            "kind": "image",
+            "prompt_sha256": "f4602fbd041ffda63ca1620cdb1cc00252c62a5058e0fc066b678ed998d0c1c9",
+            "negative_prompt_sha256": "0180d525fd0ea0b62bff9af7ecdfcee911fcd2365c34d035d8eb30e377191741",
+            "model": {
+              "provider": "openai",
+              "model": "gpt-image-2.6-sunburst",
+              "params": {
+                "size": "1152x2048",
+                "quality": "high",
+                "output_format": "png"
+              }
+            },
+            "aspect_ratio": "9:16",
+            "resolution": "1080x1920",
+            "references": [
+              {
+                "subject": "poco",
+                "view": "turnaround: front / side / back",
+                "path": "references/characters/poco/poco_reference.png",
+                "sha256": "0cfb9f9a03b6b3039800fd83cffc7469d20ef0dc5c352e77306e9d3579969e06"
+              },
+              {
+                "subject": "vending-corner",
+                "view": "front, night",
+                "path": "references/locations/vending-corner/vending_corner_reference.png",
+                "sha256": "28caa9124e45c69733f005efbaf79edc3e11c5c02ea732ba305bb5dd245ecd52"
+              }
+            ]
+          },
+          "seed": null,
+          "created_at": "2026-11-19T18:33:02+00:00",
+          "request": {
+            "endpoint": "/images/edits",
+            "model": "gpt-image-2.6-sunburst",
+            "size": "1152x2048",
+            "quality": "high",
+            "reference_images": 2
+          },
+          "usage": {
+            "input_tokens": 3932,
+            "input_tokens_details": {
+              "image_tokens": 2993,
+              "text_tokens": 939
+            },
+            "output_tokens": 1413,
+            "output_tokens_details": {
+              "image_tokens": 1413,
+              "text_tokens": 0
+            },
+            "total_tokens": 5345
+          },
+          "cost_usd": 0.071029,
+          "status": "complete",
+          "file": "media/ep001/images/cut01_start-696ceaab71273c70.png",
+          "format": "png",
+          "width": 1152,
+          "height": 2048,
+          "bytes": 3868211,
+          "sha256": "f7392e3781eb3ba17725417c4add349a78bb83baf51a75157ec7c4f2a5dd79b9",
+          "storage": {
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://1oLqa0K91FA_OHKk3T5_-LZjWT96R4ysV",
+            "at": "2026-11-23T05:20:32+00:00"
+          }
+        }
+      ]
+    },
+    "cut02_start": {
+      "kind": "image",
+      "versions": [
+        {
+          "key": "sha256:39312c13f6bfba884d8ea7ad3b8fcdf351cfa3a3b9764b1319fa32bef3968c80",
+          "cut_number": 2,
+          "conditions": {
+            "kind": "image",
+            "prompt_sha256": "c7c4a99706c51e4591476384137eff98f30429232ef061e7ea62f0ae5270063a",
+            "negative_prompt_sha256": "0180d525fd0ea0b62bff9af7ecdfcee911fcd2365c34d035d8eb30e377191741",
+            "model": {
+              "provider": "openai",
+              "model": "gpt-image-2.6-sunburst",
+              "params": {
+                "size": "1152x2048",
+                "quality": "high",
+                "output_format": "png"
+              }
+            },
+            "aspect_ratio": "9:16",
+            "resolution": "1080x1920",
+            "references": [
+              {
+                "subject": "poco",
+                "view": "turnaround: front / side / back",
+                "path": "references/characters/poco/poco_reference.png",
+                "sha256": "0cfb9f9a03b6b3039800fd83cffc7469d20ef0dc5c352e77306e9d3579969e06"
+              },
+              {
+                "subject": "vending-corner",
+                "view": "front, night",
+                "path": "references/locations/vending-corner/vending_corner_reference.png",
+                "sha256": "28caa9124e45c69733f005efbaf79edc3e11c5c02ea732ba305bb5dd245ecd52"
+              },
+              {
+                "subject": "cut01_start",
+                "view": "previous shot (adopted)",
+                "path": "media/ep001/images/cut01_start-696ceaab71273c70.png",
+                "sha256": "f7392e3781eb3ba17725417c4add349a78bb83baf51a75157ec7c4f2a5dd79b9"
+              }
+            ]
+          },
+          "seed": null,
+          "created_at": "2026-11-19T19:03:22+00:00",
+          "request": {
+            "endpoint": "/images/edits",
+            "model": "gpt-image-2.6-sunburst",
+            "size": "1152x2048",
+            "quality": "high",
+            "reference_images": 3
+          },
+          "usage": {
+            "input_tokens": 5472,
+            "input_tokens_details": {
+              "image_tokens": 4501,
+              "text_tokens": 971
+            },
+            "output_tokens": 1413,
+            "output_tokens_details": {
+              "image_tokens": 1413,
+              "text_tokens": 0
+            },
+            "total_tokens": 6885
+          },
+          "cost_usd": 0.083253,
+          "status": "complete",
+          "file": "media/ep001/images/cut02_start-39312c13f6bfba88.png",
+          "format": "png",
+          "width": 1152,
+          "height": 2048,
+          "bytes": 3688766,
+          "sha256": "400485ac1a8cadac783929f08f213de0f9255b625d99bf5a6957edd13bd09e66",
+          "storage": {
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://1zsT0coVU6bmLvJIGCLJYkhCHKk-Av8al",
+            "at": "2026-11-23T05:20:35+00:00"
+          }
+        }
+      ]
+    },
+    "cut03_start": {
+      "kind": "image",
+      "versions": [
+        {
+          "key": "sha256:acba216ccc1eb519f842afa6d596cbfeabaffb24f96a47b49ad115f8f5f29389",
+          "cut_number": 3,
+          "conditions": {
+            "kind": "image",
+            "prompt_sha256": "105ba69cde5ac022fc4e48c0ecd598ff8dab9b3b21019ad9b96f40e34640e0dd",
+            "negative_prompt_sha256": "0180d525fd0ea0b62bff9af7ecdfcee911fcd2365c34d035d8eb30e377191741",
+            "model": {
+              "provider": "openai",
+              "model": "gpt-image-2.6-sunburst",
+              "params": {
+                "size": "1152x2048",
+                "quality": "high",
+                "output_format": "png"
+              }
+            },
+            "aspect_ratio": "9:16",
+            "resolution": "1080x1920",
+            "references": [
+              {
+                "subject": "poco",
+                "view": "turnaround: front / side / back",
+                "path": "references/characters/poco/poco_reference.png",
+                "sha256": "0cfb9f9a03b6b3039800fd83cffc7469d20ef0dc5c352e77306e9d3579969e06"
+              },
+              {
+                "subject": "vending-corner",
+                "view": "front, night",
+                "path": "references/locations/vending-corner/vending_corner_reference.png",
+                "sha256": "28caa9124e45c69733f005efbaf79edc3e11c5c02ea732ba305bb5dd245ecd52"
+              },
+              {
+                "subject": "cut02_start",
+                "view": "previous shot (adopted)",
+                "path": "media/ep001/images/cut02_start-39312c13f6bfba88.png",
+                "sha256": "400485ac1a8cadac783929f08f213de0f9255b625d99bf5a6957edd13bd09e66"
+              }
+            ]
+          },
+          "seed": null,
+          "created_at": "2026-11-20T02:11:12+00:00",
+          "request": {
+            "endpoint": "/images/edits",
+            "model": "gpt-image-2.6-sunburst",
+            "size": "1152x2048",
+            "quality": "high",
+            "reference_images": 3
+          },
+          "usage": {
+            "input_tokens": 5290,
+            "input_tokens_details": {
+              "image_tokens": 4501,
+              "text_tokens": 789
+            },
+            "output_tokens": 1413,
+            "output_tokens_details": {
+              "image_tokens": 1413,
+              "text_tokens": 0
+            },
+            "total_tokens": 6703
+          },
+          "cost_usd": 0.082343,
+          "status": "complete",
+          "file": "media/ep001/images/cut03_start-acba216ccc1eb519.png",
+          "format": "png",
+          "width": 1152,
+          "height": 2048,
+          "bytes": 3271706,
+          "sha256": "9dfd0fd2fe6dfed50b1205639ce6d078bfc7ae5e8531a921d7f19d2a523b53c3",
+          "storage": {
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://1Lky19Nh2DRiMXqRKpq20V-ECt9mNT3BY",
+            "at": "2026-11-23T05:20:38+00:00"
+          }
+        }
+      ]
+    }
+  }
+}

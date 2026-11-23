@@ -1,0 +1,22 @@
+# 秘密情報
+.env
+.env.*
+!.env.example
+
+# 作業ファイル
+series/*/drafts/*
+!series/*/drafts/.gitkeep
+series/*/.lock
+series/*/episodes/.staging-*
+series/*/episodes/.backup-*
+series/*/episodes/*/assets/
+.tmp-*.part
+
+__pycache__/
+*.pyc
+
+# 生成素材（大きいので Git 管理外。永続保存は series.json の asset_storage）。生成記録 records.json は Git 管理する
+series/*/media/*/images/
+series/*/media/*/videos/
+series/*/media/*/audio/
+series/*/media/**/.tmp-*

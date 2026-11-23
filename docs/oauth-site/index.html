@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>midnight-vending-machine</title>
+<style>
+  :root { --bg:#fbfaf7; --fg:#222; --muted:#666; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#16171b; --fg:#e8e6e1; --muted:#a0a0a0; } }
+  body { background:var(--bg); color:var(--fg); font-family:system-ui,sans-serif; line-height:1.7; max-width:720px; margin:0 auto; padding:24px 16px; }
+  h1 { font-size:1.4rem; } h2 { font-size:1.1rem; margin-top:2rem; } small { color:var(--muted); }
+</style>
+</head>
+<body>
+<h1>midnight-vending-machine</h1>
+<p>個人の創作連載「午前0時の自販機」を制作するための、個人用の制作ツールです。
+生成した画像などの制作素材を、利用者本人の Google ドライブに保存・復元するために Google のアカウント連携を使います。
+一般公開のサービスではなく、利用者は開発者本人のみです。</p>
+
+<h2 id="privacy">プライバシーポリシー</h2>
+<ul>
+  <li><strong>取得する権限：</strong>Google ドライブの <code>drive.file</code> スコープのみ。このツールが作成したファイルとフォルダーだけにアクセスし、それ以外のドライブ内のファイルは読み取りません。</li>
+  <li><strong>利用目的：</strong>このツールが作成した制作素材（画像・動画など）の保存、空き容量の確認、保存した素材の復元。</li>
+  <li><strong>保存場所：</strong>素材は利用者本人の Google ドライブ内のフォルダーに保存されます。第三者のサーバーへ素材やアカウント情報を送信・販売・共有することはありません。</li>
+  <li><strong>認証情報：</strong>アクセストークンは処理中のメモリ上でのみ使用し、ログやソースコードに記録しません。</li>
+  <li><strong>連携の解除：</strong>Google アカウントの「サードパーティ製のアプリとサービス」（https://myaccount.google.com/permissions）からいつでも解除できます。</li>
+  <li><strong>お問い合わせ：</strong>Google Cloud の同意画面に登録したサポートメールアドレスまで。</li>
+</ul>
+<p><small>最終更新日: 2026-11-20</small></p>
+</body>
+</html>
