@@ -45,7 +45,7 @@ python3 -m storyengine drive-token begin|finish|cleanup  # Actions から暗号�
 - 秘密情報（APIキー、トークン）をコード・JSON・コミットに入れない。環境変数で渡す（`.env.example` に名前だけ記載）。
 - 外部APIの呼び出し、画像・動画生成、SNS投稿は、ユーザーが接続と費用を確認するまで行わない。`images` は `--dry-run` のみ使い、`--allow-paid` はユーザーがその回の見積もりを確認してから付ける。
 - OpenAI の API キーはクラウド環境のネットワーク用シークレットに保存されている（通信経路で付与）。キーをファイル・コミット・会話に書かない。
-- Google ドライブは、クラウド環境では www.googleapis.com 宛てのネットワーク用シークレット（Playground のアクセストークン、約1時間有効）で使う。リフレッシュトークンを環境変数やファイルに置かない。値を表示・記録しない。保存先の空き容量が確認できないときは有料生成をしない。
+- Google ドライブのリフレッシュトークンは GitHub Actions のシークレットにだけ置く。クラウド環境の環境変数・ファイル・会話に置かない。値を表示・記録しない。保存先の空き容量が確認できないときは有料生成をしない。
 - Google ドライブのトークンは `drive-token` で受け取る: `begin --mode google` → GitHub 連携で `drive-token.yml` を main 上で起動（入力は request_id・public_key・mode）→ 実行名「drive-token <request_id>」の実行のジョブログを取得してファイルに保存 → `finish --request-id … --log … --then <コマンド>`。トークンは表示・保存しない。
 - ダミー画像を生成素材として登録しない。永続保存先が未設定なら「保存完了」と報告しない。
 - 左右は「画面左／画面右」と「ポコ自身の右腕・左腰」を区別して書く。
