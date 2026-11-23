@@ -443,34 +443,48 @@
         "note": "カメラを上へ振って浮き上がりを示す（ポコ自身は動かない）"
       },
       "video_trial": {
-        "purpose": "技術確認：立方体を180度（半回転）回す→雨が上向きになる→ポコが浮く、を5秒で表現できるか",
+        "purpose": "技術確認：立方体を両手で胸元に抱えたまま、ポコ全体がゆっくり浮く（1動作だけ）を5秒で保てるか。口なしの顔と、両手と立方体の接触を最後まで維持できるか",
         "duration_sec": 5,
         "timeline": [
           {
             "start_sec": 0.0,
-            "end_sec": 1.5,
-            "action": "ポコが立方体を180度（半回転）、ゆっくり回して逆さにする"
+            "end_sec": 1.0,
+            "action": "立方体を両手で胸元に抱えたまま静止"
           },
           {
-            "start_sec": 1.5,
+            "start_sec": 1.0,
             "end_sec": 4.0,
-            "action": "立方体の中の雨が上へ昇り始め、ポコの足が地面から離れて身長の3分の1ほどまでゆっくり浮く。目が少し大きくなる"
+            "action": "抱えた姿勢のまま、ポコ全体が地面からまっすぐゆっくり浮き、身長の3分の1ほどの高さまで上がる"
           },
           {
             "start_sec": 4.0,
             "end_sec": 5.0,
-            "action": "浮いたまま止まる。バッグが少し持ち上がり、短い脚が小さく揺れる"
+            "action": "浮いたまま止まる。短い脚が小さく揺れる程度"
           }
         ],
-        "prompt": "Static camera. Poco slowly turns the transparent cube upside down with a single half turn (180 degrees). The rain inside reverses and drifts upward. Poco's flat wooden feet gently lift off the cobblestones and it floats up slowly to about one third of its own height; its eyes grow slightly wider, the red bag lifts a little, short legs dangle. Keep Poco's design, the bag on Poco's own left hip (screen right), and the vending machine unchanged. No text.",
-        "omitted": [
-          "足元を見下ろして慌てる表情",
-          "慌てて立方体を元の向きに戻す動き",
-          "雨がまた下へ降り始めること",
-          "上昇が止まって降り始めること",
-          "浮く高さ（元の案の身長の半分→3分の1に抑える）"
+        "prompt": "Locked-off static camera. Poco holds the transparent cube against its chest with both wooden arms for the entire shot; both arms stay touching the cube and the cube never leaves Poco's arms. Poco's whole body slowly rises straight up off the cobblestones, floating to about one third of its own height, then hangs still in the air. Poco's face stays exactly as in the first frame: a plain felt face with only two short horizontal black eyes and no mouth at any moment. The red bag stays on Poco's own left hip (screen right). Only one Poco. The vending machine and background stay still. No text.",
+        "must_keep": [
+          "口なしの顔（目は黒い横長が2つだけ）",
+          "両手と立方体の接触（胸元に抱えたまま離さない）",
+          "ポコは1体",
+          "バッグはポコ自身の左腰（画面右）",
+          "カメラ固定"
         ],
-        "unresolved": "完成版では、立方体を元に戻して着地するまでのつながりが必要。省いた動き（元に戻す・雨が下へ戻る・降り始める）をどこで見せるかは未解決。",
+        "omitted": [
+          "立方体を180度（半回転）回して逆さにする動き",
+          "立方体の中の雨が上へ昇る（雨の逆転）",
+          "目が少し大きくなる表情の変化",
+          "足元を見下ろして慌てる表情",
+          "立方体を元の向きに戻す・雨が下へ戻る・降りて着地する"
+        ],
+        "unresolved": "回転（立方体を180度回して逆さにする）と雨の逆転を、完成版でどう見せるかは未解決。立方体を元に戻して着地するまでのつながりも未解決。",
+        "previous_trials": [
+          {
+            "file": "media/ep001/videos/cut04_video_trial-4ba1f1bf2ccefb0e.mp4",
+            "result": "不採用（技術確認用として保存）",
+            "findings": "180度の回転・雨の逆転・浮く動きのどれも出ず、立方体が手を離れて画面外へ。約2.5秒から口が現れた"
+          }
+        ],
         "budget": {
           "max_cost_usd_per_attempt": 0.25,
           "auto_regeneration": false

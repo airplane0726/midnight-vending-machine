@@ -466,6 +466,16 @@ def cmd_video_trial(series: Series, args) -> int:
     from .integrations import NotConfiguredError, create_asset_store, create_video_generator
 
     n = args.episode or _latest_episode(series)
+    if args.review:
+        try:
+            data = json.loads(Path(args.review).read_text(encoding="utf-8"))
+            v = vt.review(series, n, args.cut, data.pop("sha256"), data)
+        except (vt.TrialError, OSError, ValueError, KeyError) as e:
+            print(f"エラー: {e}", file=sys.stderr)
+            return 1
+        r = v["review"]
+        print(f"点検結果を記録: {v['file']} / {'採用' if r['adopted'] else '不採用'}（{r['use']}）/ 項目 {len(r['checks'])}")
+        return 0
     try:
         gen = create_video_generator(series.config.get("generation", {}).get("video"))
         store = create_asset_store(series.config.get("asset_storage"))
@@ -560,6 +570,7 @@ def main(argv: list[str] | None = None) -> int:
     vtp.add_argument("--allow-paid", action="store_true")
     vtp.add_argument("--again", action="store_true", help="同じ条件で依頼済みでも、利用者の明示の指示でもう一度だけ送る")
     vtp.add_argument("--allow-over-episode-cap", action="store_true")
+    vtp.add_argument("--review", help="点検結果の JSON（sha256・adopted・use・checks）を、完成した試作の記録に付ける。生成はしない")
     vtp.add_argument("--resume-task", help="記録済みのタスクの結果を取り直す（新しい生成依頼は送らない）")
     bp = sub.add_parser("budget", help="今月の制作費（消費）と上限、前払いの入金を表示")
     bp.add_argument("--month", help="YYYY-MM（既定: 今月）")

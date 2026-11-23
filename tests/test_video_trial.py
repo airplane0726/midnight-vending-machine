@@ -125,6 +125,17 @@ class TestVideoTrial(unittest.TestCase):
         with self.assertRaises(vt.TrialError):
             vt._refetch(self.series, 1, vt.plan(self.series, 1, 4, g2), g2, None, "unknown-task")
 
+    def test_review_marks_not_adopted_without_touching_cost(self):
+        res = vt.run(self.series, 1, 4, self.gen(), store=None)
+        sha = res["version"]["sha256"]
+        with self.assertRaises(vt.TrialError):
+            vt.review(self.series, 1, 4, sha[:12], {"adopted": False})
+        v = vt.review(self.series, 1, 4, sha[:12], {"adopted": False, "use": "技術確認用", "checks": [{"item": "口なし", "ok": False}]})
+        self.assertFalse(v["review"]["adopted"])
+        self.assertEqual(v["cost_usd"], res["version"]["cost_usd"])
+        with self.assertRaises(vt.TrialError):
+            vt.review(self.series, 1, 4, "ffff", {"adopted": True, "use": "x", "checks": []})
+
     def test_timeout_does_not_resubmit(self):
         g = RunwayVideoGenerator(CFG, opener=FakeRunway(self.video, polls=999), sleep=lambda s: None,
                                  poll_interval=1, max_wait_sec=3)

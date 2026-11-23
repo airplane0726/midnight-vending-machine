@@ -53,6 +53,22 @@ def plan(series: Series, n: int, cut_number: int, generator: VideoGenerator | No
             "estimate": generator.estimate(spec) if generator else None}
 
 
+def review(series: Series, n: int, cut_number: int, sha256: str, data: dict[str, Any]) -> dict[str, Any]:
+    """完成した試作に点検結果を付ける（採用の可否・用途・点検項目）。動画そのものや費用の記録は変えない。"""
+    if not isinstance(data.get("adopted"), bool) or not data.get("use") or not isinstance(data.get("checks"), list):
+        raise TrialError("点検結果には adopted（true/false）・use・checks（一覧）が必要です")
+    slot = f"cut{cut_number:02d}_video_trial"
+    with exclusive_lock(series.lock_path):
+        rec = load_records(series, n)
+        versions = rec["slots"].get(slot, {}).get("versions", [])
+        hits = [v for v in versions if v.get("status") == "complete" and str(v.get("sha256", "")).startswith(sha256)]
+        if len(hits) != 1:
+            raise TrialError(f"点検する動画を1つに特定できません（{len(hits)} 件一致）")
+        hits[0]["review"] = dict(data, reviewed_at=_dt.datetime.now(_dt.timezone.utc).replace(microsecond=0).isoformat())
+        save_records(series, n, rec)
+        return hits[0]
+
+
 def _refetch(series: Series, n: int, pl: dict[str, Any], generator: VideoGenerator, store: AssetStore | None,
              task_id: str) -> dict[str, Any]:
     """記録済みの依頼（タスク）の結果を取り直す。新しい生成依頼は送らず、費用も加えない。"""
