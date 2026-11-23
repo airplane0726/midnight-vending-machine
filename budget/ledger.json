@@ -1,0 +1,12 @@
+{
+  "_note": "前払いの入金と、生成記録に載らない費用の記録。生成の消費額は series/*/media/*/records.json の cost_usd から集計する。",
+  "deposits": [
+    {"month": "2026-11", "provider": "openai", "amount": 5.0, "currency": "USD", "auto_topup": false,
+     "note": "画像生成用の前払い。正確な日付は未記録（2026-11-19〜20 ごろ）"}
+  ],
+  "planned_deposits": [
+    {"provider": "runway", "amount": 10.0, "currency": "USD", "status": "未承認・未入金",
+     "note": "カット4の動画試作用の最低入金額。入金前にクレジットの有効期限を確認する。自動入金は OFF"}
+  ],
+  "other_spends": []
+}

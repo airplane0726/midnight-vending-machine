@@ -443,7 +443,7 @@ def _persist(series: Series, store: AssetStore | None, path: Path, n: int) -> di
 
 
 def run_images(series: Series, n: int, generator: ImageGenerator | None, *, store: AssetStore | None = None,
-               cuts: list[int] | None = None) -> RunResult:
+               cuts: list[int] | None = None, before_paid=None) -> RunResult:
     """各カットを順に処理する。1カットごとに記録を保存するので、途中で失敗しても再実行で続きから再開できる。"""
     with exclusive_lock(series.lock_path):
         plans, notes = plan_images(series, n, cuts=cuts, store=store)
@@ -477,6 +477,12 @@ def run_images(series: Series, n: int, generator: ImageGenerator | None, *, stor
                     ok, msg = False, f"保存先の空き容量を確認できません: {e}"
                 if not ok:
                     result.failed.append((p.cut_number, f"生成を中止しました（{msg}）"))
+                    break
+            if before_paid is not None and getattr(generator, "paid", False):
+                try:
+                    before_paid(p)  # 予算の確認（超えるなら例外）
+                except Exception as e:  # noqa: BLE001
+                    result.failed.append((p.cut_number, f"生成を中止しました（{e}）"))
                     break
             ok, err = _generate_one(series, n, generator, store, p, rec)
             save_records(series, n, rec)  # 1カットごとに保存（再開できるように）

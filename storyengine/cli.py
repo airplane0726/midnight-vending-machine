@@ -203,6 +203,46 @@ def _latest_episode(series: Series) -> int:
     return eps[-1]["episode_number"]
 
 
+IMAGE_INPUT_MARGIN_USD = 0.05  # 参照画像・指示文の入力分（実績は約$0.04）を安全側に見込む
+
+
+def _image_budget_guard(series: Series, n: int, generator, args):
+    from . import budget
+
+    def guard(plan):
+        est = generator.estimate(plan.spec) or {}
+        usd = (est.get("output_usd") or 0.0) + IMAGE_INPUT_MARGIN_USD
+        budget.check(usd, series=series.id, episode=n, allow_over_episode=args.allow_over_episode_cap)
+    return guard
+
+
+def cmd_budget(series: Series, args) -> int:
+    from . import budget
+
+    try:
+        s = budget.summary(month=args.month, series=series.id, episode=args.episode)
+        rows = budget.spends()
+    except budget.BudgetError as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        return 2
+    print(f"{s['month']} の制作費（1ドル={s['rate']}円で換算）")
+    print(f"  消費: {s['month_spent_jpy']:.0f}円（${s['month_spent_usd']:.4f}）/ 月の上限 {s['monthly_cap_jpy']}円"
+          f" / 残り {s['month_remaining_jpy']:.0f}円")
+    per_ep: dict = {}
+    for r in rows:
+        if r["month"] == s["month"]:
+            k = (r.get("series"), r.get("episode"))
+            per_ep[k] = per_ep.get(k, 0.0) + r["usd"]
+    for (sid, ep), usd in sorted(per_ep.items(), key=lambda x: (str(x[0][0]), x[0][1] or 0)):
+        print(f"  {sid} 第{ep}話: {usd * s['rate']:.0f}円（${usd:.4f}）/ 1本の上限 {s['per_episode_cap_jpy']}円（原則）")
+    print("  前払いの入金（消費とは別）:")
+    for d in s["deposits"]:
+        print(f"    {d.get('month', d.get('date', ''))} {d['provider']} {d['amount']} {d['currency']} 自動入金:{'ON' if d.get('auto_topup') else 'OFF'}")
+    for d in s["planned_deposits"]:
+        print(f"    予定 {d['provider']} {d['amount']} {d['currency']}（{d['status']}）")
+    return 0
+
+
 def cmd_images(series: Series, args) -> int:
     from . import media
     from .integrations import NotConfiguredError, create_asset_store, create_image_generator
@@ -240,7 +280,8 @@ def cmd_images(series: Series, args) -> int:
             print(f"  有料の生成が {len(todo)} カット分必要です。見積もりを確認してから --allow-paid を付けて実行してください。")
             print("  （--dry-run で見積もりを表示できます。--cuts 1 で1カットだけに絞れます）")
             return 2
-        result = media.run_images(series, n, generator, store=store, cuts=cuts)
+        result = media.run_images(series, n, generator, store=store, cuts=cuts,
+                                  before_paid=_image_budget_guard(series, n, generator, args))
         notes = result.notes
     else:
         result = media.run_images(series, n, generator, store=store, cuts=cuts)
@@ -448,6 +489,12 @@ def cmd_video_trial(series: Series, args) -> int:
     if gen.paid and not args.allow_paid:
         print("  有料です。見積もりを確認してから --allow-paid を付けて実行してください。")
         return 2
+    from . import budget
+    try:
+        budget.check(est["usd"], series=series.id, episode=n, allow_over_episode=args.allow_over_episode_cap)
+    except budget.BudgetError as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        return 1
     try:
         res = vt.run(series, n, args.cut, gen, store=store, again=args.again)
     except vt.TrialError as e:
@@ -494,11 +541,16 @@ def main(argv: list[str] | None = None) -> int:
     vtp.add_argument("--dry-run", action="store_true")
     vtp.add_argument("--allow-paid", action="store_true")
     vtp.add_argument("--again", action="store_true", help="同じ条件で依頼済みでも、利用者の明示の指示でもう一度だけ送る")
+    vtp.add_argument("--allow-over-episode-cap", action="store_true")
+    bp = sub.add_parser("budget", help="今月の制作費（消費）と上限、前払いの入金を表示")
+    bp.add_argument("--month", help="YYYY-MM（既定: 今月）")
+    bp.add_argument("--episode", type=int)
     im = sub.add_parser("images", help="カットの開始画像を生成（--dry-run で確認のみ）")
     im.add_argument("--episode", type=int, help="話数（既定: 最新話）")
     im.add_argument("--cuts", help="対象カット（例: 1,3）。既定: 全カット")
     im.add_argument("--dry-run", action="store_true", help="生成せず、対象・参照画像・保存先・再利用可否・見積もりを表示")
     im.add_argument("--allow-paid", action="store_true", help="費用のかかる生成サービスで実際に生成する（見積もり確認後に指定）")
+    im.add_argument("--allow-over-episode-cap", action="store_true", help="1本の上限（原則）を超えることを利用者が明示的に認めた場合だけ")
     sub.add_parser("status")
     args = p.parse_args(argv)
 
@@ -506,7 +558,7 @@ def main(argv: list[str] | None = None) -> int:
                 "commit": cmd_commit, "render": cmd_render, "rebuild": cmd_rebuild, "status": cmd_status, "images": cmd_images, "persist": cmd_persist,
                 "restore": cmd_restore, "import-zip": cmd_import_zip,
                 "drive-token": cmd_drive_token, "animatic": cmd_animatic,
-                "video-trial": cmd_video_trial}
+                "video-trial": cmd_video_trial, "budget": cmd_budget}
     try:
         series = load_series(args.series)
         return handlers[args.cmd](series, args)

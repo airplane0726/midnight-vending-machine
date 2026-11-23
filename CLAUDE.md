@@ -36,9 +36,20 @@ python3 -m storyengine persist                # 生成済み画像を永続保�
 python3 -m storyengine restore [--check]      # 保存先から画像を取り戻す／全件を照合（生成はしない）
 python3 -m storyengine import-zip <zip>       # 記録と一致する画像だけを ZIP から戻す（新しい環境で画像がないとき）
 python3 -m storyengine drive-token begin|finish|cleanup  # Actions から暗号化した Drive 用トークンを受け取る（下記）
+python3 -m storyengine budget [--episode N]   # 今月の制作費（消費）・上限・前払いの入金
+python3 -m storyengine animatic --episode N   # 採用画像だけで構成確認用の動画（無料）
+python3 -m storyengine video-trial --episode N --cut C --dry-run  # カット単位の動画試作（技術確認）
 ```
 
 別の連載は `--series series/<id>` を付ける。標準ライブラリのみ（Python 3.10+）。
+
+## 予算（budget/policy.json）
+
+- 3日に1本。月の上限 3,000円（画像・動画・台本・音楽・編集・保存・投稿、失敗・作り直しを含む。既存の月額契約は別）。
+- 1本は原則 300円以内。月の上限が常に優先。超える依頼は送らない（コードで確認している）。
+- 前払いの入金（budget/ledger.json）と実際の消費（生成記録の cost_usd）を分けて記録する。入金額は事前に利用者が確認する。自動入金は OFF。
+- 有料の処理の前に `budget` で残りを確認し、見積もりを利用者に示してから `--allow-paid` を付ける。自動の作り直しはしない。
+- 制作は自動化してよいが、投稿は利用者が確認してから行う。
 
 ## 守ること
 

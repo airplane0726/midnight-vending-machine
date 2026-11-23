@@ -89,6 +89,13 @@ Claude Code では `/daily-episode` と入力するか、「今日の話を作�
 - **同時実行の防止**。連載ごとのロックファイルで、2つの処理が同時に履歴を更新しないようにしています。
 - **連続性の検査**。品物の性質の変更、未登録の謎・構想・人物の参照、タイトルの重複を拒否します。
 
+## 予算
+
+`budget/policy.json` に方針（3日に1本、月 3,000円、1本 原則 300円、自動入金 OFF、投稿前に利用者が確認）、
+`budget/ledger.json` に前払いの入金を記録します。消費額は生成記録の `cost_usd`（失敗分を含む）から集計し、
+`python3 -m storyengine budget` で確認できます。有料の処理は送る前に月・1本の上限を確認し、月の上限を超える依頼は送りません。
+残り作業と投稿先の確認事項は `docs/roadmap.md`。
+
 ## 素材の保存場所とパスの基準
 
 `production.json`、生成記録、`series.json` の `reference_images` に書く素材のパスは、**すべて連載ディレクトリ（`series/<id>/`）からの相対パス**です（`production.json` の `paths_relative_to: "series_dir"`）。

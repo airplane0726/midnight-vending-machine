@@ -1,0 +1,17 @@
+{
+  "_note": "制作の予算方針（利用者が決めたもの）。変更は利用者の指示があるときだけ。",
+  "currency": "JPY",
+  "monthly_cap_jpy": 3000,
+  "per_episode_cap_jpy": 300,
+  "per_episode_cap_mode": "soft",
+  "per_episode_cap_note": "1本は原則300円以内。超える場合は利用者の明示の指示が必要。月の上限が常に優先（超える依頼は送らない）。",
+  "cadence": "3日に1本",
+  "timezone": "Asia/Tokyo",
+  "usd_jpy_rate": 160,
+  "usd_jpy_rate_note": "円換算は安全側の固定レート。実際の請求額との差は月末に見直す。",
+  "includes": ["画像", "動画", "台本", "音楽・効果音", "編集", "保存", "投稿", "失敗・作り直しの費用"],
+  "excludes": ["既存の月額契約（Claude など）"],
+  "auto_topup": false,
+  "deposit_rule": "前払いの入金は、金額を事前に利用者が確認してから利用者が行う。入金（budget/ledger.json の deposits）と消費（生成記録の費用）は分けて記録する。",
+  "publish_rule": "制作は自動化し、投稿前に利用者が確認する。"
+}
