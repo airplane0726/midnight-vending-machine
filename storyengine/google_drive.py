@@ -1,6 +1,8 @@
 """Google ドライブへの生成素材の永続保存（Drive API v3、標準ライブラリのみ）。
 
 認証の仕組み（認証情報をコード・Git・チャットに置かない）:
+- 方式0（推奨）: GitHub Actions のシークレットにあるリフレッシュトークンで、Actions が1時間有効のトークンを発行し、
+  このセッションの公開鍵で暗号化して返す（storyengine/drive_token.py）。トークンはメモリ上でだけ使う。
 - 方式A（クラウド環境の既定）: OAuth Playground で発行したアクセストークン（約1時間有効）を、
   www.googleapis.com 宛てのネットワーク用シークレット（Bearer）として保存する。通信経路が Authorization を付与する。
   リフレッシュトークンはクラウド環境に置かない（本文でしか送れず、安全に保存する場所がないため）。
@@ -47,6 +49,19 @@ class DriveError(RuntimeError):
     pass
 
 
+# GitHub Actions から受け取った短時間トークン（メモリ上だけに置く。ファイル・環境変数・ログに出さない）
+_SESSION_TOKEN: dict[str, Any] = {}
+
+
+def set_session_token(token: str, expires_at: float) -> None:
+    _SESSION_TOKEN.clear()
+    _SESSION_TOKEN.update(token=token, expires_at=expires_at)
+
+
+def clear_session_token() -> None:
+    _SESSION_TOKEN.clear()
+
+
 class GoogleDriveStore(AssetStore):
     provider = "google-drive"
 
@@ -83,6 +98,10 @@ class GoogleDriveStore(AssetStore):
     def _access_token(self) -> str:
         if self._token and self._clock() < self._token_until:
             return self._token
+        if _SESSION_TOKEN:
+            if time.time() >= _SESSION_TOKEN["expires_at"]:
+                raise DriveError("受け取ったアクセストークンの期限が切れました。drive-token で取り直してください")
+            return _SESSION_TOKEN["token"]
         refresh = os.environ.get(REFRESH_ENV)
         if not refresh:
             # クラウド環境: アクセストークン（約1時間有効）を www.googleapis.com 宛てのネットワーク用シークレットに

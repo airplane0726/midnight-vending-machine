@@ -35,6 +35,7 @@ python3 -m storyengine images --dry-run       # 画像生成の対象・参照�
 python3 -m storyengine persist                # 生成済み画像を永続保存先（Google ドライブ）へ送り、復元を確認する
 python3 -m storyengine restore [--check]      # 保存先から画像を取り戻す／全件を照合（生成はしない）
 python3 -m storyengine import-zip <zip>       # 記録と一致する画像だけを ZIP から戻す（新しい環境で画像がないとき）
+python3 -m storyengine drive-token begin|finish|cleanup  # Actions から暗号化した Drive 用トークンを受け取る（下記）
 ```
 
 別の連載は `--series series/<id>` を付ける。標準ライブラリのみ（Python 3.10+）。
@@ -45,6 +46,7 @@ python3 -m storyengine import-zip <zip>       # 記録と一致する画像だ�
 - 外部APIの呼び出し、画像・動画生成、SNS投稿は、ユーザーが接続と費用を確認するまで行わない。`images` は `--dry-run` のみ使い、`--allow-paid` はユーザーがその回の見積もりを確認してから付ける。
 - OpenAI の API キーはクラウド環境のネットワーク用シークレットに保存されている（通信経路で付与）。キーをファイル・コミット・会話に書かない。
 - Google ドライブは、クラウド環境では www.googleapis.com 宛てのネットワーク用シークレット（Playground のアクセストークン、約1時間有効）で使う。リフレッシュトークンを環境変数やファイルに置かない。値を表示・記録しない。保存先の空き容量が確認できないときは有料生成をしない。
+- Google ドライブのトークンは `drive-token` で受け取る: `begin --mode google` → GitHub 連携で `drive-token.yml` を main 上で起動（入力は request_id・public_key・mode）→ 実行名「drive-token <request_id>」の実行のジョブログを取得してファイルに保存 → `finish --request-id … --log … --then <コマンド>`。トークンは表示・保存しない。
 - ダミー画像を生成素材として登録しない。永続保存先が未設定なら「保存完了」と報告しない。
 - 左右は「画面左／画面右」と「ポコ自身の右腕・左腰」を区別して書く。
 - 登録済みの話は書き換えない（最新話のみ `commit --replace` で差し替え可）。

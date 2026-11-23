@@ -69,6 +69,8 @@ python3 -m storyengine images --episode 1 --cuts 1 --allow-paid   # 有料生成
 python3 -m storyengine persist                   # 完成済みでまだ永続保存されていない画像を保存先へ送る（保存後にダウンロードして照合）
 python3 -m storyengine restore --check           # 保存先の全画像をダウンロードして照合（生成はしない）
 python3 -m storyengine import-zip <zip>          # 記録と一致する画像だけを ZIP から手元に戻す
+python3 -m storyengine drive-token begin --mode google   # Actions に渡す依頼（依頼ID・公開鍵）を作る
+python3 -m storyengine drive-token finish --request-id <ID> --log <ログ> --then persist --episode 1
 python3 -m unittest discover -s tests -v
 ```
 
@@ -109,6 +111,18 @@ Claude Code では `/daily-episode` と入力するか、「今日の話を作�
 - 生成に失敗した出力、壊れた画像、縦横比が違う画像は「失敗」として記録し、完成品として扱いません。
 - 5カットを順に処理し、1カットごとに記録を保存します。途中で失敗したら止まり、再実行すると成功済みのカットを再利用して続きから再開します。
 - プレースホルダー（ダミー）の生成器の出力は登録しません。生成サービスが未接続なら何も生成しません。
+
+### Google ドライブの認証（GitHub Actions 経由）
+
+リフレッシュトークンは GitHub Actions のシークレットにだけ置き、このクラウド環境には置きません。
+`.github/workflows/drive-token.yml` が1時間有効のアクセストークンを発行し、依頼ごとに作る公開鍵で暗号化してジョブログに出力します。
+
+- 画像・動画は GitHub を通らず、クラウド環境から Google ドライブへ直接送ります（Git の履歴に素材が残らない）。
+- 暗号方式: 64バイトの鍵を RSA-OAEP(SHA-256, 3072bit) で包み、本文は AES-256-CBC、改ざん検出は HMAC-SHA256（依頼 ID・発行時刻・モードも検証対象）。
+- ワークフローは権限なし（`permissions: {}`）、外部アクション・チェックアウトなし、入力は env 経由のみ。シークレットは `mode: google` のときだけ渡す。
+- 依頼 ID を実行名と暗号文の両方に入れ、別の依頼の結果を受け付けない。発行から15分を過ぎた結果も受け付けない。
+- 成功・失敗にかかわらず、秘密鍵とログファイルを削除する。平文のトークンはメモリ上だけで使う。
+- `mode: dummy` はシークレットを使わず同じ方式で長いダミー値を返す（起動・ログ取得・復号の確認用）。
 
 ### ほかの物語に使う場合
 

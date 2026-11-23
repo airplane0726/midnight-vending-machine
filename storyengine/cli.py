@@ -18,6 +18,7 @@ commands:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import sys
@@ -337,6 +338,46 @@ def cmd_import_zip(series: Series, args) -> int:
     return 0
 
 
+def cmd_drive_token(series: Series, args) -> int:
+    from . import drive_token as dt
+    from . import google_drive
+
+    if args.action == "begin":
+        print(json.dumps(dt.begin(args.mode), ensure_ascii=False, indent=2))
+        return 0
+    if args.action == "cleanup":
+        print(f"削除した依頼: {dt.cleanup_all()} 件")
+        return 0
+    # finish
+    if not args.request_id or not args.log:
+        print("エラー: --request-id と --log が必要です", file=sys.stderr)
+        return 2
+    try:
+        token, header = dt.finish(args.request_id, Path(args.log))
+    except dt.TokenError as e:
+        print(f"エラー: {e}（秘密鍵とログファイルは削除しました）", file=sys.stderr)
+        return 1
+    try:
+        digest = hashlib.sha256(token.encode()).hexdigest()[:12]
+        print(f"復号成功: mode={header['mode']} / 依頼ID一致 / 改ざんなし / トークン長 {len(token)} 文字（SHA-256 先頭 {digest}）")
+        if header.get("quota"):
+            q = header["quota"]
+            if q.get("limit"):
+                free = (int(q["limit"]) - int(q.get("usage") or 0)) / 1024 ** 3
+                print(f"  Actions 側でのドライブ確認: 空き {free:.2f} GB")
+        then = list(args.then or [])
+        if not then:
+            return 0
+        if header["mode"] != "google":
+            print("dummy のトークンでは後続のコマンドを実行しません")
+            return 0
+        google_drive.set_session_token(token, header["issued_at"] + int(header["expires_in"]) - 120)
+        return main(["--series", str(series.root), *then])
+    finally:
+        google_drive.clear_session_token()
+        del token
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="storyengine", description="連載ショート動画の制作管理")
     p.add_argument("--series", default=DEFAULT_SERIES, help=f"連載ディレクトリ（既定: {DEFAULT_SERIES}）")
@@ -357,6 +398,13 @@ def main(argv: list[str] | None = None) -> int:
     iz = sub.add_parser("import-zip", help="記録と一致する画像だけを ZIP から手元に戻す（生成・通信なし）")
     iz.add_argument("zip")
     iz.add_argument("--episode", type=int)
+    dtp = sub.add_parser("drive-token", help="GitHub Actions から暗号化した Google ドライブ用トークンを受け取る")
+    dtp.add_argument("action", choices=["begin", "finish", "cleanup"])
+    dtp.add_argument("--mode", choices=["dummy", "google"], default="dummy")
+    dtp.add_argument("--request-id")
+    dtp.add_argument("--log", help="ワークフローのログを保存したファイル（処理後に削除）")
+    dtp.add_argument("--then", nargs=argparse.REMAINDER, default=[],
+                     help="最後に置く。トークンを使って続けて実行する storyengine のコマンド（例: --then persist --episode 1）")
     im = sub.add_parser("images", help="カットの開始画像を生成（--dry-run で確認のみ）")
     im.add_argument("--episode", type=int, help="話数（既定: 最新話）")
     im.add_argument("--cuts", help="対象カット（例: 1,3）。既定: 全カット")
@@ -367,7 +415,8 @@ def main(argv: list[str] | None = None) -> int:
 
     handlers = {"brief": cmd_brief, "scaffold": cmd_scaffold, "validate": cmd_validate,
                 "commit": cmd_commit, "render": cmd_render, "rebuild": cmd_rebuild, "status": cmd_status, "images": cmd_images, "persist": cmd_persist,
-                "restore": cmd_restore, "import-zip": cmd_import_zip}
+                "restore": cmd_restore, "import-zip": cmd_import_zip,
+                "drive-token": cmd_drive_token}
     try:
         series = load_series(args.series)
         return handlers[args.cmd](series, args)
