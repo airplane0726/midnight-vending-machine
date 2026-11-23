@@ -739,6 +739,87 @@
           }
         }
       ]
+    },
+    "cut04_video_trial": {
+      "kind": "video",
+      "versions": [
+        {
+          "key": "sha256:4ba1f1bf2ccefb0e4357db4d7e2971fe44d5ead98eb88be4a0ad65d5e821f830",
+          "kind": "video_trial",
+          "conditions": {
+            "kind": "video_trial",
+            "version": 1,
+            "cut": 4,
+            "spec": {
+              "prompt": "Static camera. Poco slowly turns the transparent cube upside down with a single half turn (180 degrees). The rain inside reverses and drifts upward. Poco's flat wooden feet gently lift off the cobblestones and it floats up slowly to about one third of its own height; its eyes grow slightly wider, the red bag lifts a little, short legs dangle. Keep Poco's design, the bag on Poco's own left hip (screen right), and the vending machine unchanged. No text.",
+              "duration_sec": 5,
+              "aspect_ratio": "9:16"
+            },
+            "model": {
+              "provider": "runway",
+              "model": "gen4_turbo",
+              "params": {
+                "max_cost_usd": 0.25
+              }
+            },
+            "init_image": "media/ep001/images/cut04_start-483422b202a91c66.png",
+            "init_image_sha256": "cdaefe03ae984a3cf55e39a809ab93c22554b668e8ed4d63c306bb9a89f5e695"
+          },
+          "created_at": "2026-11-23T15:06:28+00:00",
+          "cost_usd": 0.25,
+          "cost_note": "料金表からの見積もり。実際の請求は Runway の請求画面で確認する",
+          "status": "failed",
+          "task": {
+            "id": "9f1c3eba-c45f-4f63-aace-e640b311ab2a",
+            "status": "SUCCEEDED"
+          },
+          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)>"
+        },
+        {
+          "key": "sha256:4ba1f1bf2ccefb0e4357db4d7e2971fe44d5ead98eb88be4a0ad65d5e821f830",
+          "kind": "video_trial",
+          "conditions": {
+            "kind": "video_trial",
+            "version": 1,
+            "cut": 4,
+            "spec": {
+              "prompt": "Static camera. Poco slowly turns the transparent cube upside down with a single half turn (180 degrees). The rain inside reverses and drifts upward. Poco's flat wooden feet gently lift off the cobblestones and it floats up slowly to about one third of its own height; its eyes grow slightly wider, the red bag lifts a little, short legs dangle. Keep Poco's design, the bag on Poco's own left hip (screen right), and the vending machine unchanged. No text.",
+              "duration_sec": 5,
+              "aspect_ratio": "9:16"
+            },
+            "model": {
+              "provider": "runway",
+              "model": "gen4_turbo",
+              "params": {
+                "max_cost_usd": 0.25
+              }
+            },
+            "init_image": "media/ep001/images/cut04_start-483422b202a91c66.png",
+            "init_image_sha256": "cdaefe03ae984a3cf55e39a809ab93c22554b668e8ed4d63c306bb9a89f5e695"
+          },
+          "status": "complete",
+          "created_at": "2026-11-23T15:13:23+00:00",
+          "task": {
+            "id": "9f1c3eba-c45f-4f63-aace-e640b311ab2a",
+            "status": "SUCCEEDED"
+          },
+          "cost_usd": 0.0,
+          "cost_note": "同じタスクの結果を取り直したもの（費用は元の依頼の記録に計上済み）",
+          "file": "media/ep001/videos/cut04_video_trial-4ba1f1bf2ccefb0e.mp4",
+          "format": "mp4",
+          "width": 720,
+          "height": 1280,
+          "duration": 5.042,
+          "bytes": 1651111,
+          "sha256": "407bc70c1bf5142b23570e5965d085ab5d02ab84439084fa403787c22936832b",
+          "storage": {
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://12rqpgDlF7gfN7lNNh8pi-tEVpFuQabT8",
+            "at": "2026-11-23T15:13:26+00:00"
+          }
+        }
+      ]
     }
   }
 }
