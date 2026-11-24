@@ -1,0 +1,26 @@
+{
+ "episode": 1,
+ "purpose": "投稿用の表紙案（完成動画の1コマ＋文字。文字は表紙だけで、動画には入れない）",
+ "source_slot": "final",
+ "font": "/usr/share/fonts/opentype/ipafont-gothic/ipag.ttf",
+ "covers": [
+  {"name": "A-float", "label": "A 逆さで浮く（いちばん目を引く場面）", "time": 13.1,
+   "shade": {"y": 0, "top": 0.6, "height": 0.36},
+   "lines": [
+    {"text": "午前0時の自販機", "size": 58, "y": 292, "color": "0xFFE7B8"},
+    {"text": "第1話　雨のしかく", "size": 92, "y": 372, "color": "white", "border": 5},
+    {"text": "逆さにしたら――？", "size": 60, "y": 500, "color": "0xFFE7B8"}]},
+  {"name": "B-button", "label": "B 光るボタン（謎の入口）", "time": 1.4,
+   "shade": {"y": 0, "top": 0.55, "height": 0.34},
+   "lines": [
+    {"text": "午前0時の自販機", "size": 58, "y": 292, "color": "0xFFE7B8"},
+    {"text": "第1話　雨のしかく", "size": 92, "y": 372, "color": "white", "border": 5},
+    {"text": "ボタンが、ひとつだけ光った。", "size": 52, "y": 500, "color": "0xFFE7B8"}]},
+  {"name": "C-cube", "label": "C 雨の立方体（品物が主役）", "time": 6.6,
+   "shade": {"y": 0, "top": 0.5, "height": 0.30},
+   "lines": [
+    {"text": "午前0時の自販機", "size": 58, "y": 292, "color": "0xFFE7B8"},
+    {"text": "第1話　雨のしかく", "size": 92, "y": 372, "color": "white", "border": 5},
+    {"text": "中だけ、雨が降っている。", "size": 52, "y": 500, "color": "0xFFE7B8"}]}
+ ]
+}

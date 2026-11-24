@@ -19,4 +19,5 @@ __pycache__/
 series/*/media/*/images/
 series/*/media/*/videos/
 series/*/media/*/audio/
+series/*/media/*/covers/
 series/*/media/**/.tmp-*

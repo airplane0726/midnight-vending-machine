@@ -159,8 +159,9 @@ sound = {
         {"t": 5.6, "type": "beep", "freq": 1500, "to": 1900, "dur": 0.12, "gain_db": -18},
         {"t": 7.5, "type": "squeak", "freq": 2400, "to": 2900, "dur": 0.12, "gain_db": -26},
         {"t": 10.0, "type": "beep", "freq": 2100, "dur": 0.08, "gain_db": -18},
-        {"t": 10.55, "type": "squeak", "freq": 2200, "to": 3100, "dur": 0.18, "gain_db": -22},
-        {"t": 10.6, "type": "whoosh", "dur": 0.45, "gain_db": -20},
+        # 逆さに回す音は、白い切り替え（10.80〜11.15秒、明るさの山は約10.98秒）に合わせる
+        {"t": 10.80, "type": "squeak", "freq": 2200, "to": 3100, "dur": 0.18, "gain_db": -22},
+        {"t": 10.71, "type": "whoosh", "dur": 0.45, "gain_db": -20},
         {"t": 11.3, "type": "beep", "freq": 700, "to": 1400, "dur": 0.6, "gain_db": -20},
         {"t": 13.55, "type": "beep", "freq": 2300, "dur": 0.07, "gain_db": -17},
         {"t": 13.68, "type": "beep", "freq": 2300, "dur": 0.07, "gain_db": -17},

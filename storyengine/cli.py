@@ -481,6 +481,49 @@ def cmd_roughcut(series: Series, args) -> int:
     return 0
 
 
+def cmd_cover(series: Series, args) -> int:
+    from . import cover, roughcut
+
+    n = args.episode or _latest_episode(series)
+    try:
+        spec = roughcut.load_spec(series, args.spec or f"edits/ep{n:03d}_covers.json")
+        res = cover.build(series, n, spec, preview_dir=Path(args.preview) if args.preview else None)
+    except (cover.CoverError, roughcut.RoughcutError) as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        return 1
+    labels = {c["name"]: c.get("label", c["name"]) for c in spec["covers"]}
+    for r in res:
+        v = r["version"]
+        name = v["conditions"]["cover"]["name"]
+        print(f"  {labels[name]}: {v['file']}（{v['width']}x{v['height']}、{'再利用' if r['action'] == 'reuse' else '作成'}）")
+    if args.preview:
+        print(f"  見本（黄: 3:4 の切り取り範囲、水色: 1:1）: {Path(args.preview) / 'covers_preview.png'}")
+    return 0
+
+
+def cmd_finalize(series: Series, args) -> int:
+    from . import finalize
+
+    n = args.episode or _latest_episode(series)
+    try:
+        if args.check:
+            res = finalize.check(Path(args.check), dict(series.format), series.config.get("publish_export"))
+            v = {"file": args.check, "checks": res}
+            print(f"確認: {args.check}")
+        else:
+            out = finalize.export(series, n, source_slot=args.source, note=args.note or "")
+            v = out["version"]
+            print(f"第{n}話の投稿用MP4（{'再利用' if out['action'] == 'reuse' else '書き出し'}）: {v['file']}")
+            print(f"  元: {v['source_file']} / {v['bytes'] / 1024 ** 2:.1f}MB / 費用 $0")
+    except (finalize.FinalizeError, OSError) as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        return 1
+    for it in v["checks"]["items"]:
+        print(f"  {'OK ' if it['ok'] else 'NG '} {it['item']}: {it['value']}")
+    print(f"  総合: {'すべて合格' if v['checks']['ok'] else '不合格の項目あり'}")
+    return 0 if v["checks"]["ok"] else 1
+
+
 def cmd_video_trial(series: Series, args) -> int:
     from . import video_trial as vt
     from .integrations import NotConfiguredError, create_asset_store, create_video_generator
@@ -581,6 +624,15 @@ def main(argv: list[str] | None = None) -> int:
     dtp.add_argument("--log", help="ワークフローのログを保存したファイル（処理後に削除）")
     dtp.add_argument("--then", nargs=argparse.REMAINDER, default=[],
                      help="最後に置く。トークンを使って続けて実行する storyengine のコマンド。複数は + で区切る（例: --then images --dry-run + restore --check）")
+    cv = sub.add_parser("cover", help="完成動画の1コマ＋文字で投稿用の表紙案を作る（無料）")
+    cv.add_argument("--episode", type=int)
+    cv.add_argument("--spec", help="表紙の指示 JSON（既定 edits/epNNN_covers.json）")
+    cv.add_argument("--preview", help="切り取り範囲を示した見本の保存先フォルダ")
+    fz = sub.add_parser("finalize", help="投稿用MP4を書き出し、仕様・音量・音割れ・同期の長さを確認する（無料）")
+    fz.add_argument("--episode", type=int)
+    fz.add_argument("--source", default="roughcut", help="元にする生成記録の枠（既定 roughcut）")
+    fz.add_argument("--note", help="記録に残すメモ")
+    fz.add_argument("--check", help="書き出さず、このMP4の確認だけを行う")
     rcp = sub.add_parser("roughcut", help="既存素材だけで合成・音・編集を入れた仮編集の動画を作る（無料）")
     rcp.add_argument("--episode", type=int)
     rcp.add_argument("--spec", help="編集指示 JSON（連載ディレクトリからの相対パス。既定 edits/epNNN_roughcut.json）")
@@ -610,7 +662,7 @@ def main(argv: list[str] | None = None) -> int:
     handlers = {"brief": cmd_brief, "scaffold": cmd_scaffold, "validate": cmd_validate,
                 "commit": cmd_commit, "render": cmd_render, "rebuild": cmd_rebuild, "status": cmd_status, "images": cmd_images, "persist": cmd_persist,
                 "restore": cmd_restore, "import-zip": cmd_import_zip,
-                "drive-token": cmd_drive_token, "animatic": cmd_animatic, "roughcut": cmd_roughcut,
+                "drive-token": cmd_drive_token, "animatic": cmd_animatic, "roughcut": cmd_roughcut, "finalize": cmd_finalize, "cover": cmd_cover,
                 "video-trial": cmd_video_trial, "budget": cmd_budget}
     try:
         series = load_series(args.series)

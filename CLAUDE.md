@@ -39,6 +39,8 @@ python3 -m storyengine drive-token begin|finish|cleanup  # Actions から暗号�
 python3 -m storyengine budget [--episode N]   # 今月の制作費（消費）・上限・前払いの入金
 python3 -m storyengine animatic --episode N   # 採用画像だけで構成確認用の動画（無料）
 python3 -m storyengine roughcut --episode N   # 既存素材だけで合成・音・編集を入れた仮編集（無料。edits/epNNN_roughcut.json）
+python3 -m storyengine finalize --episode N   # 投稿用MP4を書き出し、仕様・音量・音割れ・映像と音声の長さ・キーフレームを確認（無料）
+python3 -m storyengine cover --episode N      # 完成動画の1コマ＋文字で表紙案（edits/epNNN_covers.json。無料）
 python3 -m storyengine video-trial --episode N --cut C --dry-run  # カット単位の動画試作（技術確認）
 ```
 

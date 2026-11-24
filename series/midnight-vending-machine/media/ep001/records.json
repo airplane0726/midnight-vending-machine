@@ -882,7 +882,7 @@
       "kind": "video",
       "versions": [
         {
-          "key": "sha256:30dd1ede5db38ef2bb67d933b397373d7d8640015ceb95d2187b02330b45b8dd",
+          "key": "sha256:7f2f78a525eefdc0240b8025293445f57935549de14c253169e9c299c321b19e",
           "status": "complete",
           "kind": "roughcut",
           "conditions": {
@@ -2277,7 +2277,7 @@
                     "gain_db": -18
                   },
                   {
-                    "t": 10.55,
+                    "t": 10.8,
                     "type": "squeak",
                     "freq": 2200,
                     "to": 3100,
@@ -2285,7 +2285,7 @@
                     "gain_db": -22
                   },
                   {
-                    "t": 10.6,
+                    "t": 10.71,
                     "type": "whoosh",
                     "dur": 0.45,
                     "gain_db": -20
@@ -2663,20 +2663,301 @@
               "media/ep001/images/cut04_start-483422b202a91c66.png": "cdaefe03ae984a3cf55e39a809ab93c22554b668e8ed4d63c306bb9a89f5e695"
             }
           },
-          "file": "media/ep001/videos/roughcut-30dd1ede5db38ef2.mp4",
+          "file": "media/ep001/videos/roughcut-7f2f78a525eefdc0.mp4",
           "format": "mp4",
           "width": 1080,
           "height": 1920,
           "duration": 20.0,
-          "bytes": 18233550,
-          "sha256": "373d271c625b137b813b6c1d64c2fbd094ba77629a76bb5c9d8ca67672551f45",
+          "bytes": 18234993,
+          "sha256": "00cede8561dc51e9af23b056cae613ec9dceb4c009f1d962bd7d1cd6eeadbd5b",
           "cost_usd": 0.0,
-          "created_at": "2026-11-24T02:45:18+00:00",
+          "created_at": "2026-11-24T03:29:40+00:00",
           "storage": {
-            "status": "persisted",
-            "provider": "google-drive",
-            "uri": "gdrive://1kq-KmRAjJwTdiOO-pZMt_ZLxKKpSNKkQ",
-            "at": "2026-11-24T02:47:19+00:00"
+            "status": "local_only",
+            "note": "persist で永続保存する"
+          }
+        }
+      ]
+    },
+    "final": {
+      "kind": "video",
+      "versions": [
+        {
+          "key": "sha256:ab61c1e291f98621ae3a571ac4f3bbf63898483100f8c9ec6686537cac9b8401",
+          "status": "complete",
+          "kind": "final",
+          "role": "final_candidate",
+          "conditions": {
+            "kind": "final",
+            "version": 1,
+            "source": {
+              "slot": "roughcut",
+              "sha256": "00cede8561dc51e9af23b056cae613ec9dceb4c009f1d962bd7d1cd6eeadbd5b"
+            },
+            "crf": 17,
+            "preset": "slow",
+            "gop_sec": 1.0,
+            "fps": 30.0
+          },
+          "file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
+          "format": "mp4",
+          "width": 1080,
+          "height": 1920,
+          "duration": 20.0,
+          "bytes": 24207228,
+          "sha256": "47e63422bed9d85aa5239db71633950514bc1803fe222c9e8a1a9126190e1545",
+          "source_file": "media/ep001/videos/roughcut-7f2f78a525eefdc0.mp4",
+          "checks": {
+            "ok": true,
+            "items": [
+              {
+                "item": "大きさ",
+                "value": "1080x1920",
+                "ok": true
+              },
+              {
+                "item": "フレームレート（一定）",
+                "value": "30fps",
+                "ok": true
+              },
+              {
+                "item": "映像",
+                "value": "h264 High yuv420p",
+                "ok": true
+              },
+              {
+                "item": "音声",
+                "value": "aac 48000Hz 2ch",
+                "ok": true
+              },
+              {
+                "item": "長さ",
+                "value": "20.000秒",
+                "ok": true
+              },
+              {
+                "item": "映像と音声の長さの差",
+                "value": "0ms",
+                "ok": true
+              },
+              {
+                "item": "音量（ラウドネス）",
+                "value": "-16.0 LUFS",
+                "ok": true
+              },
+              {
+                "item": "ピーク（音割れ）",
+                "value": "-2.8 dBTP",
+                "ok": true
+              },
+              {
+                "item": "キーフレーム間隔（最大）",
+                "value": "1.00秒",
+                "ok": true
+              },
+              {
+                "item": "faststart（先頭に目次）",
+                "value": "あり",
+                "ok": true
+              },
+              {
+                "item": "色の情報",
+                "value": "bt709/bt709/bt709",
+                "ok": true
+              }
+            ],
+            "loudness": {
+              "integrated_lufs": -16.0,
+              "lra_lu": 3.2,
+              "true_peak_dbfs": -2.8
+            }
+          },
+          "note": "第1話の最終候補（追加画像なし。利用者の指示で固定）",
+          "cost_usd": 0.0,
+          "created_at": "2026-11-24T03:31:07+00:00",
+          "storage": {
+            "status": "local_only",
+            "note": "persist で永続保存する"
+          }
+        }
+      ]
+    },
+    "cover_A-float": {
+      "kind": "image",
+      "versions": [
+        {
+          "key": "sha256:4dba9b4610a1d1d36aa521b8f8b39e35c8269877bcf75d641aa8cdd5bbc4563b",
+          "status": "complete",
+          "kind": "cover",
+          "conditions": {
+            "kind": "cover",
+            "version": 1,
+            "source_sha256": "47e63422bed9d85aa5239db71633950514bc1803fe222c9e8a1a9126190e1545",
+            "cover": {
+              "name": "A-float",
+              "label": "A 逆さで浮く（いちばん目を引く場面）",
+              "time": 13.1,
+              "shade": {
+                "y": 0,
+                "top": 0.6,
+                "height": 0.36
+              },
+              "lines": [
+                {
+                  "text": "午前0時の自販機",
+                  "size": 58,
+                  "y": 292,
+                  "color": "0xFFE7B8"
+                },
+                {
+                  "text": "第1話　雨のしかく",
+                  "size": 92,
+                  "y": 372,
+                  "color": "white",
+                  "border": 5
+                },
+                {
+                  "text": "逆さにしたら――？",
+                  "size": 60,
+                  "y": 500,
+                  "color": "0xFFE7B8"
+                }
+              ]
+            },
+            "font": "ipag.ttf"
+          },
+          "file": "media/ep001/covers/cover-A-float-4dba9b4610a1d1d3.png",
+          "format": "png",
+          "width": 1080,
+          "height": 1920,
+          "bytes": 4330844,
+          "sha256": "51872a654babb87d9e5f702d3e8282e28f2a605339f5ddeb59cf3f0f6ebb653f",
+          "cost_usd": 0.0,
+          "source_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
+          "created_at": "2026-11-24T03:32:06+00:00",
+          "storage": {
+            "status": "local_only",
+            "note": "persist で永続保存する"
+          }
+        }
+      ]
+    },
+    "cover_B-button": {
+      "kind": "image",
+      "versions": [
+        {
+          "key": "sha256:97b12a55ce4aa3383297f667e856e101331f92a619f9ff0062a4b3a87d321acc",
+          "status": "complete",
+          "kind": "cover",
+          "conditions": {
+            "kind": "cover",
+            "version": 1,
+            "source_sha256": "47e63422bed9d85aa5239db71633950514bc1803fe222c9e8a1a9126190e1545",
+            "cover": {
+              "name": "B-button",
+              "label": "B 光るボタン（謎の入口）",
+              "time": 1.4,
+              "shade": {
+                "y": 0,
+                "top": 0.55,
+                "height": 0.34
+              },
+              "lines": [
+                {
+                  "text": "午前0時の自販機",
+                  "size": 58,
+                  "y": 292,
+                  "color": "0xFFE7B8"
+                },
+                {
+                  "text": "第1話　雨のしかく",
+                  "size": 92,
+                  "y": 372,
+                  "color": "white",
+                  "border": 5
+                },
+                {
+                  "text": "ボタンが、ひとつだけ光った。",
+                  "size": 52,
+                  "y": 500,
+                  "color": "0xFFE7B8"
+                }
+              ]
+            },
+            "font": "ipag.ttf"
+          },
+          "file": "media/ep001/covers/cover-B-button-97b12a55ce4aa338.png",
+          "format": "png",
+          "width": 1080,
+          "height": 1920,
+          "bytes": 4062138,
+          "sha256": "be3aad956fc8d36e2f34fd949e7a125c0c1b9d389b9d7e7ef089cf1d5a180663",
+          "cost_usd": 0.0,
+          "source_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
+          "created_at": "2026-11-24T03:32:07+00:00",
+          "storage": {
+            "status": "local_only",
+            "note": "persist で永続保存する"
+          }
+        }
+      ]
+    },
+    "cover_C-cube": {
+      "kind": "image",
+      "versions": [
+        {
+          "key": "sha256:29d00741ca8b4758b276f505932334318845a15b83204c9ad907d031ce007dc5",
+          "status": "complete",
+          "kind": "cover",
+          "conditions": {
+            "kind": "cover",
+            "version": 1,
+            "source_sha256": "47e63422bed9d85aa5239db71633950514bc1803fe222c9e8a1a9126190e1545",
+            "cover": {
+              "name": "C-cube",
+              "label": "C 雨の立方体（品物が主役）",
+              "time": 6.6,
+              "shade": {
+                "y": 0,
+                "top": 0.5,
+                "height": 0.3
+              },
+              "lines": [
+                {
+                  "text": "午前0時の自販機",
+                  "size": 58,
+                  "y": 292,
+                  "color": "0xFFE7B8"
+                },
+                {
+                  "text": "第1話　雨のしかく",
+                  "size": 92,
+                  "y": 372,
+                  "color": "white",
+                  "border": 5
+                },
+                {
+                  "text": "中だけ、雨が降っている。",
+                  "size": 52,
+                  "y": 500,
+                  "color": "0xFFE7B8"
+                }
+              ]
+            },
+            "font": "ipag.ttf"
+          },
+          "file": "media/ep001/covers/cover-C-cube-29d00741ca8b4758.png",
+          "format": "png",
+          "width": 1080,
+          "height": 1920,
+          "bytes": 3960921,
+          "sha256": "fd14020f316e96951a2e395a6c4c7962a92cf3ccc7fa5af0194a901ba9977fc3",
+          "cost_usd": 0.0,
+          "source_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
+          "created_at": "2026-11-24T03:32:08+00:00",
+          "storage": {
+            "status": "local_only",
+            "note": "persist で永続保存する"
           }
         }
       ]
