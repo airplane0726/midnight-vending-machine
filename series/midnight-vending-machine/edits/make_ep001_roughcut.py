@@ -15,6 +15,11 @@ POCO = [{"ellipse": [352, 1081, 172, 298]}, {"ellipse": [233, 1141, 40, 64]}, {"
         {"rect": [387, 1215, 142, 155]}, {"rect": [283, 995, 222, 198]},
         {"rect": [273, 1340, 62, 105]}, {"rect": [387, 1340, 62, 105]},
         {"ellipse": [305, 1452, 56, 26]}, {"ellipse": [416, 1452, 56, 26]}]
+# 体の中心（目など暗い部分も必ず含める）と足の円盤
+POCO_FORCE = [{"ellipse": [352, 1075, 140, 262]}, {"rect": [290, 1000, 210, 190]},
+              {"ellipse": [305, 1452, 52, 23]}, {"ellipse": [416, 1452, 52, 23]},
+              {"rect": [280, 1345, 50, 95]}, {"rect": [393, 1345, 50, 95]},
+              {"ellipse": [457, 1293, 66, 72]}, {"rect": [400, 1232, 118, 120]}]  # バッグ（影の部分も含める）
 SHADOW = {"ellipse": [353, 1556, 150, 26]}
 CUBE5 = [283, 995, 221, 197]  # 立方体（x, y, 幅, 高さ）
 
@@ -22,6 +27,8 @@ CUBE5 = [283, 995, 221, 197]  # 立方体（x, y, 幅, 高さ）
 # 0 が接地（元の画像の足の高さを地面とみなし、足元に接地の影を置く）。負で上へ
 LIFT = [[0, 0], [0.4, 0], [2.6, -200], [3.0, -200], [3.3, -190], [5.0, 0], [5.12, 8], [5.3, 0]]
 FOOT_Y = 1478  # 接地したときの足の裏
+MOCHI_X, MOCHI_Y = 640, 1178   # モチ（幅220・高さ226）の左上。目は (78, 104) と (152, 104)
+FLAP_LIFT = 100                # フラップが持ち上がる量（下端が上がり、すき間ができる）
 
 
 def plus(kfs, d):
@@ -37,13 +44,29 @@ assets = {
     "blank4": {"op": "blank", "size": [214, 214]},
     "blank5": {"op": "blank", "size": CUBE5[2:]},
     "mask_plate": {"op": "mask", "size": SIZE, "shapes": POCO + [SHADOW], "grow": 12},
-    "mask_poco": {"op": "mask", "size": SIZE, "shapes": POCO, "grow": 3, "feather": 2},
-    "plate5": {"op": "fill", "src": K5, "mask": "@mask_plate", "sigma": 45,
-               "patches": [{"from": [590, 1470, 380, 230], "to": [180, 1420], "feather": 30}]},
+    "mask_poco": {"op": "colormask", "src": K5, "within": POCO, "force": POCO_FORCE,
+                  "rule": {"min_r": 110, "min_r_minus_b": 60}, "close": 2, "feather": 1.2},
+    "mask_hole": {"op": "colormask", "src": K5, "within": POCO + [SHADOW], "force": POCO_FORCE + [SHADOW],
+                  "rule": {"min_r": 110, "min_r_minus_b": 60}, "close": 2, "grow": 6},
+    # 背景の穴埋め：ポコがいた場所を、同じ画像の別の場所（自販機の側面・正面の下部・路地・石畳）の模様で埋める
+    "plate5": {"op": "fill", "src": K5, "mask": "@mask_hole", "sigma": 45, "patches": [
+        {"from": [0, 1130, 165, 380], "to": [170, 1130], "feather": 20},     # 路地の地面
+        {"from": [333, 470, 70, 320], "to": [333, 1140], "feather": 10},     # 自販機の側面
+        {"from": [560, 1045, 150, 105], "to": [398, 1145], "feather": 14},   # 正面（取り出し口の左の余白）
+        {"from": [560, 1325, 150, 135], "to": [398, 1325], "feather": 14},   # 正面の下部
+        {"from": [560, 1045, 150, 85], "to": [398, 1243], "feather": 14},
+        {"from": [560, 1445, 215, 60], "to": [333, 1445], "feather": 12},    # 台座と足元の影
+        {"from": [600, 1505, 400, 170], "to": [165, 1490], "feather": 26},   # 石畳
+    ]},
     "poco5": {"op": "cutout", "src": K5, "mask": "@mask_poco"},
     "cube5_flip": {"op": "crop", "src": K5, "rect": CUBE5, "vflip": True},
     "shadow": {"op": "glow", "radius": 140, "ry": 24, "color": [16, 10, 6], "alpha": 0.85},
-    "rainbow": {"op": "rainbow", "radius": 66, "thickness": 26},
+    "rainbow": {"op": "rainbow", "radius": 66, "thickness": 26, "alpha": 165, "blur": 2.2, "ground_fade": 16},
+    "rainbow_glow": {"op": "glow", "radius": 90, "ry": 20, "color": [255, 236, 200], "alpha": 0.35},
+    # 取り出し口：フラップ（ちょうつがいは上）と、開いたときに見える暗い内側
+    "flap": {"op": "crop", "src": K5, "rect": [548, 1146, 428, 178]},
+    "slot_dark": {"op": "crop", "src": K5, "rect": [548, 1146, 428, 178], "tint": [0.16, 0.12, 0.10]},
+    "lid": {"op": "glow", "radius": 9, "ry": 7, "color": [232, 198, 152], "alpha": 1.0},
     "mask_mochi": {"op": "mask", "size": [1254, 1254], "shapes": [{"ellipse": [203, 640, 170, 166]},
                    {"rect": [80, 518, 246, 246]}], "grow": -4, "feather": 3},
     "mochi_cut": {"op": "cutout", "src": MOCHI, "mask": "@mask_mochi"},
@@ -93,6 +116,7 @@ shots = [
              "rain": cube_rain_up},
             {"asset": "blank5", "x": CUBE5[0], "y": plus(LIFT, CUBE5[1]), "fade_in": [3.0, 0.3],
              "rain": cube_rain_dn},
+            {"asset": "rainbow_glow", "x": 361 - 90, "y": FOOT_Y + 34 - 20, "fade_in": [5.3, 0.9]},
             {"asset": "rainbow", "x": 361 - 66, "y": FOOT_Y + 34 - 66, "fade_in": [5.3, 0.9]}],
         "transition": {"type": "cut"}},
     {  # 17.0–20.0 モチがのぞく
@@ -102,9 +126,14 @@ shots = [
             {"asset": "shadow", "x": 362 - 140, "y": FOOT_Y - 24},
             {"asset": "poco5", "x": 0, "y": 0},
             {"asset": "blank5", "x": CUBE5[0], "y": CUBE5[1], "rain": cube_rain_dn},
+            {"asset": "rainbow_glow", "x": 361 - 90, "y": FOOT_Y + 34 - 20},
             {"asset": "rainbow", "x": 361 - 66, "y": FOOT_Y + 34 - 66},
-            {"asset": "mochi", "x": 690, "y": [[0, 1325], [0.4, 1325], [1.2, 1212]], "opacity": 0.88,
-             "clip": [549, 1143, 422, 178]}]},
+            # フラップが内側から押し上げられ、下にできたすき間からモチが顔の上半分を出す
+            {"asset": "slot_dark", "x": 548, "y": 1146},
+            {"asset": "mochi", "x": MOCHI_X, "y": [[0, 1330], [0.5, 1330], [1.2, MOCHI_Y]], "clip": [548, 1146, 428, 176]},
+            {"asset": "lid", "anchor": "center", "x": MOCHI_X + 78, "y": MOCHI_Y + 104, "fade_in": [1.93, 0.04], "fade_out": [2.07, 0.05]},
+            {"asset": "lid", "anchor": "center", "x": MOCHI_X + 152, "y": MOCHI_Y + 104, "fade_in": [1.93, 0.04], "fade_out": [2.07, 0.05]},
+            {"asset": "flap", "x": 548, "y": [[0, 1146], [0.35, 1146], [1.0, 1146 - FLAP_LIFT]], "clip": [548, 1146, 428, 178]}]},
 ]
 
 F3, C3 = "F3", "C3"
@@ -161,10 +190,10 @@ sound = {
 }
 
 spec = {"episode": 1, "purpose": "仮編集（完成形を判断するため。既存素材だけ・追加課金なし）",
-        "placeholders": ["浮く・着地：カット5の画像からポコを切り抜いて上下に動かす。元の足の高さを地面とし、接地の影を足元に置く（回す動作は白い切り替えで代用）",
+        "placeholders": ["浮く・着地：カット5の画像からポコを形と色で切り抜いて上下に動かす。背後は同じ画像の自販機の側面・正面・路地・石畳の模様で埋めた。元の足の高さを地面とし、接地の影を足元に置く（回す動作は白い切り替えで代用）",
                          "逆さの立方体：立方体部分を上下反転して代用",
-                         "虹：図形（6色の小さなアーチ）。両足がくっついていて間に置けないため、足のすぐ手前の地面に置いた",
-                         "モチ：基準画像を形で切り抜き、暖色に寄せて取り出し口に重ねる（光や質感は合っていない）",
+                         "虹：図形（6色の小さなアーチ）を半透明・ぼかし・地面側を薄くして、石畳に淡い光を足した。両足がくっついていて間に置けないため、足のすぐ手前の地面に置いた",
+                         "モチ：基準画像を形で切り抜き暖色に寄せた。フラップを持ち上げ、下のすき間から顔の上半分（目）を出す。まばたき1回",
                          "音：すべて合成音（仮）"],
         "output": {"width": 1080, "height": 1920, "fps": 30}, "assets": assets, "shots": shots, "sound": sound}
 Path(__file__).with_name("ep001_roughcut.json").write_text(json.dumps(spec, ensure_ascii=False, indent=1), encoding="utf-8")

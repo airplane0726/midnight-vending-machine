@@ -159,6 +159,52 @@ class Assets:
                      f"geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':a='255*min(1,min(min(X,Y),min(W-1-X,H-1-Y))/{f})'[p];"
                      f"[0][p]overlay={tx}:{ty}:format=auto,format=rgb24", "-frames:v", "1", str(nxt)])
                 os.replace(nxt, out)
+        elif op == "colormask":  # 形の中で色の条件を満たす画素＋必ず含める形（目など暗い部分）
+            src = self.path(a["src"])
+            w, h = self.size(src)
+            raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(src), "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
+                                 check=True, capture_output=True).stdout
+            rule = a.get("rule") or {}
+            min_r, min_rb = int(rule.get("min_r", 0)), int(rule.get("min_r_minus_b", -255))
+
+            def inside(shapes, x, y):
+                for sh in shapes:
+                    if "ellipse" in sh:
+                        cx, cy, rx, ry = sh["ellipse"]
+                        if ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 <= 1:
+                            return True
+                    elif "rect" in sh:
+                        rx0, ry0, rw, rh = sh["rect"]
+                        if rx0 <= x < rx0 + rw and ry0 <= y < ry0 + rh:
+                            return True
+                return False
+            within, force = a.get("within") or [], a.get("force") or []
+            xs = [v for sh in within + force for v in ((sh["ellipse"][0] - sh["ellipse"][2], sh["ellipse"][0] + sh["ellipse"][2])
+                                                     if "ellipse" in sh else (sh["rect"][0], sh["rect"][0] + sh["rect"][2]))]
+            ys = [v for sh in within + force for v in ((sh["ellipse"][1] - sh["ellipse"][3], sh["ellipse"][1] + sh["ellipse"][3])
+                                                     if "ellipse" in sh else (sh["rect"][1], sh["rect"][1] + sh["rect"][3]))]
+            x0, x1 = max(0, int(min(xs))), min(w, int(max(xs)) + 1)
+            y0, y1 = max(0, int(min(ys))), min(h, int(max(ys)) + 1)
+            px = bytearray(w * h * 4)
+            for i in range(0, len(px), 4):
+                px[i + 3] = 255
+            for y in range(y0, y1):
+                for x in range(x0, x1):
+                    o = (y * w + x) * 3
+                    r, g, b = raw[o], raw[o + 1], raw[o + 2]
+                    if inside(force, x, y) or (r >= min_r and r - b >= min_rb and inside(within, x, y)):
+                        q = (y * w + x) * 4
+                        px[q:q + 3] = b"\xff\xff\xff"
+            tmp = self.work / f"asset-{name}-raw.png"
+            write_png_rgba(tmp, w, h, px)
+            vf = "format=gray"
+            if a.get("close"):  # 小さな穴をふさぐ（ぼかして二値化）
+                vf += f",gblur=sigma={a['close']},lut=y='if(gt(val,90),255,0)'"
+            if a.get("grow"):
+                vf += f",gblur=sigma={a['grow']},lut=y='if(gt(val,20),255,0)'"
+            if a.get("feather"):
+                vf += f",gblur=sigma={a['feather']}"
+            _ff(["-i", str(tmp), "-vf", vf, "-frames:v", "1", str(out)])
         elif op == "plate":
             _ff(["-i", str(self.path(a["src"])), "-vf", f"removelogo=f={self.path(a['mask'])}", "-frames:v", "1", str(out)])
         elif op == "cutout":
@@ -202,9 +248,13 @@ class Assets:
                 for k in reversed(range(6)):
                     e = f"if(eq(B,{k}),{cols[k][i]},{e})"
                 return e.replace("B", band)
-            alpha = f"if(between({band},0,5)*lt(Y,{r}),215,0)"
+            peak = int(a.get("alpha", 215))
+            # 足もと（下端）に向かって薄くし、地面に溶け込ませる
+            fade_h = float(a.get("ground_fade", 0))
+            ground = f"*clip(({r}-Y)/{fade_h},0,1)" if fade_h else ""
+            alpha = f"if(between({band},0,5)*lt(Y,{r}),{peak}{ground},0)"
             _ff(["-f", "lavfi", "-i", f"color=black:s={2 * r}x{r + 2}", "-vf",
-                 f"format=rgba,geq=r='{ch(0)}':g='{ch(1)}':b='{ch(2)}':a='{alpha}',gblur=sigma=1.2",
+                 f"format=rgba,geq=r='{ch(0)}':g='{ch(1)}':b='{ch(2)}':a='{alpha}',gblur=sigma={a.get('blur', 1.2)}",
                  "-frames:v", "1", str(out)])
         elif op == "rain":
             w, h = a["size"]
