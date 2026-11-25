@@ -21,3 +21,8 @@ series/*/media/*/videos/
 series/*/media/*/audio/
 series/*/media/*/covers/
 series/*/media/**/.tmp-*
+
+# 公開準備の生成物（brand から作り直せる）
+brand/out/
+site_draft/
+series/*/publish/.ledger.lock

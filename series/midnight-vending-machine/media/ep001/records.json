@@ -2971,6 +2971,308 @@
           }
         }
       ]
+    },
+    "post": {
+      "kind": "video",
+      "versions": [
+        {
+          "key": "sha256:8da66d9252c92f68bfdda4f107ed0cef86b68162f4b6b9dcfeeed38ae2d9228b",
+          "status": "complete",
+          "kind": "post",
+          "conditions": {
+            "kind": "post",
+            "version": 1,
+            "master_sha256": "47e63422bed9d85aa5239db71633950514bc1803fe222c9e8a1a9126190e1545",
+            "logo": {
+              "text": "(Author TBD)",
+              "font_size": 34,
+              "opacity": 0.7,
+              "position": {
+                "x": "W-w-36",
+                "y": "232"
+              }
+            },
+            "brand_status": "provisional"
+          },
+          "file": "media/ep001/videos/ep001-post-8da66d9252c92f68.mp4",
+          "format": "mp4",
+          "width": 1080,
+          "height": 1920,
+          "duration": 20.0,
+          "bytes": 23213807,
+          "sha256": "4a093fcb1fd060448c63b36cf3041d19e920da29234097931cbfae12830774e4",
+          "master_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
+          "checks": {
+            "ok": true,
+            "items": [
+              {
+                "item": "大きさ",
+                "value": "1080x1920",
+                "ok": true
+              },
+              {
+                "item": "フレームレート（一定）",
+                "value": "30fps",
+                "ok": true
+              },
+              {
+                "item": "映像",
+                "value": "h264 High yuv420p",
+                "ok": true
+              },
+              {
+                "item": "音声",
+                "value": "aac 48000Hz 2ch",
+                "ok": true
+              },
+              {
+                "item": "長さ",
+                "value": "20.000秒",
+                "ok": true
+              },
+              {
+                "item": "映像と音声の長さの差",
+                "value": "0ms",
+                "ok": true
+              },
+              {
+                "item": "音量（ラウドネス）",
+                "value": "-16.0 LUFS",
+                "ok": true
+              },
+              {
+                "item": "ピーク（音割れ）",
+                "value": "-2.8 dBTP",
+                "ok": true
+              },
+              {
+                "item": "キーフレーム間隔（最大）",
+                "value": "1.00秒",
+                "ok": true
+              },
+              {
+                "item": "faststart（先頭に目次）",
+                "value": "あり",
+                "ok": true
+              },
+              {
+                "item": "色の情報",
+                "value": "bt709/bt709/bt709",
+                "ok": true
+              }
+            ],
+            "loudness": {
+              "integrated_lufs": -16.0,
+              "lra_lu": 3.2,
+              "true_peak_dbfs": -2.8
+            }
+          },
+          "cost_usd": 0.0,
+          "created_at": "2026-11-25T01:35:58+00:00",
+          "storage": {
+            "status": "local_only",
+            "note": "persist で永続保存する"
+          }
+        }
+      ]
+    },
+    "cover_still-01.40s": {
+      "kind": "image",
+      "versions": [
+        {
+          "key": "sha256:f5ef6bcd0f1049fb8d5368b303ab6c5faeb94d1da02471d58a215e270e66f7f3",
+          "status": "complete",
+          "kind": "cover",
+          "conditions": {
+            "kind": "cover",
+            "version": 1,
+            "source_sha256": "47e63422bed9d85aa5239db71633950514bc1803fe222c9e8a1a9126190e1545",
+            "cover": {
+              "name": "still-01.40s",
+              "time": 1.4
+            },
+            "font": "ipag.ttf"
+          },
+          "file": "media/ep001/covers/cover-still-01.40s-f5ef6bcd0f1049fb.png",
+          "format": "png",
+          "width": 1080,
+          "height": 1920,
+          "bytes": 4310749,
+          "sha256": "6bc271d54c8bb6cc4908299c2b37b4d68d74877f77339bc9482789317dcc7cea",
+          "cost_usd": 0.0,
+          "source_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
+          "created_at": "2026-11-25T01:35:58+00:00",
+          "storage": {
+            "status": "local_only",
+            "note": "persist で永続保存する"
+          }
+        }
+      ]
+    },
+    "cover_still-06.60s": {
+      "kind": "image",
+      "versions": [
+        {
+          "key": "sha256:d6b6b7b7b5460acc7c7dc898450f13207eb030e97c6657d0ad54eaf9f119e646",
+          "status": "complete",
+          "kind": "cover",
+          "conditions": {
+            "kind": "cover",
+            "version": 1,
+            "source_sha256": "47e63422bed9d85aa5239db71633950514bc1803fe222c9e8a1a9126190e1545",
+            "cover": {
+              "name": "still-06.60s",
+              "time": 6.6
+            },
+            "font": "ipag.ttf"
+          },
+          "file": "media/ep001/covers/cover-still-06.60s-d6b6b7b7b5460acc.png",
+          "format": "png",
+          "width": 1080,
+          "height": 1920,
+          "bytes": 4136290,
+          "sha256": "5f3281ec7ae73686725c0ea82d6ec12157a4b935d9571c650e586c6ecd499d0f",
+          "cost_usd": 0.0,
+          "source_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
+          "created_at": "2026-11-25T01:35:59+00:00",
+          "storage": {
+            "status": "local_only",
+            "note": "persist で永続保存する"
+          }
+        }
+      ]
+    },
+    "cover_still-09.00s": {
+      "kind": "image",
+      "versions": [
+        {
+          "key": "sha256:4fb090cd6e0e33b8a18fb7ba69d72c74c509f436de4531eabe5402a525b8b5ec",
+          "status": "complete",
+          "kind": "cover",
+          "conditions": {
+            "kind": "cover",
+            "version": 1,
+            "source_sha256": "47e63422bed9d85aa5239db71633950514bc1803fe222c9e8a1a9126190e1545",
+            "cover": {
+              "name": "still-09.00s",
+              "time": 9.0
+            },
+            "font": "ipag.ttf"
+          },
+          "file": "media/ep001/covers/cover-still-09.00s-4fb090cd6e0e33b8.png",
+          "format": "png",
+          "width": 1080,
+          "height": 1920,
+          "bytes": 4344147,
+          "sha256": "4488e389b02269cc076bd47df79430e78af882733befdd56e4632157b1f88852",
+          "cost_usd": 0.0,
+          "source_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
+          "created_at": "2026-11-25T01:36:00+00:00",
+          "storage": {
+            "status": "local_only",
+            "note": "persist で永続保存する"
+          }
+        }
+      ]
+    },
+    "cover_still-13.10s": {
+      "kind": "image",
+      "versions": [
+        {
+          "key": "sha256:5af8d028cad999804f05ceda93c1a334918251913999521ea4db72b1dfaafb5e",
+          "status": "complete",
+          "kind": "cover",
+          "conditions": {
+            "kind": "cover",
+            "version": 1,
+            "source_sha256": "47e63422bed9d85aa5239db71633950514bc1803fe222c9e8a1a9126190e1545",
+            "cover": {
+              "name": "still-13.10s",
+              "time": 13.1
+            },
+            "font": "ipag.ttf"
+          },
+          "file": "media/ep001/covers/cover-still-13.10s-5af8d028cad99980.png",
+          "format": "png",
+          "width": 1080,
+          "height": 1920,
+          "bytes": 4658462,
+          "sha256": "1b33729f7e367c90ba30437bfe99fabef91fdf3b220fba27cc68d364ffa0b588",
+          "cost_usd": 0.0,
+          "source_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
+          "created_at": "2026-11-25T01:36:00+00:00",
+          "storage": {
+            "status": "local_only",
+            "note": "persist で永続保存する"
+          }
+        }
+      ]
+    },
+    "cover_still-16.80s": {
+      "kind": "image",
+      "versions": [
+        {
+          "key": "sha256:9af9f4d40d6ac5ec63dbf6a26c09730a35b9c93e22be609e4167327a6d1be235",
+          "status": "complete",
+          "kind": "cover",
+          "conditions": {
+            "kind": "cover",
+            "version": 1,
+            "source_sha256": "47e63422bed9d85aa5239db71633950514bc1803fe222c9e8a1a9126190e1545",
+            "cover": {
+              "name": "still-16.80s",
+              "time": 16.8
+            },
+            "font": "ipag.ttf"
+          },
+          "file": "media/ep001/covers/cover-still-16.80s-9af9f4d40d6ac5ec.png",
+          "format": "png",
+          "width": 1080,
+          "height": 1920,
+          "bytes": 4399226,
+          "sha256": "774ec5fd37c107ef56988d1776a59deb7fd5b3f8c037d821bbd5f7c04d6b69c2",
+          "cost_usd": 0.0,
+          "source_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
+          "created_at": "2026-11-25T01:36:01+00:00",
+          "storage": {
+            "status": "local_only",
+            "note": "persist で永続保存する"
+          }
+        }
+      ]
+    },
+    "cover_still-19.40s": {
+      "kind": "image",
+      "versions": [
+        {
+          "key": "sha256:3996f50a69556a5c9f782a183f98ae03ea85c538623daa99f68c7d6de627f4ef",
+          "status": "complete",
+          "kind": "cover",
+          "conditions": {
+            "kind": "cover",
+            "version": 1,
+            "source_sha256": "47e63422bed9d85aa5239db71633950514bc1803fe222c9e8a1a9126190e1545",
+            "cover": {
+              "name": "still-19.40s",
+              "time": 19.4
+            },
+            "font": "ipag.ttf"
+          },
+          "file": "media/ep001/covers/cover-still-19.40s-3996f50a69556a5c.png",
+          "format": "png",
+          "width": 1080,
+          "height": 1920,
+          "bytes": 4347487,
+          "sha256": "4933315f1f5817bae8e5fca06396a45f00e005e035e47c7d5d269485b54456fd",
+          "cost_usd": 0.0,
+          "source_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
+          "created_at": "2026-11-25T01:36:01+00:00",
+          "storage": {
+            "status": "local_only",
+            "note": "persist で永続保存する"
+          }
+        }
+      ]
     }
   }
 }

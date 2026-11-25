@@ -1,0 +1,86 @@
+{
+  "episode": 1,
+  "version": 1,
+  "created_at": "2026-11-25T01:36:01+00:00",
+  "brand": {
+    "status": "provisional",
+    "name_ja": "（作者名・仮）",
+    "name_en": "(Author TBD)"
+  },
+  "video": {
+    "post": {
+      "file": "media/ep001/videos/ep001-post-8da66d9252c92f68.mp4",
+      "sha256": "4a093fcb1fd060448c63b36cf3041d19e920da29234097931cbfae12830774e4",
+      "checks_ok": true
+    },
+    "master": {
+      "file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
+      "sha256": "47e63422bed9d85aa5239db71633950514bc1803fe222c9e8a1a9126190e1545"
+    }
+  },
+  "covers": [
+    {
+      "name": "A-float",
+      "file": "media/ep001/covers/cover-A-float-4dba9b4610a1d1d3.png",
+      "sha256": "51872a654babb87d9e5f702d3e8282e28f2a605339f5ddeb59cf3f0f6ebb653f"
+    },
+    {
+      "name": "B-button",
+      "file": "media/ep001/covers/cover-B-button-97b12a55ce4aa338.png",
+      "sha256": "be3aad956fc8d36e2f34fd949e7a125c0c1b9d389b9d7e7ef089cf1d5a180663"
+    },
+    {
+      "name": "C-cube",
+      "file": "media/ep001/covers/cover-C-cube-29d00741ca8b4758.png",
+      "sha256": "fd14020f316e96951a2e395a6c4c7962a92cf3ccc7fa5af0194a901ba9977fc3"
+    }
+  ],
+  "cover_choice": "A-float",
+  "stills": [
+    {
+      "time": 1.4,
+      "file": "media/ep001/covers/cover-still-01.40s-f5ef6bcd0f1049fb.png",
+      "sha256": "6bc271d54c8bb6cc4908299c2b37b4d68d74877f77339bc9482789317dcc7cea"
+    },
+    {
+      "time": 6.6,
+      "file": "media/ep001/covers/cover-still-06.60s-d6b6b7b7b5460acc.png",
+      "sha256": "5f3281ec7ae73686725c0ea82d6ec12157a4b935d9571c650e586c6ecd499d0f"
+    },
+    {
+      "time": 9.0,
+      "file": "media/ep001/covers/cover-still-09.00s-4fb090cd6e0e33b8.png",
+      "sha256": "4488e389b02269cc076bd47df79430e78af882733befdd56e4632157b1f88852"
+    },
+    {
+      "time": 13.1,
+      "file": "media/ep001/covers/cover-still-13.10s-5af8d028cad99980.png",
+      "sha256": "1b33729f7e367c90ba30437bfe99fabef91fdf3b220fba27cc68d364ffa0b588"
+    },
+    {
+      "time": 16.8,
+      "file": "media/ep001/covers/cover-still-16.80s-9af9f4d40d6ac5ec.png",
+      "sha256": "774ec5fd37c107ef56988d1776a59deb7fd5b3f8c037d821bbd5f7c04d6b69c2"
+    },
+    {
+      "time": 19.4,
+      "file": "media/ep001/covers/cover-still-19.40s-3996f50a69556a5c.png",
+      "sha256": "4933315f1f5817bae8e5fca06396a45f00e005e035e47c7d5d269485b54456fd"
+    }
+  ],
+  "texts": {
+    "youtube": "publish/ep001/youtube.md",
+    "instagram": "publish/ep001/instagram.md",
+    "tiktok": "publish/ep001/tiktok.md",
+    "note": "publish/ep001/note.md",
+    "x": "publish/ep001/x.md"
+  },
+  "platforms": [
+    "youtube",
+    "instagram",
+    "tiktok",
+    "note",
+    "x"
+  ],
+  "package_sha256": "sha256:6cbaada9ebcd1a07ea115e801bd6b841b9866bb954231c2e52032d4f6415810c"
+}

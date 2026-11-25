@@ -42,6 +42,10 @@ python3 -m storyengine roughcut --episode N   # 既存素材だけで合成・�
 python3 -m storyengine finalize --episode N   # 投稿用MP4を書き出し、仕様・音量・音割れ・映像と音声の長さ・キーフレームを確認（無料）
 python3 -m storyengine cover --episode N      # 完成動画の1コマ＋文字で表紙案（edits/epNNN_covers.json。無料）
 python3 -m storyengine video-trial --episode N --cut C --dry-run  # カット単位の動画試作（技術確認）
+python3 -m storyengine brand                  # 作者プロフィール・作品紹介・文字ロゴを brand/out に作る（brand/brand.json から）
+python3 -m storyengine publish package --episode N  # 投稿版（作者ロゴあり）・表紙・静止画・各投稿先の文章・manifest
+python3 -m storyengine publish status|request-review|approve|check|record  # 承認台帳（公開そのものはしない）
+python3 -m storyengine site                   # 作品サイトのローカル下書き（site_draft/。公開しない）
 ```
 
 別の連載は `--series series/<id>` を付ける。標準ライブラリのみ（Python 3.10+）。
@@ -53,6 +57,14 @@ python3 -m storyengine video-trial --episode N --cut C --dry-run  # カット単
 - 前払いの入金（budget/ledger.json）と実際の消費（生成記録の cost_usd）を分けて記録する。入金額は事前に利用者が確認する。自動入金は OFF。
 - 有料の処理の前に `budget` で残りを確認し、見積もりを利用者に示してから `--allow-paid` を付ける。自動の作り直しはしない。
 - 制作は自動化してよいが、投稿は利用者が確認してから行う。
+
+## 公開の関門（docs/publishing.md）
+
+- 作者ブランドは `brand/brand.json` だけで管理する（名前の一括置換はここだけ）。未取得の URL・アカウントは null のまま。文章・サイトでは「準備中」と書き、実在するように見せない。
+- 前の話が公開済み（published）か取り下げ（withdrawn）になるまで、次の話の登録・有料生成をしない（コードで確認している）。
+- 承認（`publish approve`）は、利用者がその投稿版を確認したと明示したときだけ行う。承認は投稿版の sha256 に結びつき、作り直すと無効になる。仮のブランド名のままでは承認できない。
+- 投稿の前に `publish check`、投稿したら `publish record`。同じ話を同じ投稿先へ二度記録しない。
+- ロゴなしの原版（final）と投稿版（post）の両方を保存する。
 
 ## 守ること
 

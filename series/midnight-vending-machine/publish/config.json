@@ -1,0 +1,9 @@
+{
+ "note": "この作品の公開設定。platforms は投稿パッケージを作る対象（投稿先が決まったら絞る）。logo は作者ロゴの位置（ffmpeg の overlay の式。W・H は動画、w・h はロゴの大きさ）。",
+ "platforms": ["youtube", "instagram", "tiktok", "note", "x"],
+ "logo": {"x": "W-w-36", "y": "232"},
+ "intro_en": {
+  "short": "Every midnight, one button lights up on an old vending machine and a strange item drops out. Poco, a tiny felt delivery robot, tries each one.",
+  "long": "In a small town at night stands an old vending machine. At midnight, a single button lights up and one mysterious item appears. Poco, a tiny delivery robot carrying a parcel whose address has faded away, receives the item every night and tries it out. Mochi, a soft white creature who lives inside the machine, quietly watches from the retrieval slot."
+ }
+}

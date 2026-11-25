@@ -144,8 +144,24 @@ def cmd_validate(series: Series, args) -> int:
     return 0
 
 
+def _publish_gate(series: Series, n: int, what: str) -> bool:
+    """前の話の公開準備が終わっていなければ止める（予算の関門とは別に確認する）。"""
+    from . import publish
+    try:
+        publish.assert_can_generate(series, n)
+    except publish.GateError as e:
+        print(f"エラー: {e}（{what}を中止）", file=sys.stderr)
+        print("  前の話を公開（publish record）または取り下げてから進めてください。", file=sys.stderr)
+        return False
+    return True
+
+
 def cmd_commit(series: Series, args) -> int:
     draft = _load_draft(args.draft)
+    n_new = draft.get("episode_number") if isinstance(draft, dict) else None
+    latest = max((e["episode_number"] for e in load_episodes(series)), default=0)
+    if isinstance(n_new, int) and n_new > latest and not _publish_gate(series, n_new, "新しい話の登録"):
+        return 1
     plan, notes = commit(series, draft, replace=args.replace)
     for n in notes:
         print(f"[復旧] {n}")
@@ -285,10 +301,14 @@ def cmd_images(series: Series, args) -> int:
     elif generator is not None and generator.paid and not args.allow_paid:
         plans, notes = media.plan_images(series, n, cuts=cuts, store=store)
         todo = [p for p in plans if p.action not in ("reuse", "restore", "blocked")]
+        if todo and not _publish_gate(series, n, "画像生成"):
+            return 1
         if todo:
             print(f"  有料の生成が {len(todo)} カット分必要です。見積もりを確認してから --allow-paid を付けて実行してください。")
             print("  （--dry-run で見積もりを表示できます。--cuts 1 で1カットだけに絞れます）")
             return 2
+        if todo and not _publish_gate(series, n, "画像生成"):
+            return 1
         result = media.run_images(series, n, generator, store=store, cuts=cuts,
                                   before_paid=_image_budget_guard(series, n, generator, args))
         notes = result.notes
@@ -481,6 +501,93 @@ def cmd_roughcut(series: Series, args) -> int:
     return 0
 
 
+def cmd_brand(series: Series, args) -> int:
+    from . import publish
+
+    try:
+        brand = publish.load_brand(series)
+        ctx = publish.context(series)
+        root = publish.repo_root(series)
+        out = root / "brand" / "out"
+        made = []
+        for t in sorted((root / "brand" / "templates").glob("*.md")):
+            atomic_write_text(out / t.name, publish.render_template(t, ctx))
+            made.append(out / t.name)
+        tdir = series.root / "publish" / "templates"
+        for name in ("intro_ja.md", "intro_en.md"):
+            if (tdir / name).exists():
+                atomic_write_text(out / f"{series.id}_{name}", publish.render_template(tdir / name, ctx))
+                made.append(out / f"{series.id}_{name}")
+        logo = publish.logo_png(brand, out / "logo.png")
+    except publish.PublishError as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        return 1
+    print(f"作者ブランド: {brand['name_ja']} / {brand['name_en']}（{'確定' if brand.get('status') == 'final' else '仮'}）")
+    for m in made + [logo]:
+        print(f"  {os.path.relpath(m)}")
+    return 0
+
+
+def cmd_publish(series: Series, args) -> int:
+    from . import publish
+
+    n = args.episode or _latest_episode(series)
+    try:
+        if args.action == "status":
+            for line in publish.status_lines(series):
+                print(line)
+            return 0
+        if args.action == "package":
+            man = publish.build_package(series, n)
+            print(f"第{n}話の投稿パッケージ: {os.path.relpath(publish.package_dir(series, n))}/manifest.json")
+            print(f"  投稿版（ロゴあり）: {man['video']['post']['file']}（自動確認 {'合格' if man['video']['post']['checks_ok'] else '不合格'}）")
+            print(f"  原版（ロゴなし）: {man['video']['master']['file']}")
+            print(f"  表紙: {len(man['covers'])} 案（選択: {man.get('cover_choice') or '未選択'}） / 静止画: {len(man['stills'])} 枚")
+            print(f"  文章: {', '.join(man['texts'])}")
+            print(f"  作者ブランド: {man['brand']['name_ja']}（{'確定' if man['brand']['status'] == 'final' else '仮。承認できません'}）")
+            print(f"  パッケージ: {man['package_sha256'][:23]}")
+            return 0
+        if args.action == "request-review":
+            e = publish.request_review(series, n)
+            print(f"第{n}話: 確認待ちにしました。投稿版 sha256 先頭: {e['post_sha256'][:12]}")
+            print("  利用者が確認したら: publish approve --episode N --sha <先頭8文字以上>")
+            return 0
+        if args.action == "approve":
+            e = publish.approve(series, n, args.sha or "", note=args.note or "")
+            print(f"第{n}話: 承認しました（投稿版 {e['approved']['post_sha256'][:12]}）")
+            return 0
+        if args.action == "check":
+            man = publish.assert_can_post(series, n, args.platform)
+            print(f"第{n}話 → {args.platform}: 投稿できます（{man['video']['post']['file']}）")
+            return 0
+        if args.action == "record":
+            e = publish.record_post(series, n, args.platform, url=args.url, post_id=args.post_id, done=args.done)
+            print(f"第{n}話 → {args.platform}: 投稿を記録しました（状態: {e['status']}）")
+            return 0
+    except publish.PublishError as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        return 1
+    except FileNotFoundError as e:
+        print(f"エラー: {e}（先に publish package を実行）", file=sys.stderr)
+        return 1
+    return 2
+
+
+def cmd_site(series: Series, args) -> int:
+    from . import publish, site
+
+    out = Path(args.out) if args.out else publish.repo_root(series) / "site_draft"
+    try:
+        files = site.build(series, out, public_only=args.public_only)
+    except publish.PublishError as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        return 1
+    print(f"サイトの下書き（{'公開済みの話だけ' if args.public_only else '全話・確認用の印つき'}。公開はしていません）:")
+    for f in files:
+        print(f"  {os.path.relpath(f)}")
+    return 0
+
+
 def cmd_cover(series: Series, args) -> int:
     from . import cover, roughcut
 
@@ -580,6 +687,8 @@ def cmd_video_trial(series: Series, args) -> int:
     if gen.paid and not args.allow_paid:
         print("  有料です。見積もりを確認してから --allow-paid を付けて実行してください。")
         return 2
+    if not _publish_gate(series, n, "動画の試作"):
+        return 1
     from . import budget
     try:
         budget.check(est["usd"], series=series.id, episode=n, allow_over_episode=args.allow_over_episode_cap)
@@ -624,6 +733,19 @@ def main(argv: list[str] | None = None) -> int:
     dtp.add_argument("--log", help="ワークフローのログを保存したファイル（処理後に削除）")
     dtp.add_argument("--then", nargs=argparse.REMAINDER, default=[],
                      help="最後に置く。トークンを使って続けて実行する storyengine のコマンド。複数は + で区切る（例: --then images --dry-run + restore --check）")
+    bp = sub.add_parser("brand", help="作者ブランドのプロフィール・作品紹介・文字ロゴを brand/out に作る（無料）")
+    pb = sub.add_parser("publish", help="投稿パッケージ・確認・承認・投稿記録（公開そのものはしない）")
+    pb.add_argument("action", choices=["status", "package", "request-review", "approve", "check", "record"])
+    pb.add_argument("--episode", type=int)
+    pb.add_argument("--sha", help="approve: 利用者が確認した投稿版の sha256 の先頭8文字以上")
+    pb.add_argument("--platform", help="check / record: youtube・instagram・tiktok・note・x")
+    pb.add_argument("--url", help="record: 投稿した URL")
+    pb.add_argument("--post-id", help="record: 投稿の ID")
+    pb.add_argument("--done", action="store_true", help="record: 予定の投稿先がそろわなくても公開済みにする")
+    pb.add_argument("--note", help="approve: メモ")
+    sp = sub.add_parser("site", help="作品サイトのローカル下書き（静的 HTML）を作る。公開はしない")
+    sp.add_argument("--out", help="出力先（既定 site_draft/）")
+    sp.add_argument("--public-only", action="store_true", help="公開済みの話だけを載せる")
     cv = sub.add_parser("cover", help="完成動画の1コマ＋文字で投稿用の表紙案を作る（無料）")
     cv.add_argument("--episode", type=int)
     cv.add_argument("--spec", help="表紙の指示 JSON（既定 edits/epNNN_covers.json）")
@@ -662,7 +784,7 @@ def main(argv: list[str] | None = None) -> int:
     handlers = {"brief": cmd_brief, "scaffold": cmd_scaffold, "validate": cmd_validate,
                 "commit": cmd_commit, "render": cmd_render, "rebuild": cmd_rebuild, "status": cmd_status, "images": cmd_images, "persist": cmd_persist,
                 "restore": cmd_restore, "import-zip": cmd_import_zip,
-                "drive-token": cmd_drive_token, "animatic": cmd_animatic, "roughcut": cmd_roughcut, "finalize": cmd_finalize, "cover": cmd_cover,
+                "drive-token": cmd_drive_token, "animatic": cmd_animatic, "roughcut": cmd_roughcut, "finalize": cmd_finalize, "cover": cmd_cover, "brand": cmd_brand, "publish": cmd_publish, "site": cmd_site,
                 "video-trial": cmd_video_trial, "budget": cmd_budget}
     try:
         series = load_series(args.series)
