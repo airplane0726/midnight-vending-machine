@@ -1,18 +1,21 @@
 {
  "status": "provisional",
- "note": "作者ブランド（全作品共通）。名前が決まったら name_ja・name_en・handle を書き換え、status を final にする。各ファイルはここから作り直されるので、名前の一括置換はこのファイルだけでよい。links は取得済みの URL だけを書き、未取得は null のまま（サイトや文章では「準備中」になる）。",
+ "note": "作者ブランド（全作品共通）。名前が決まったら name_ja・name_en・display_name・display_name_en・handle を書き換え、status を final にする。各ファイルはここから作り直されるので、名前の一括置換はこのファイルだけでよい。links は取得済みの URL だけを書き、未取得は null のまま（サイトや文章では「準備中」になる）。",
  "name_ja": "（作者名・仮）",
  "name_en": "(Author TBD)",
+ "display_name": "（作者名・仮）",
+ "display_name_en": "(Author TBD)",
  "handle": null,
  "tagline_ja": "せりふのない、小さな不思議の短い映像をつくっています。",
  "tagline_en": "Tiny, wordless short films about small wonders.",
  "contact": null,
  "logo": {
-  "text": "{{brand.name_en}}",
+  "text": "{{brand.display_name}}",
   "font_size": 34,
   "opacity": 0.7,
   "color": "white",
-  "position": {}
+  "position": {},
+  "font": "/usr/share/fonts/opentype/ipafont-gothic/ipagp.ttf"
  },
  "links": {
   "youtube": null,

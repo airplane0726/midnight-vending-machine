@@ -4,7 +4,7 @@
 # 説明
 {{posts.youtube.description_body}}
 
-制作：{{brand.name_ja}}（{{brand.name_en}}）
+制作：{{brand.display_name}}
 {{brand.links_line_ja}}
 
 ※{{package.ai_disclosure}}

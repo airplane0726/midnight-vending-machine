@@ -14,7 +14,7 @@
 
 せりふのない20秒の連載ショートアニメです。3日に1話ずつ公開しています。
 
-制作：{{brand.name_ja}}
+制作：{{brand.display_name}}
 {{brand.links_line_ja}}
 
 ※{{package.ai_disclosure}}

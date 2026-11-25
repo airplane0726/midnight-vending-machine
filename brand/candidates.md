@@ -42,3 +42,21 @@
 - 劇団MOYU との混同を避けるなら、英語表記を「moyu theater」以外（例: moyu shogekijo、moyu tiny theater）にする、日本語の「もゆ小劇場」を前に出す、などの案がある。
 
 出典: [劇団MOYU（X）](https://x.com/gekidanmoyu)、[劇団MOYU（サイト）](https://gekidannmoyu.studio.site/)、[やまがた演劇りーぐ！ MOYU NOTE II](https://ymgt-engeki-leage.com/%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88/moyunote2_hifu_2025nov/)、[MoYu（Speedsolving wiki）](https://speedsolving.com/wiki/index.php/Moyu)、[about moyucube](https://moyustore.com/pages/about-moyucube)、[百結もゆ（YouTube）](https://www.youtube.com/@momoyu_moyu)
+
+---
+
+## 決定案「もゆ / s_moyur」の重複調査（2026-11-25、公開情報の検索のみ）
+
+利用者の決定: 作者ブランド名「s_moyur」、表示名「もゆ / s_moyur」。作品名「午前0時の自販機」はそのまま。
+
+| 見つかったもの | 名前の重なり | 見立て |
+|---|---|---|
+| X のアカウント @s_moyur（表示名「moyu」、2013年3月登録、投稿は非公開、紹介文に soundcloud.com/s_moyur へのリンク） | **ハンドルが完全一致、表示名もほぼ同じ** | 利用者本人のアカウントでなければ重大な混同になる（X では @s_moyur を取れず、同じ名前の別人が先にいる）。本人のものなら問題なし |
+| SoundCloud の s_moyur（上の X の紹介文にあるリンク。ページそのものは未確認） | ハンドルが完全一致 | 同上 |
+| Instagram・TikTok・YouTube・note の s_moyur | 検索では見つからなかった | 取得できるかは各登録画面で確認が必要（見つからない＝空いている、ではない） |
+| 「moyur」（ベンガル語の名前・歌・船名など）、星草もゆり（VTuber、活動休止） | 綴りが近い | 分野・地域が違い、混同の心配は小さい |
+
+状態: 上記の X・SoundCloud が利用者本人のものかの確認待ち。確認できるまで `brand/brand.json` は仮名のまま
+（見本は STORYENGINE_BRAND_FILE で別のファイルを読んで作った。保存物の名前は変えていない）。
+
+出典: [moyu (@s_moyur) / X](https://x.com/s_moyur)

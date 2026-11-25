@@ -57,10 +57,15 @@ def repo_root(series: Series) -> Path:
 
 
 def load_brand(series: Series) -> dict[str, Any]:
-    path = repo_root(series) / "brand" / "brand.json"
+    """作者ブランド。STORYENGINE_BRAND_FILE があればそちらを読む（確定前の見本づくり用。保存物の名前は変えない）。"""
+    override = os.environ.get("STORYENGINE_BRAND_FILE")
+    path = Path(override) if override else repo_root(series) / "brand" / "brand.json"
     if not path.exists():
-        raise PublishError("brand/brand.json がありません")
-    return read_json(path)
+        raise PublishError(f"{path} がありません")
+    b = read_json(path)
+    b.setdefault("display_name", b.get("name_ja"))
+    b.setdefault("display_name_en", b.get("name_en"))
+    return b
 
 
 def publish_config(series: Series) -> dict[str, Any]:

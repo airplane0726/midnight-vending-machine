@@ -1,4 +1,4 @@
-{{brand.name_ja}}
+{{brand.display_name}}
 
 {{brand.tagline_ja}}
 せりふのない縦型の短いアニメを、少しずつ連載しています。

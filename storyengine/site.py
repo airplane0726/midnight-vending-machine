@@ -79,7 +79,7 @@ def _page(title: str, body: str, draft: bool, brand: dict[str, Any]) -> str:
     return (f'<!doctype html><html lang="ja"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<meta name="robots" content="noindex,nofollow"><title>{_e(title)}</title><style>{CSS}</style></head>'
-            f'<body>{banner}{body}<footer><p>© {_e(brand.get("name_ja"))} / {_e(brand.get("name_en"))}</p></footer>'
+            f'<body>{banner}{body}<footer><p>© {_e(brand.get("display_name"))}</p></footer>'
             f'</body></html>')
 
 
@@ -131,7 +131,7 @@ def build(series: Series, out: Path, *, public_only: bool = False) -> list[Path]
     chars = "".join(
         f'<div><h3>{_e(c.get("name"))} <small>{_e(c.get("name_en"))}</small></h3><p>{_e(c.get("role"))}</p>'
         f'<p>{_e(c.get("personality"))}</p></div>' for c in (cfg.get("characters") or {}).values())
-    body = (f'<header><p>{_e(brand.get("name_ja"))} / {_e(brand.get("name_en"))}</p>'
+    body = (f'<header><p>{_e(brand.get("display_name"))}</p>'
             f'<h1>{_e(cfg.get("title"))}</h1><p>{_e(cfg.get("title_en"))}</p></header><main>'
             f'{latest or "<section><h2>最新話</h2><p>まだありません。</p></section>"}'
             f'<section><h2>全話一覧</h2><ul class="eps">{"".join(cards) or "<li>まだありません</li>"}</ul></section>'

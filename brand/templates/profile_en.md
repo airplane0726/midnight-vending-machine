@@ -1,4 +1,4 @@
-{{brand.name_en}}
+{{brand.display_name_en}}
 
 {{brand.tagline_en}}
 Wordless vertical short animations, released as a serial.
