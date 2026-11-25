@@ -60,3 +60,10 @@
 （見本は STORYENGINE_BRAND_FILE で別のファイルを読んで作った。保存物の名前は変えていない）。
 
 出典: [moyu (@s_moyur) / X](https://x.com/s_moyur)
+
+### 更新（2026-11-25）: 表記を「s_moyur」のみに
+
+- 利用者の決定: 作者名・表示名・動画の署名は **s_moyur** のみ。日本語の「もゆ」は併記しない。作品名「午前0時の自販機」は変えない。
+- X・SoundCloud の @s_moyur が利用者本人のものかは **未回答（所有確認待ち）**。公式リンク（brand.json の links）には登録しない。
+- 見本（署名・プロフィール・投稿文・サイト）は「s_moyur」で作成済み。`brand/brand.json` は所有確認が済むまで仮名のまま。
+  確定するときは name_ja・name_en・display_name・display_name_en を「s_moyur」にし、status を final にする。
