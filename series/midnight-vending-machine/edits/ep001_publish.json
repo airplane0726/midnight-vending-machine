@@ -1,6 +1,6 @@
 {
  "episode": 1,
- "note": "第1話の投稿パッケージの指示。表紙は edits/ep001_covers.json の中から選ぶ。静止画は文字なしの1コマ（記事・サイト用）。ai_disclosure は実際の制作方法に合わせた文（series.json の文を変えるかは利用者が決める）。",
+ "note": "第1話の投稿パッケージの指示。表紙は edits/ep001_covers.json の中から選ぶ。静止画は文字なしの1コマ（記事・サイト用）。AI 利用の表示は episode.json の ai_disclosure（第1話は「画像生成AIで作った絵をもとに、編集・合成で制作」に統一）。",
  "cover": "A-float",
  "stills": [
   1.4,
@@ -10,7 +10,6 @@
   16.8,
   19.4
  ],
- "ai_disclosure": "この作品は、画像生成AIで作った絵をもとに、編集・合成で制作しています。",
  "hashtags_remove": [
   "#3Dアニメ",
   "#miniature"

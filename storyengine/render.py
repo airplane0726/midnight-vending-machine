@@ -154,7 +154,7 @@ def build_production(series: Series, ep: dict[str, Any]) -> dict[str, Any]:
             "youtube": {"title": posts["youtube"]["title"], "description": posts["youtube"]["description"],
                         "tags": posts["youtube"].get("tags", []),
                         "made_for_kids": posts["youtube"].get("made_for_kids", False)},
-            "ai_disclosure": series.config.get("ai_disclosure", ""),
+            "ai_disclosure": ep.get("ai_disclosure") or series.config.get("ai_disclosure", ""),
         },
     }
 

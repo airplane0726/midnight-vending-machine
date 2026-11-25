@@ -302,7 +302,7 @@ Poco slowly drifts down and lands softly, toes first then heels, both feet flat,
 
 #午前0時の自販機 #ショートアニメ #ミニチュア
 
-※この作品は画像・動画生成AIを用いて制作しています。
+※この作品は、画像生成AIで作った絵をもとに、編集・合成で制作しています。
 ```
 
 **タグ**: 午前0時の自販機, ポコ, ショートアニメ, ミニチュア, 自販機, ロボット, 不思議, 雨, 虹, せりふなし, shorts

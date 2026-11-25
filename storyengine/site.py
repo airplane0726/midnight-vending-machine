@@ -116,7 +116,7 @@ def build(series: Series, out: Path, *, public_only: bool = False) -> list[Path]
         body = (f'<header><p><a href="index.html">← {_e(cfg.get("title"))}</a></p>'
                 f'<h1>第{n}話「{_e(ep["title"])}」{badge}</h1><p>{_e(ep.get("logline"))}</p></header><main><section>'
                 + (f'<video controls playsinline preload="metadata" poster="{poster}" src="{video}"></video>' if video else "")
-                + f'<p>{_e(ep.get("summary"))}</p><p><small>{_e(cfg.get("ai_disclosure"))}</small></p></section></main>')
+                + f'<p>{_e(ep.get("summary"))}</p><p><small>{_e(ep.get("ai_disclosure") or cfg.get("ai_disclosure"))}</small></p></section></main>')
         (out / page).write_text(_page(f'第{n}話「{ep["title"]}」｜{cfg.get("title")}', body, not public_only, brand),
                                 encoding="utf-8")
         written.append(out / page)

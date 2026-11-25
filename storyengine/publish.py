@@ -128,7 +128,8 @@ def context(series: Series, n: int | None = None, extra: dict[str, Any] | None =
             if isinstance(p, dict) and isinstance(p.get("tags"), list):
                 p["tags_line"] = ", ".join(p["tags"])
         ctx["episode"] = {"number": n, "number_padded": f"{n:03d}", "title": ep["title"], "logline": ep.get("logline"),
-                          "summary": ep.get("summary"), "featured_object": ep.get("featured_object")}
+                          "summary": ep.get("summary"), "featured_object": ep.get("featured_object"),
+                          "ai_disclosure": ep.get("ai_disclosure") or cfg.get("ai_disclosure")}
         ctx["posts"] = posts
     if extra:
         ctx.update(extra)
@@ -265,7 +266,8 @@ def build_package(series: Series, n: int) -> dict[str, Any]:
     stills = [r["version"] for r in cover.build(series, n, stills_spec)] if spec.get("stills") else []
     chosen = spec.get("cover")
     ctx = context(series, n, {"package": {
-        "ai_disclosure": spec.get("ai_disclosure") or series.config.get("ai_disclosure"),
+        "ai_disclosure": spec.get("ai_disclosure") or episode(series, n).get("ai_disclosure")
+        or series.config.get("ai_disclosure"),
         "hook": spec.get("hook", ""), "cover": chosen, "hashtags_remove": spec.get("hashtags_remove") or []}})
     out = package_dir(series, n)
     texts = {}

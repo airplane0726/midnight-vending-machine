@@ -13,3 +13,32 @@
 - 各サービス（YouTube・Instagram・TikTok・note・X）で、同じハンドルが空いているか
 - 同名の商標・作品・店がないか（特許庁の J-PlatPat などで検索）
 - 独自ドメインを使う場合は空き状況と費用（年額。月の上限 3,000円に含める）
+
+---
+
+## 第一候補「もゆ小劇場 / moyu theater」の重複調査（2026-11-25、公開情報の検索のみ）
+
+検索で確認できたこと（同名・似た名前）:
+
+| 見つかったもの | 分野 | 名前の重なり | 影響の見立て |
+|---|---|---|---|
+| 「もゆ小劇場」「moyu theater / theatre」「もゆ劇場」「もゆシアター」 | — | 完全一致は見つからなかった | — |
+| 劇団MOYU（山形県上山市。X: @GekidanMOYU、サイト gekidannmoyu.studio.site。2016年から活動、2025年11月にも公演） | 演劇 | 「MOYU」＋演劇。**分野が近い** | 「moyu theater」は劇団MOYUの英語表記と誤解されるおそれがある。ハンドルや英語表記で区別が要る |
+| MoYu（魔域。中国のスピードキューブのブランド。moyustore.com など） | 玩具 | 「moyu」が同じ | 分野は違うが、英語の「moyu」検索ではこちらが上位に出る。ハンドルの moyu 単体は取られている可能性が高い |
+| 百結もゆ（ももゆもゆ。VTuber、2026年7月デビュー。YouTube @momoyu_moyu） | 配信 | 「もゆ」 | 分野は違う。「もゆ」単体の名前だと紛れやすい |
+
+ハンドル候補と、確認の状態:
+
+| ハンドル案 | 公開情報の検索 | 取得できるか |
+|---|---|---|
+| moyu_theater | 一致する公開アカウントは検索で見つからなかった | **未確認**（各サービスの登録画面で確認が必要） |
+| moyutheater | 同上 | **未確認**（同上） |
+| moyu.theater（Instagram・TikTok はドットを使える） | 同上 | **未確認**（同上） |
+| moyu_shogekijo（ローマ字） | 未調査 | **未確認**（同上） |
+
+注意:
+- 検索で見つからないことは、空いていることの保証ではない（非公開・削除済み・検索に出ないアカウントがある）。取得できるかは、YouTube・Instagram・TikTok・note・X の各登録画面でだけ確かめられる。
+- 商標は未確認。特許庁の J-PlatPat（商標検索）で「もゆ」「MOYU」「moyu theater」を、映像・娯楽の区分（第41類など）で検索するのは利用者の操作になる（この環境からは使えない）。
+- 劇団MOYU との混同を避けるなら、英語表記を「moyu theater」以外（例: moyu shogekijo、moyu tiny theater）にする、日本語の「もゆ小劇場」を前に出す、などの案がある。
+
+出典: [劇団MOYU（X）](https://x.com/gekidanmoyu)、[劇団MOYU（サイト）](https://gekidannmoyu.studio.site/)、[やまがた演劇りーぐ！ MOYU NOTE II](https://ymgt-engeki-leage.com/%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88/moyunote2_hifu_2025nov/)、[MoYu（Speedsolving wiki）](https://speedsolving.com/wiki/index.php/Moyu)、[about moyucube](https://moyustore.com/pages/about-moyucube)、[百結もゆ（YouTube）](https://www.youtube.com/@momoyu_moyu)
