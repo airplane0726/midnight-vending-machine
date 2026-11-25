@@ -67,3 +67,10 @@
 - X・SoundCloud の @s_moyur が利用者本人のものかは **未回答（所有確認待ち）**。公式リンク（brand.json の links）には登録しない。
 - 見本（署名・プロフィール・投稿文・サイト）は「s_moyur」で作成済み。`brand/brand.json` は所有確認が済むまで仮名のまま。
   確定するときは name_ja・name_en・display_name・display_name_en を「s_moyur」にし、status を final にする。
+
+### 確定（2026-11-25）
+
+- 利用者が、X の @s_moyur とリンク先の SoundCloud は本人のアカウントで、普段からこの名前を使っていると回答。重大な混同なしと判断。
+- **作者名・表示名・動画の署名は「s_moyur」で確定**（brand.json の status: final）。日本語の併記なし。
+- 公式リンク: X（https://x.com/s_moyur）を登録。SoundCloud は本人のものだが、サイトへの掲載は保留（unlisted_accounts に記録）。
+- YouTube・Instagram・TikTok・note は、取得済みと確認できるまで「準備中」。

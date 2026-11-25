@@ -75,7 +75,8 @@ def _links_html(links: dict[str, Any]) -> str:
 
 
 def _page(title: str, body: str, draft: bool, brand: dict[str, Any]) -> str:
-    banner = '<div class="draft">下書き（非公開・ローカル確認用）。名前・リンクは仮のものを含みます</div>' if draft else ""
+    note = "。名前・リンクは仮のものを含みます" if brand.get("status") != "final" else ""
+    banner = f'<div class="draft">下書き（非公開・ローカル確認用）{note}</div>' if draft else ""
     return (f'<!doctype html><html lang="ja"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<meta name="robots" content="noindex,nofollow"><title>{_e(title)}</title><style>{CSS}</style></head>'

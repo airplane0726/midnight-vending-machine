@@ -103,7 +103,12 @@ class TestPublishFlow(unittest.TestCase):
         site.build(self.series, out)
         html = (out / "index.html").read_text(encoding="utf-8")
         self.assertIn("準備中", html)
-        self.assertNotIn("href=\"http", html)
+        brand = json.loads((self.tmp / "brand" / "brand.json").read_text(encoding="utf-8"))
+        allowed = {v for v in brand["links"].values() if v}
+        import re
+        self.assertEqual(set(re.findall(r'href="(http[^"]*)"', html)), allowed)  # 確認済みの公式リンクだけ
+        for acc in (brand.get("unlisted_accounts") or {}).values():
+            self.assertNotIn(acc["url"], html)  # 掲載保留のアカウントは出さない
         self.assertIn("noindex", html)
         site.build(self.series, self.tmp / "site2", public_only=True)
         self.assertNotIn("ep001.html", (self.tmp / "site2" / "index.html").read_text(encoding="utf-8"))

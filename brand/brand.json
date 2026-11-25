@@ -1,11 +1,11 @@
 {
- "status": "provisional",
- "note": "作者ブランド（全作品共通）。名前が決まったら name_ja・name_en・display_name・display_name_en・handle を書き換え、status を final にする。各ファイルはここから作り直されるので、名前の一括置換はこのファイルだけでよい。links は取得済みの URL だけを書き、未取得は null のまま（サイトや文章では「準備中」になる）。",
- "name_ja": "（作者名・仮）",
- "name_en": "(Author TBD)",
- "display_name": "（作者名・仮）",
- "display_name_en": "(Author TBD)",
- "handle": null,
+ "status": "final",
+ "note": "作者ブランド（全作品共通）。2026-11-25 に利用者が確定: 作者名・表示名・動画の署名は s_moyur のみ（日本語の併記なし）。名前の一括置換はこのファイルだけでよい。links は利用者が本人のものと確認した公式 URL だけを書き、未確認・未取得は null（サイトや文章では「準備中」）。unlisted_accounts は本人確認済みだが掲載を保留しているもの（サイト・文章には出さない）。",
+ "name_ja": "s_moyur",
+ "name_en": "s_moyur",
+ "display_name": "s_moyur",
+ "display_name_en": "s_moyur",
+ "handle": "s_moyur",
  "tagline_ja": "せりふのない、小さな不思議の短い映像をつくっています。",
  "tagline_en": "Tiny, wordless short films about small wonders.",
  "contact": null,
@@ -22,7 +22,14 @@
   "instagram": null,
   "tiktok": null,
   "note": null,
-  "x": null,
+  "x": "https://x.com/s_moyur",
   "site": null
+ },
+ "unlisted_accounts": {
+  "soundcloud": {
+   "url": "https://soundcloud.com/s_moyur",
+   "owner_confirmed": "2026-11-25",
+   "note": "利用者本人のアカウント。サイトへの掲載は保留"
+  }
  }
 }
