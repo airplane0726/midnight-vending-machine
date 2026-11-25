@@ -3070,8 +3070,10 @@
           "cost_usd": 0.0,
           "created_at": "2026-11-25T01:35:58+00:00",
           "storage": {
-            "status": "local_only",
-            "note": "persist で永続保存する"
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://13Bh4K0SkRpDwHAZaG-ssoGVKWpe7C2o2",
+            "at": "2026-11-25T01:39:38+00:00"
           }
         }
       ]
@@ -3103,8 +3105,10 @@
           "source_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
           "created_at": "2026-11-25T01:35:58+00:00",
           "storage": {
-            "status": "local_only",
-            "note": "persist で永続保存する"
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://182UIuUQcwdOD2PDoSzjipgKejF3f_dJS",
+            "at": "2026-11-25T01:39:41+00:00"
           }
         }
       ]
@@ -3136,8 +3140,10 @@
           "source_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
           "created_at": "2026-11-25T01:35:59+00:00",
           "storage": {
-            "status": "local_only",
-            "note": "persist で永続保存する"
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://1Ca_P1Wyq-bQnUsv2k6lVqovXkyReuJev",
+            "at": "2026-11-25T01:39:44+00:00"
           }
         }
       ]
@@ -3169,8 +3175,10 @@
           "source_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
           "created_at": "2026-11-25T01:36:00+00:00",
           "storage": {
-            "status": "local_only",
-            "note": "persist で永続保存する"
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://1tHyYPpW3iOg9nAKh96l7sc4DGg_KRYlQ",
+            "at": "2026-11-25T01:39:47+00:00"
           }
         }
       ]
@@ -3202,8 +3210,10 @@
           "source_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
           "created_at": "2026-11-25T01:36:00+00:00",
           "storage": {
-            "status": "local_only",
-            "note": "persist で永続保存する"
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://16Dl9ypAdioa6UZjBLyq-J8i7Uy-grSFY",
+            "at": "2026-11-25T01:39:50+00:00"
           }
         }
       ]
@@ -3235,8 +3245,10 @@
           "source_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
           "created_at": "2026-11-25T01:36:01+00:00",
           "storage": {
-            "status": "local_only",
-            "note": "persist で永続保存する"
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://12uj6F2Xapm3YIdx-86m2oSRi5oU6F20o",
+            "at": "2026-11-25T01:39:53+00:00"
           }
         }
       ]
@@ -3268,8 +3280,10 @@
           "source_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
           "created_at": "2026-11-25T01:36:01+00:00",
           "storage": {
-            "status": "local_only",
-            "note": "persist で永続保存する"
+            "status": "persisted",
+            "provider": "google-drive",
+            "uri": "gdrive://1pSmwmAgJdkDsHjAcYH88ifUh8d-krNuG",
+            "at": "2026-11-25T01:39:56+00:00"
           }
         }
       ]
