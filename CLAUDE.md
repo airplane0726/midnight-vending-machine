@@ -46,6 +46,8 @@ python3 -m storyengine brand                  # 作者プロフィール・作�
 python3 -m storyengine publish package --episode N  # 投稿版（作者ロゴあり）・表紙・静止画・各投稿先の文章・manifest
 python3 -m storyengine publish status|request-review|approve|check|record  # 承認台帳（公開そのものはしない）
 python3 -m storyengine site                   # 作品サイトのローカル下書き（site_draft/。公開しない）
+python3 -m storyengine instagram plan --episode N --sha <先頭16文字>   # Instagram 送信計画（通信なし）。送信は Actions の instagram-publish（docs/instagram_setup.md）
+python3 -m storyengine instagram record --episode N --log <ジョブログ> --request-id <ID>  # 公開結果を承認台帳に記録
 ```
 
 別の連載は `--series series/<id>` を付ける。標準ライブラリのみ（Python 3.10+）。
@@ -64,6 +66,7 @@ python3 -m storyengine site                   # 作品サイトのローカル�
 - 前の話が公開済み（published）か取り下げ（withdrawn）になるまで、次の話の登録・有料生成をしない（コードで確認している）。
 - 承認（`publish approve`）は、利用者がその投稿版を確認したと明示したときだけ行う。承認は投稿版の sha256 に結びつき、作り直すと無効になる。仮のブランド名のままでは承認できない。
 - 投稿の前に `publish check`、投稿したら `publish record`。同じ話を同じ投稿先へ二度記録しない。
+- Instagram への送信は GitHub Actions の instagram-publish だけで行う（check → container → publish の順）。publish は利用者が「投稿してよい」と明示したときだけ起動する。失敗しても自動で作り直さない。Instagram のトークンは GitHub の Actions シークレットにだけ置く。
 - ロゴなしの原版（final）と投稿版（post）の両方を保存する。
 
 ## 守ること

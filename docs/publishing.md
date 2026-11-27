@@ -18,7 +18,7 @@
 | 承認と二重投稿の防止 | 自動化済み（記録と関門） | `publish request-review / approve / check / record`（publish/ledger.json） |
 | 作品サイト | ローカル下書きのみ | `site`（site_draft/。公開しない） |
 | 作者ブランド名・ロゴ | **未確定**（仮名で動く） | `brand/brand.json`（status: provisional） |
-| SNS への投稿 | **未実装**（投稿先が未定） | 下記の調査を見て、投稿先が決まってから |
+| SNS への投稿 | Instagram: 実装済み（模擬テストまで。接続は未設定）。他は未実装 | `instagram`・Actions の instagram-publish（docs/instagram_setup.md） |
 | 定期実行（3日ごと） | **未開始** | 投稿の流れが決まってから |
 
 ## 2. 利用者の操作が必要なこと

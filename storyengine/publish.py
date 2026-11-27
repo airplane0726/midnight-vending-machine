@@ -243,6 +243,16 @@ def post_video(series: Series, n: int) -> dict[str, Any]:
         return {"action": "built", "version": version}
 
 
+def file_sha256(path: Path) -> str:
+    """ファイルの sha256（ffprobe などに頼らない。Actions など素材のない環境でも使える）。"""
+    import hashlib
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
 def _now() -> str:
     return _dt.datetime.now(_dt.timezone.utc).replace(microsecond=0).isoformat()
 
@@ -353,7 +363,7 @@ def approve(series: Series, n: int, sha_prefix: str, *, note: str = "") -> dict[
         post_sha = man["video"]["post"]["sha256"]
         if not post_sha.startswith(sha_prefix):
             raise GateError("指定した sha256 が、確認待ちの投稿版と一致しません")
-        cur = inspect_media(series.resolve(man["video"]["post"]["file"]))["sha256"]
+        cur = file_sha256(series.resolve(man["video"]["post"]["file"]))
         if cur != post_sha:
             raise GateError("投稿版のファイルがパッケージ作成後に変わっています")
         e.update(status="approved", approved={"post_sha256": post_sha, "package_sha256": man["package_sha256"],
@@ -374,7 +384,7 @@ def assert_can_post(series: Series, n: int, platform: str) -> dict[str, Any]:
     man = read_json(package_dir(series, n) / "manifest.json")
     if man["package_sha256"] != e["approved"]["package_sha256"]:
         raise GateError("承認後にパッケージが作り直されています。もう一度確認・承認が必要です")
-    cur = inspect_media(series.resolve(man["video"]["post"]["file"]))["sha256"]
+    cur = file_sha256(series.resolve(man["video"]["post"]["file"]))
     if cur != e["approved"]["post_sha256"]:
         raise GateError("承認した投稿版とファイルが一致しません")
     if platform not in man.get("platforms", []):

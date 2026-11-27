@@ -207,6 +207,30 @@ class GoogleDriveStore(AssetStore):
             raise DriveError("保存後にダウンロードした内容が元のファイルと一致しません")
         return f"gdrive://{file_id}"
 
+    # ---------------------------------------------------------------- 一時的な公開（投稿の取り込み用）
+    def share_public(self, uri: str) -> tuple[str, str]:
+        """「リンクを知っている全員が閲覧可」の権限を付け、(権限 ID, 直接ダウンロードの URL) を返す。
+        投稿先がファイルを取り込む間だけ使い、終わったら必ず unshare で外す。"""
+        file_id = self._file_id(uri)
+        perm = self._json("POST", f"{API}/files/{urllib.parse.quote(file_id)}/permissions?fields=id",
+                          {"type": "anyone", "role": "reader", "allowFileDiscovery": False})
+        if not perm.get("id"):
+            raise DriveError("公開リンクの権限を作れませんでした")
+        url = "https://drive.usercontent.google.com/download?" + urllib.parse.urlencode(
+            {"id": file_id, "export": "download", "confirm": "t"})
+        return perm["id"], url
+
+    def unshare(self, uri: str, permission_id: str) -> None:
+        file_id = self._file_id(uri)
+        with self._call("DELETE", f"{API}/files/{urllib.parse.quote(file_id)}/permissions/{urllib.parse.quote(permission_id)}"):
+            pass
+
+    @staticmethod
+    def _file_id(uri: str) -> str:
+        if not uri.startswith("gdrive://"):
+            raise DriveError(f"Google ドライブの URI ではありません: {uri}")
+        return uri[len("gdrive://"):]
+
     def download(self, uri: str, dest: Path) -> Path:
         if not uri.startswith("gdrive://"):
             raise DriveError(f"Google ドライブの URI ではありません: {uri}")

@@ -573,6 +573,36 @@ def cmd_publish(series: Series, args) -> int:
     return 2
 
 
+def cmd_instagram(series: Series, args) -> int:
+    from . import instagram, publish
+    from .integrations import create_asset_store
+
+    n = args.episode or _latest_episode(series)
+    try:
+        if args.action == "plan":
+            pl = instagram.plan(series, n, args.sha or "")
+            print(f"第{n}話 → Instagram（リール）の送信計画（通信なし）")
+            print(f"  動画: {pl['video_file']}（sha256 {pl['video_sha256'][:16]}… / 保存先 {pl['video_uri']}）")
+            print(f"  表紙: {pl['cover_file'] or 'なし'}")
+            print(f"  キャプション: {len(pl['caption'])} 文字")
+            print("  GitHub Actions の instagram-publish に渡す入力:")
+            print(f"    episode={n} sha={pl['video_sha256'][:16]} mode=check|container|publish request_id=<16進32文字>")
+            return 0
+        if args.action == "run":   # GitHub Actions の中で使う（トークンは環境変数から）
+            store = create_asset_store(series.config.get("asset_storage"))
+            res = instagram.run(series, n, mode=args.mode, expected_sha=args.sha or "", client=instagram.from_env(),
+                                store=store, request_id=args.request_id or "")
+            return 0 if res.get("status") else 1
+        if args.action == "record":
+            e = instagram.record_from_log(series, n, Path(args.log), args.request_id or "")
+            print(f"第{n}話 → instagram: 投稿を記録しました（状態: {e['status']} / {e['posts']['instagram']['url']}）")
+            return 0
+    except (instagram.InstagramError, publish.PublishError, FileNotFoundError) as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        return 1
+    return 2
+
+
 def cmd_site(series: Series, args) -> int:
     from . import publish, site
 
@@ -743,6 +773,13 @@ def main(argv: list[str] | None = None) -> int:
     pb.add_argument("--post-id", help="record: 投稿の ID")
     pb.add_argument("--done", action="store_true", help="record: 予定の投稿先がそろわなくても公開済みにする")
     pb.add_argument("--note", help="approve: メモ")
+    ig = sub.add_parser("instagram", help="承認済みの投稿版を Instagram リールへ（plan は通信なし、run は Actions 用）")
+    ig.add_argument("action", choices=["plan", "run", "record"])
+    ig.add_argument("--episode", type=int)
+    ig.add_argument("--sha", help="承認済み投稿版の sha256 の先頭16文字以上")
+    ig.add_argument("--mode", choices=["check", "container", "publish"], default="check")
+    ig.add_argument("--request-id", help="依頼 ID（結果の行と対応付ける）")
+    ig.add_argument("--log", help="record: Actions のジョブログを保存したファイル")
     sp = sub.add_parser("site", help="作品サイトのローカル下書き（静的 HTML）を作る。公開はしない")
     sp.add_argument("--out", help="出力先（既定 site_draft/）")
     sp.add_argument("--public-only", action="store_true", help="公開済みの話だけを載せる")
@@ -784,7 +821,7 @@ def main(argv: list[str] | None = None) -> int:
     handlers = {"brief": cmd_brief, "scaffold": cmd_scaffold, "validate": cmd_validate,
                 "commit": cmd_commit, "render": cmd_render, "rebuild": cmd_rebuild, "status": cmd_status, "images": cmd_images, "persist": cmd_persist,
                 "restore": cmd_restore, "import-zip": cmd_import_zip,
-                "drive-token": cmd_drive_token, "animatic": cmd_animatic, "roughcut": cmd_roughcut, "finalize": cmd_finalize, "cover": cmd_cover, "brand": cmd_brand, "publish": cmd_publish, "site": cmd_site,
+                "drive-token": cmd_drive_token, "animatic": cmd_animatic, "roughcut": cmd_roughcut, "finalize": cmd_finalize, "cover": cmd_cover, "brand": cmd_brand, "publish": cmd_publish, "site": cmd_site, "instagram": cmd_instagram,
                 "video-trial": cmd_video_trial, "budget": cmd_budget}
     try:
         series = load_series(args.series)

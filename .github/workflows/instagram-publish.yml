@@ -1,0 +1,86 @@
+# 承認済みの投稿版を Instagram リールへ送る（利用者が手動で起動する）。
+#
+# - 関門: 承認台帳（publish/ledger.json）で「承認済み・sha256 一致・未投稿」を確かめてから送る。入力の sha が違えば送らない。
+# - 段階: check＝確認だけ（送信なし）／container＝取り込みまで（公開しない）／publish＝公開まで。
+# - 動画は Google ドライブの投稿版に一時的な公開リンクを付けて渡し、終わったら外す（GitHub には動画を置かない）。
+# - 権限はリポジトリの読み取りだけ。外部のアクションは使わない。入力は env 経由でだけ受け取る。
+# - トークンはシークレットからだけ読み、表示しない。結果は「INSTAGRAM_RESULT <依頼ID> <JSON>」の1行。
+# - 失敗しても自動で作り直さない。同時に2本は走らせない。
+name: instagram-publish
+run-name: instagram ${{ inputs.mode }} ep${{ inputs.episode }} ${{ inputs.request_id }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      episode:
+        description: "話数（例: 1）"
+        required: true
+        type: string
+      sha:
+        description: "承認済み投稿版の sha256 の先頭16文字以上"
+        required: true
+        type: string
+      mode:
+        description: "check（確認だけ）／container（取り込みまで・公開しない）／publish（公開）"
+        required: true
+        type: choice
+        options: [check, container, publish]
+        default: check
+      request_id:
+        description: "依頼 ID（16進32文字）"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: instagram-publish
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Fetch repository (read only)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          REF: ${{ github.sha }}
+        run: |
+          set -eu
+          git init -q repo
+          cd repo
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          git -c http.extraheader="AUTHORIZATION: basic $auth" fetch -q --depth 1 "https://github.com/$REPO" "$REF"
+          git checkout -q FETCH_HEAD
+
+      - name: Check inputs
+        env:
+          EPISODE: ${{ inputs.episode }}
+          SHA: ${{ inputs.sha }}
+          REQUEST_ID: ${{ inputs.request_id }}
+        run: |
+          set -eu
+          printf '%s' "$EPISODE" | grep -Eq '^[0-9]{1,4}$' || { echo "invalid episode"; exit 1; }
+          printf '%s' "$SHA" | grep -Eq '^[0-9a-f]{16,64}$' || { echo "invalid sha"; exit 1; }
+          printf '%s' "$REQUEST_ID" | grep -Eq '^[0-9a-f]{32}$' || { echo "invalid request_id"; exit 1; }
+
+      - name: Post to Instagram
+        working-directory: repo
+        env:
+          EPISODE: ${{ inputs.episode }}
+          SHA: ${{ inputs.sha }}
+          MODE: ${{ inputs.mode }}
+          REQUEST_ID: ${{ inputs.request_id }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          GOOGLE_OAUTH_CLIENT_ID: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
+          GOOGLE_OAUTH_CLIENT_SECRET: ${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }}
+          GOOGLE_DRIVE_REFRESH_TOKEN: ${{ secrets.GOOGLE_DRIVE_REFRESH_TOKEN }}
+        run: |
+          set -eu
+          python3 -m storyengine instagram run --episode "$EPISODE" --sha "$SHA" --mode "$MODE" --request-id "$REQUEST_ID"
