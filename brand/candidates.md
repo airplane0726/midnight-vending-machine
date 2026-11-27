@@ -83,3 +83,10 @@
 - 5媒体の URL は、この環境から各サイトに接続できず（ネットワークの許可外）、プロフィールを開いて確認できていない。
   確認できるまで links は null（文章・サイトでは「準備中」）。想定 URL は pending_links に置き、どこにも表示しない。
 - 公開情報の検索では「moyrr_s」の一致はなかった（作成直後のアカウントは検索に出ないことがある）。
+
+### 公式リンクの登録（2026-11-27）
+
+- 利用者が5媒体とも moyrr_s で登録・変更を完了したと申告し、公式プロフィール URL を指定した。本人申告を根拠に brand.json の links に登録。
+  - Instagram https://www.instagram.com/moyrr_s/ ／ TikTok https://www.tiktok.com/@moyrr_s ／ X https://x.com/moyrr_s ／ YouTube https://www.youtube.com/@moyrr_s ／ note https://note.com/moyrr_s
+- 外部アクセスによる確認は **未実施**（この環境から各サイトに接続できないため）。brand.json の links_verification に記録。
+- 環境からページを開けないことだけを理由に「準備中」へ戻さない。

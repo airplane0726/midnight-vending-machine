@@ -13,7 +13,7 @@
 #午前0時の自販機 #ショートアニメ #ミニチュア
 
 制作：moyrr_s
-YouTube: 準備中 / Instagram: 準備中 / TikTok: 準備中 / note: 準備中 / X: 準備中 / Web: 準備中
+YouTube: https://www.youtube.com/@moyrr_s / Instagram: https://www.instagram.com/moyrr_s/ / TikTok: https://www.tiktok.com/@moyrr_s / note: https://note.com/moyrr_s / X: https://x.com/moyrr_s / Web: 準備中
 
 ※この作品は、画像生成AIで作った絵をもとに、編集・合成で制作しています。
 
