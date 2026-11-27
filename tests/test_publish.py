@@ -33,7 +33,9 @@ class TestPublishFlow(unittest.TestCase):
                         ignore=shutil.ignore_patterns("drafts", "media", ".lock", "ledger.json"))
         shutil.rmtree(self.root / "publish" / "ep001", ignore_errors=True)
         (self.root / "edits" / "ep001_covers.json").unlink(missing_ok=True)
-        (self.root / "edits" / "ep001_publish.json").write_text(json.dumps({"cover": None, "stills": [1.0]}))
+        real = json.loads((SERIES_SRC / "edits" / "ep001_publish.json").read_text(encoding="utf-8"))
+        (self.root / "edits" / "ep001_publish.json").write_text(
+            json.dumps({"cover": None, "stills": [1.0], "en": real["en"]}, ensure_ascii=False), encoding="utf-8")
         self.series = load_series(self.root)
         self.series.config["format"] = dict(self.series.config["format"], resolution="108x192", total_seconds=2)
         self.series.config["publish_export"] = {"loudness": [-30, -5]}

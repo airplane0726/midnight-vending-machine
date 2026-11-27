@@ -273,7 +273,8 @@ def build_package(series: Series, n: int) -> dict[str, Any]:
     ctx = context(series, n, {"package": {
         "ai_disclosure": spec.get("ai_disclosure") or episode(series, n).get("ai_disclosure")
         or series.config.get("ai_disclosure"),
-        "hook": spec.get("hook", ""), "cover": chosen, "hashtags_remove": spec.get("hashtags_remove") or []}})
+        "hook": spec.get("hook", ""), "cover": chosen, "hashtags_remove": spec.get("hashtags_remove") or [],
+        "en": spec.get("en") or {}}})
     out = package_dir(series, n)
     texts = {}
     tdir = series.root / "publish" / "templates"

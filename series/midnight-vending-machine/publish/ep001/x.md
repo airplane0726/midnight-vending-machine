@@ -1,6 +1,6 @@
-午前0時、光ったボタンから出てきたのは、中だけで雨が降る透明な立方体だった。
+Rain falls only inside this cube. What happens upside down? Ep. 1 “The Rain Cube” (20s, sound on)
 
-連載ショート『午前0時の自販機』第1話「雨のしかく」（20秒・音あり）
-制作：moyrr_s
+中だけ雨が降る立方体を、逆さにしたら――。『午前0時の自販機』第1話「雨のしかく」
 
-#午前0時の自販機 #ショートアニメ
+※AI-generated images, edited / 画像生成AIの絵を編集・合成
+#午前0時の自販機

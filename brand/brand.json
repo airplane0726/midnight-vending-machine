@@ -6,8 +6,8 @@
  "display_name": "moyrr_s",
  "display_name_en": "moyrr_s",
  "handle": "moyrr_s",
- "tagline_ja": "せりふのない、小さな不思議の短い映像をつくっています。",
- "tagline_en": "Tiny, wordless short films about small wonders.",
+ "tagline_ja": "小さな不思議を、短い物語に。",
+ "tagline_en": "Small wonders. Quiet stories. Original short films from Japan.",
  "contact": null,
  "logo": {
   "text": "{{brand.display_name}}",
@@ -68,5 +68,6 @@
    "declared_at": "2026-11-27",
    "external_access_check": "未実施（この環境から各サイトに接続できないため）"
   }
- }
+ },
+ "tagline_header_en": "Small wonders. Quiet stories."
 }

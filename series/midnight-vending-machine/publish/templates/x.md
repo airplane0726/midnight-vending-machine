@@ -1,6 +1,6 @@
-{{episode.logline}}
+{{package.en.short}} Ep. {{episode.number}} “{{package.en.title}}” (20s, sound on)
 
-連載ショート『{{series.title}}』第{{episode.number}}話「{{episode.title}}」（20秒・音あり）
-制作：{{brand.display_name}}
+中だけ雨が降る立方体を、逆さにしたら――。『{{series.title}}』第{{episode.number}}話「{{episode.title}}」
 
-#{{series.title}} #ショートアニメ
+※AI-generated images, edited / 画像生成AIの絵を編集・合成
+#{{series.title}}

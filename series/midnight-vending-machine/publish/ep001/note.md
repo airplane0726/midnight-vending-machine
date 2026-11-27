@@ -1,5 +1,7 @@
 # 『午前0時の自販機』第1話「雨のしかく」
 
+*The Midnight Vending Machine — Ep. 1 “The Rain Cube”. Rain falls only inside this cube. What happens upside down?*
+
 （ここに動画を埋め込む：YouTube または Instagram に公開した後、その URL を本文に貼る）
 
 午前0時、光ったボタンから出てきたのは、中だけで雨が降る透明な立方体だった。
@@ -18,3 +20,4 @@
 YouTube: https://www.youtube.com/@moyrr_s / Instagram: https://www.instagram.com/moyrr_s/ / TikTok: https://www.tiktok.com/@moyrr_s / note: https://note.com/moyrr_s / X: https://x.com/moyrr_s / Web: 準備中
 
 ※この作品は、画像生成AIで作った絵をもとに、編集・合成で制作しています。
+※Made from AI-generated images, then edited and composited.
