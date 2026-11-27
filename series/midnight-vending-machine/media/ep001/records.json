@@ -3176,6 +3176,105 @@
             "uri": "gdrive://1IhE2iWu8KoCQg4JGehh2e9rBmig-sqaX",
             "at": "2026-11-25T10:42:52+00:00"
           }
+        },
+        {
+          "key": "sha256:24fa0afd687c3ea5de39c7ff52d5b9902522549e1aea414bb261d977b31e85ff",
+          "status": "complete",
+          "kind": "post",
+          "conditions": {
+            "kind": "post",
+            "version": 1,
+            "master_sha256": "47e63422bed9d85aa5239db71633950514bc1803fe222c9e8a1a9126190e1545",
+            "logo": {
+              "text": "moyrr_s",
+              "font_size": 34,
+              "opacity": 0.7,
+              "position": {
+                "x": "W-w-36",
+                "y": "232"
+              }
+            },
+            "brand_status": "final"
+          },
+          "file": "media/ep001/videos/ep001-post-24fa0afd687c3ea5.mp4",
+          "format": "mp4",
+          "width": 1080,
+          "height": 1920,
+          "duration": 20.0,
+          "bytes": 23146189,
+          "sha256": "e267b707af45d97fc794af7f5fb19e5b110eeb312cf7a5526d0237060b4ae5fc",
+          "master_file": "media/ep001/videos/ep001-final-ab61c1e291f98621.mp4",
+          "checks": {
+            "ok": true,
+            "items": [
+              {
+                "item": "大きさ",
+                "value": "1080x1920",
+                "ok": true
+              },
+              {
+                "item": "フレームレート（一定）",
+                "value": "30fps",
+                "ok": true
+              },
+              {
+                "item": "映像",
+                "value": "h264 High yuv420p",
+                "ok": true
+              },
+              {
+                "item": "音声",
+                "value": "aac 48000Hz 2ch",
+                "ok": true
+              },
+              {
+                "item": "長さ",
+                "value": "20.000秒",
+                "ok": true
+              },
+              {
+                "item": "映像と音声の長さの差",
+                "value": "0ms",
+                "ok": true
+              },
+              {
+                "item": "音量（ラウドネス）",
+                "value": "-16.0 LUFS",
+                "ok": true
+              },
+              {
+                "item": "ピーク（音割れ）",
+                "value": "-2.8 dBTP",
+                "ok": true
+              },
+              {
+                "item": "キーフレーム間隔（最大）",
+                "value": "1.00秒",
+                "ok": true
+              },
+              {
+                "item": "faststart（先頭に目次）",
+                "value": "あり",
+                "ok": true
+              },
+              {
+                "item": "色の情報",
+                "value": "bt709/bt709/bt709",
+                "ok": true
+              }
+            ],
+            "loudness": {
+              "integrated_lufs": -16.0,
+              "lra_lu": 3.2,
+              "true_peak_dbfs": -2.8
+            }
+          },
+          "cost_usd": 0.0,
+          "created_at": "2026-11-27T12:36:04+00:00",
+          "storage": {
+            "status": "local_only",
+            "note": "persist で永続保存する"
+          }
         }
       ]
     },

@@ -74,3 +74,12 @@
 - **作者名・表示名・動画の署名は「s_moyur」で確定**（brand.json の status: final）。日本語の併記なし。
 - 公式リンク: X（https://x.com/s_moyur）を登録。SoundCloud は本人のものだが、サイトへの掲載は保留（unlisted_accounts に記録）。
 - YouTube・Instagram・TikTok・note は、取得済みと確認できるまで「準備中」。
+
+### 変更（2026-11-27）: 作品専用アカウント moyrr_s
+
+- 利用者が Instagram・TikTok・X・YouTube・note の5媒体すべてを **moyrr_s** で取得したと回答。
+- 作者名・表示名・動画の署名を **s_moyur → moyrr_s** に変更（brand.json の status: final のまま）。
+- 本垢 s_moyur の X は作品の公式リンクから外した（unlisted_accounts に個人アカウントとして記録。表示しない）。
+- 5媒体の URL は、この環境から各サイトに接続できず（ネットワークの許可外）、プロフィールを開いて確認できていない。
+  確認できるまで links は null（文章・サイトでは「準備中」）。想定 URL は pending_links に置き、どこにも表示しない。
+- 公開情報の検索では「moyrr_s」の一致はなかった（作成直後のアカウントは検索に出ないことがある）。

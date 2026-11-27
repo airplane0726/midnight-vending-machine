@@ -1,16 +1,16 @@
 {
   "episode": 1,
   "version": 1,
-  "created_at": "2026-11-25T10:40:35+00:00",
+  "created_at": "2026-11-27T12:36:04+00:00",
   "brand": {
     "status": "final",
-    "name_ja": "s_moyur",
-    "name_en": "s_moyur"
+    "name_ja": "moyrr_s",
+    "name_en": "moyrr_s"
   },
   "video": {
     "post": {
-      "file": "media/ep001/videos/ep001-post-5b570ca988af9829.mp4",
-      "sha256": "ea7dad2e475bb1921c99dfaa6b460e14c8cc740fa53e836a22d26ec8460b2d14",
+      "file": "media/ep001/videos/ep001-post-24fa0afd687c3ea5.mp4",
+      "sha256": "e267b707af45d97fc794af7f5fb19e5b110eeb312cf7a5526d0237060b4ae5fc",
       "checks_ok": true
     },
     "master": {
@@ -82,5 +82,5 @@
     "note",
     "x"
   ],
-  "package_sha256": "sha256:023f90829fa7e5ea6d9b2adc7eb619b01fbe02455ff6536740aaebc433158beb"
+  "package_sha256": "sha256:11e0a8df1016d218b7d636018041ff37ea8ae2f2ba3614294d45683a94799e2c"
 }

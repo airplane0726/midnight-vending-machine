@@ -1,11 +1,11 @@
 {
  "status": "final",
- "note": "作者ブランド（全作品共通）。2026-11-25 に利用者が確定: 作者名・表示名・動画の署名は s_moyur のみ（日本語の併記なし）。名前の一括置換はこのファイルだけでよい。links は利用者が本人のものと確認した公式 URL だけを書き、未確認・未取得は null（サイトや文章では「準備中」）。unlisted_accounts は本人確認済みだが掲載を保留しているもの（サイト・文章には出さない）。",
- "name_ja": "s_moyur",
- "name_en": "s_moyur",
- "display_name": "s_moyur",
- "display_name_en": "s_moyur",
- "handle": "s_moyur",
+ "note": "作者ブランド（全作品共通）。2026-11-27 に利用者が変更・確定: 作者名・表示名・動画の署名は moyrr_s（作品専用アカウント）。名前の一括置換はこのファイルだけでよい。links は実際のプロフィール URL を確認できたものだけを書き、未確認は null（サイトや文章では「準備中」）。pending_links は利用者が取得したと回答したが、URL をまだ確認できていないもの（どこにも表示しない）。unlisted_accounts は利用者本人の個人アカウント（作品の公式リンクには使わない・表示しない）。",
+ "name_ja": "moyrr_s",
+ "name_en": "moyrr_s",
+ "display_name": "moyrr_s",
+ "display_name_en": "moyrr_s",
+ "handle": "moyrr_s",
  "tagline_ja": "せりふのない、小さな不思議の短い映像をつくっています。",
  "tagline_en": "Tiny, wordless short films about small wonders.",
  "contact": null,
@@ -22,14 +22,27 @@
   "instagram": null,
   "tiktok": null,
   "note": null,
-  "x": "https://x.com/s_moyur",
+  "x": null,
   "site": null
  },
  "unlisted_accounts": {
-  "soundcloud": {
+  "x_personal": {
+   "url": "https://x.com/s_moyur",
+   "owner_confirmed": "2026-11-25",
+   "note": "利用者本人の個人アカウント（本垢）。2026-11-27 に作品の公式リンクから外した"
+  },
+  "soundcloud_personal": {
    "url": "https://soundcloud.com/s_moyur",
    "owner_confirmed": "2026-11-25",
-   "note": "利用者本人のアカウント。サイトへの掲載は保留"
+   "note": "利用者本人の個人アカウント。掲載保留"
   }
+ },
+ "pending_links": {
+  "_note": "2026-11-27 利用者が 5 媒体とも moyrr_s で取得したと回答。この環境からは各サイトに接続できず、プロフィールを開いて確認できていない。利用者がアプリの「プロフィールのリンクをコピー」で得た URL と照合してから links へ移す。",
+  "instagram": "https://www.instagram.com/moyrr_s/",
+  "tiktok": "https://www.tiktok.com/@moyrr_s",
+  "x": "https://x.com/moyrr_s",
+  "youtube": "https://www.youtube.com/@moyrr_s",
+  "note": "https://note.com/moyrr_s"
  }
 }
