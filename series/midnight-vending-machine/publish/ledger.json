@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "episodes": {
+    "1": {
+      "status": "approved",
+      "history": [
+        {
+          "at": "2026-11-27T12:41:23+00:00",
+          "event": "review_requested",
+          "package_sha256": "sha256:11e0a8df1016d218b7d636018041ff37ea8ae2f2ba3614294d45683a94799e2c"
+        },
+        {
+          "at": "2026-11-27T12:41:31+00:00",
+          "event": "approved",
+          "post_sha256": "e267b707af45d97fc794af7f5fb19e5b110eeb312cf7a5526d0237060b4ae5fc"
+        }
+      ],
+      "package_sha256": "sha256:11e0a8df1016d218b7d636018041ff37ea8ae2f2ba3614294d45683a94799e2c",
+      "post_sha256": "e267b707af45d97fc794af7f5fb19e5b110eeb312cf7a5526d0237060b4ae5fc",
+      "approved": {
+        "post_sha256": "e267b707af45d97fc794af7f5fb19e5b110eeb312cf7a5526d0237060b4ae5fc",
+        "package_sha256": "sha256:11e0a8df1016d218b7d636018041ff37ea8ae2f2ba3614294d45683a94799e2c",
+        "at": "2026-11-27T12:41:31+00:00",
+        "note": "利用者が moyrr_s 署名入りの第1話投稿版を確認し承認（2026-11-27）"
+      }
+    }
+  }
+}
